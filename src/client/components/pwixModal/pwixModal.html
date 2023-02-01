@@ -1,0 +1,24 @@
+<template name="pwixModal">
+    <div class="pwixModal">
+
+        <div class="modal" tabindex="-1">
+            <div class="modal-dialog {{ modalClasses }}">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">{{ modalTitle }}</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        {{> Template.dynamic template=modalTemplate }}
+                    </div>
+                    <div class="modal-footer">
+                        {{#each btn in modalButtons }}
+                            <button type="button" class="btn {{ btnClass btn }}" data-bs-dismiss="modal" data-pwix-btn="{{ btn }}">{{ btnLabel btn }}</button>
+                        {{/each}}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</template>

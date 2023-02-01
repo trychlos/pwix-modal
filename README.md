@@ -16,7 +16,7 @@ None at the moment.
 
 ### Blaze components
 
-#### pwixModalDialog
+#### pwixModal
 
 _Note_: the package is cool enough to destroy itself the Blaze created view on dialog close. So you don't have to take care about that.
 
