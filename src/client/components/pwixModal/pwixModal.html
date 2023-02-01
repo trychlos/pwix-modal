@@ -1,8 +1,6 @@
 <template name="pwixModal">
     <div class="pwixModal">
 
-        {{ helper }}
-
         <div class="modal" tabindex="-1">
             <div class="modal-dialog {{ modalClasses }}">
                 <div class="modal-content">
@@ -14,7 +12,7 @@
                         {{> Template.dynamic template=modalTemplate }}
                     </div>
                     <div class="modal-footer">
-                        {{#each btn in modalButtons }}
+                        {{#each btn in buttons }}
                             <button type="button" class="btn {{ btnClass btn }}" data-bs-dismiss="modal" data-pwix-btn="{{ btn }}">{{ btnLabel btn }}</button>
                         {{/each}}
                     </div>

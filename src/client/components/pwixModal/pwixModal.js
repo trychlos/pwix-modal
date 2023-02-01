@@ -43,7 +43,8 @@ Template.pwixModal.onCreated( function(){
     const self = this;
 
     self.MD = {
-        lastBtn: null
+        btns: new ReactiveVar( null ),
+        minWidth: 0
     };
 });
 
@@ -58,7 +59,6 @@ Template.pwixModal.onRendered( function(){
     // make draggable if possible
     // .modal or .modal-dialog ?
     if( self.$( '.modal-dialog' ).draggable ){
-        console.log( 'draggable' );
         self.$( '.modal-dialog' ).draggable({
             handle: '.modal-header',
             cursor: 'grab'
@@ -68,9 +68,24 @@ Template.pwixModal.onRendered( function(){
     // make resizable if possible
     // .modal or .modal-content ?
     if( self.$( '.modal-content' ).resizable ){
-        console.log( 'resizable' );
         self.$( '.modal-content' ).resizable({
             handles: 'all'
+        });
+        self.$( '.modal-content' ).on( 'resize', ( event, ui ) => {
+            //console.log( 'resize', event, ui );
+            const div = self.$( '.modal-content' )[0];
+            console.log( 'height', 'client='+div.clientHeight, 'offset='+div.offsetHeight, 'scroll='+div.scrollHeight );
+            if( !self.MD.minWidth ){
+                console.log( 'width', 'client='+div.clientWidth, 'offset='+div.offsetWidth, 'scroll='+div.scrollWidth );
+                if( div.scrollWidth - div.clientWidth > 5 ){
+                    self.MD.minWidth = div.scrollWidth + 18;
+                    console.log( 'setting minWidth to', self.MD.minWidth );
+                    self.$( '.modal-content' ).resizable({
+                        minWidth: self.MD.minWidth
+                    });
+                    event.preventDefault();
+                }
+            }
         });
     }
 
@@ -102,15 +117,11 @@ Template.pwixModal.onRendered( function(){
 
     // make sure we have at least one button
     self.autorun(() => {
-        if( !Object.keys( Template.currentData()).includes( 'modalButtons' )){
-            Template.currentData().modalButtons = [ MODAL_BTN_OK ];
+        if( Object.keys( Template.currentData()).includes( 'modalButtons' )){
+            self.MD.btns.set( Template.currentData().modalButtons );
+        } else {
+            self.MD.btns.set( [ MODAL_BTN_OK ] );
         }
-    });
-
-    // record the last button
-    self.autorun(() => {
-        const btns = Template.currentData().modalButtons;
-        self.MD.lastBtn = btns[ btns.length-1 ];
     });
 });
 
@@ -118,15 +129,19 @@ Template.pwixModal.helpers({
     // the class to be added to the button
     //  the last should be be primary - all others secondary
     btnClass( btn ){
-        const MD = Template.instance().MD;
-        return MD.lastBtn ? ( MD.lastBtn === btn ? 'btn-primary' : 'btn-secondary' ) : '';
+        const btns = Template.instance().MD.btns.get();
+        const classe = btns.indexOf( btn ) === btns.length-1 ? 'btn-primary' : 'btn-secondary';
+        console.log( 'class', classe );
+        return classe;
     },
     // the translated label of the button
     btnLabel( btn ){
-        return i18n.label( pwixModal.i18n, btn );
+        const label = i18n.label( pwixModal.i18n, btn );
+        console.log( 'label', label );
+        return label;
     },
-    helper(){
-        console.log( this );
+    buttons(){
+        return Template.instance().MD.btns.get();
     }
 });
 
