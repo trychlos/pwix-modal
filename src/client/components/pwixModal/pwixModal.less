@@ -2,8 +2,12 @@
  * pwix:modal/src/client/components/pwixModal/pwixModal.less
  */
 
-body.modal-open.pwix-modal-dialog-body-class {
-    .modal-backdrop.show {
-        display: none;
+body.modal-open.pwix-modal-dialog-body-class div.modal-backdrop.show {
+    display: none;
+}
+
+.pwixModal {
+    .modal-content.ui-resizable {
+        overflow: hidden;
     }
 }

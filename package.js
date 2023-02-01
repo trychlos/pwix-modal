@@ -32,6 +32,7 @@ function configure( api ){
     api.versionsFrom( '2.9.0' );
     api.use( 'blaze-html-templates@2.0.0', 'client' );
     api.use( 'ecmascript' );
+    api.use( 'less@4.0.0', 'client' );
     api.use( 'pwix:i18n@1.0.0' );
     api.use( 'tmeasday:check-npm-versions@1.0.2', 'server' );
     api.addFiles( 'src/client/components/pwixModal/pwixModal.js', 'client' );
