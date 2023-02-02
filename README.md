@@ -59,7 +59,7 @@ May be called both before the dialog is opened, for example for preparing a next
 
 ### Blaze components
 
-#### pwixModal
+#### mdModal
 
 Parameters are to be passed as an options object when calling `pwixModal.run()` method.
 
@@ -122,7 +122,7 @@ mdTarget
 <td style="vertical-align: top;">
 The jQuery element to which the <code>click</code> events must be redirected as <code>md-click</code> messages.<br />
 The messgae will have button constants as its data.<br />
-Default is to send these messages to the <code>pwixModal</code> itself.
+Default is to send these messages to the <code>mdModal</code> itself.
 </td>
 </tr>
 </table>

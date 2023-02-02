@@ -1,17 +1,15 @@
 /*
- * pwix:modal/src/client/components/pwixModal/pwixModal.js
+ * pwix:modal/src/client/components/mdModal/mdModal.js
  *
  * A Bootstrap-based draggable and resizable modal dialog.
  * 
  * The behavior relies on the fact that a modal is unique in the application: there can be only at any time.
  */
 
-import { pwixI18n as i18n } from 'meteor/pwix:i18n';
-
 import '../../../common/js/index.js';
 
-import './pwixModal.html';
-import './pwixModal.less';
+import './mdModal.html';
+import './mdModal.less';
 
 /*
 // https://stackoverflow.com/questions/34372412/meteor-bind-events-outside-template-with-event-handlers-inside-the-template
@@ -28,7 +26,7 @@ function eventHandler( event ){
 }
 */
 
-Template.pwixModal.onCreated( function(){
+Template.mdModal.onCreated( function(){
     const self = this;
 
     self.MD = {
@@ -51,7 +49,7 @@ Template.pwixModal.onCreated( function(){
     });
 });
 
-Template.pwixModal.onRendered( function(){
+Template.mdModal.onRendered( function(){
     const self = this;
 
     // Bootstrap
@@ -109,11 +107,11 @@ Template.pwixModal.onRendered( function(){
     // =========
     //  defaults to be non-modal: several dialogs can be opened
 
-    self.$( '.pwixModal' ).resizable({
+    self.$( '.mdModal' ).resizable({
         handles: 'all'
     });
 
-    self.$( '.pwixModal' ).dialog({
+    self.$( '.mdModal' ).dialog({
         draggable: true,
         resizable: true,
         modal: true,
@@ -129,7 +127,7 @@ Template.pwixModal.onRendered( function(){
     */
 });
 
-Template.pwixModal.helpers({
+Template.mdModal.helpers({
 
     // the class to be added to the button
     //  the last is set as primary - all others secondary
@@ -149,7 +147,7 @@ Template.pwixModal.helpers({
     }
 });
 
-Template.pwixModal.events({
+Template.mdModal.events({
     // click on a button
     // note that the Blaze templating system doesn't let us add the 'data-bs-dismiss="modal"' to the button
     // so all events come here, and we have to dismiss the dialog ourselves:
@@ -164,24 +162,24 @@ Template.pwixModal.events({
             return false;
         }
         let $target = pwixModal._target.get();
-        $target = $target ? $target : instance.$( '.pwixModal' );
+        $target = $target ? $target : instance.$( '.mdModal' );
         $target.trigger( 'md-click', btn );
         // and let bubble up
     },
 
     // remove the Blaze element from the DOM
-    'hidden.bs.modal .pwixModal'( event, instance ){
+    'hidden.bs.modal .mdModal'( event, instance ){
         $( 'body' ).removeClass( 'pwix-modal-dialog-body-class' );
         Blaze.remove( instance.view );
     },
 
     // set the focus on first input field
-    'shown.bs.modal .pwixModal'( event, instance ){
+    'shown.bs.modal .mdModal'( event, instance ){
         instance.$( '.modal-body input' ).first().focus();
     }
 });
 
-Template.pwixModal.onDestroyed( function(){
+Template.mdModal.onDestroyed( function(){
     /*
     // jQuery UI overlay handling
     console.log( 'onDestroyed' );

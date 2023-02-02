@@ -35,7 +35,7 @@ function configure( api ){
     api.use( 'less@4.0.0', 'client' );
     api.use( 'pwix:i18n@1.0.0' );
     api.use( 'tmeasday:check-npm-versions@1.0.2', 'server' );
-    api.addFiles( 'src/client/components/pwixModal/pwixModal.js', 'client' );
+    api.addFiles( 'src/client/components/mdModal/mdModal.js', 'client' );
 }
 
 // NPM dependencies are checked in /src/server/js/check_npms.js

@@ -4,7 +4,7 @@
 
 import { ReactiveVar } from 'meteor/reactive-var';
 
-import '../components/pwixModal/pwixModal.js';
+import '../components/mdModal/mdModal.js';
 
 pwixModal._buttons = new ReactiveVar( null );
 pwixModal._target = new ReactiveVar( null );
@@ -14,7 +14,7 @@ pwixModal._target = new ReactiveVar( null );
  * @locus Client
  */
 pwixModal.close = function(){
-    return $( '.pwixModal .modal' ).modal( 'hide' );
+    return $( '.mdModal .modal' ).modal( 'hide' );
 };
 
 /**
@@ -37,7 +37,7 @@ pwixModal.enableButton = function( button, enable ){
  * @eturns {Object} the found button as a jQuery object, or null
  */
 pwixModal.findButton = function( button ){
-    return $( '.pwixModal .modal-footer' ).find( '[data-pwix-btn='+button+']' );
+    return $( '.mdModal .modal-footer' ).find( '[data-pwix-btn='+button+']' );
 };
 
 /**
@@ -61,7 +61,7 @@ pwixModal.knownButtons = function(){
  * @param {Object} parms the running parameters of the new dialog
  */
 pwixModal.run = function( parms ){
-    Blaze.renderWithData( Template.pwixModal, parms, $( 'body' )[0] );
+    Blaze.renderWithData( Template.mdModal, parms, $( 'body' )[0] );
 };
 
 /**
