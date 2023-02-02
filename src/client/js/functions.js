@@ -6,13 +6,38 @@ import { ReactiveVar } from 'meteor/reactive-var';
 
 import '../components/pwixModal/pwixModal.js';
 
+pwixModal._buttons = new ReactiveVar( null );
+pwixModal._target = new ReactiveVar( null );
+
 /**
- * @summary Opens a new modal dialog
+ * @summary Close the opened dialog
  * @locus Client
- * @param {Object} parms the running parameters of the new dialog
  */
-pwixModal.run = function( parms ){
-    Blaze.renderWithData( Template.pwixModal, parms, $( 'body' )[0] );
+pwixModal.close = function(){
+    return $( '.pwixModal .modal' ).modal( 'hide' );
+};
+
+/**
+ * @summary Enable/disable a button
+ * @locus Client
+ * @param {String} button the button to enable/disable
+ * @param {Boolean} enable whether the button should be enabled
+ */
+pwixModal.enableButton = function( button, enable ){
+    const btn = pwixModal.findButton( button );
+    if( btn ){
+        btn.prop( 'disabled', !enable );
+    }
+};
+
+/**
+ * @summary Find a button element
+ * @locus Client
+ * @param {String} button the button to search for
+ * @eturns {Object} the found button as a jQuery object, or null
+ */
+pwixModal.findButton = function( button ){
+    return $( '.pwixModal .modal-footer' ).find( '[data-pwix-btn='+button+']' );
 };
 
 /**
@@ -30,8 +55,14 @@ pwixModal.knownButtons = function(){
     ];
 };
 
-pwixModal._buttons = new ReactiveVar( null );
-pwixModal._target = new ReactiveVar( null );
+/**
+ * @summary Opens a new modal dialog
+ * @locus Client
+ * @param {Object} parms the running parameters of the new dialog
+ */
+pwixModal.run = function( parms ){
+    Blaze.renderWithData( Template.pwixModal, parms, $( 'body' )[0] );
+};
 
 /**
  * @summary Set the buttons of the currently opened dialog
@@ -54,29 +85,6 @@ pwixModal.setButtons = function( buttons ){
         pwixModal._buttons.set( btns );
     } else {
         console.error( 'Invalid provided buttons', buttons );
-    }
-};
-
-/**
- * @summary Find a button element
- * @locus Client
- * @param {String} button the button to search for
- * @eturns {Object} the found button as a jQuery object, or null
- */
-pwixModal.findButton = function( button ){
-    return $( '.pwixModal .modal-footer' ).find( '[data-pwix-btn='+button+']' );
-};
-
-/**
- * @summary Enable/disable a button
- * @locus Client
- * @param {String} button the button to enable/disable
- * @param {Boolean} enable whether the button should be enabled
- */
-pwixModal.enableButton = function( button, enable ){
-    const btn = pwixModal.findButton( button );
-    if( btn ){
-        btn.prop( 'disabled', !enable );
     }
 };
 

@@ -8,7 +8,7 @@ A Bootstrap-based Meteor package which provides draggable and resizable modal di
 
 The dialog makes use of Blaze templating for its rendering. It expects be called with a template to render in its body. Just call
 ```
-    pwixModal.run({})
+    pwixModal.run( parms )
 ```
 and you're done!
 
@@ -23,6 +23,39 @@ None at the moment.
 `pwixModal`
 
 ### Methods
+
+`pwixModal.run( parms )`
+
+Creates and shows a modal dialog with `parms` parameters.
+
+`pwixModal.close()`
+
+Close the current modal dialog.
+
+`pwixModal.enableButton( button, enable )`
+
+Enable (resp. disable) the specified button.<br />
+Only relevant in a dialog is currently opened.
+
+`pwixModal.findButton( button )`
+
+Returns the specfied button as a jQuery object.<br />
+Only relevant in a dialog is currently opened.
+
+`pwixModal.knownButtons()`
+
+Returns an array which contains managed buttons.
+
+`pwixModal.setButtons( buttons )`
+
+Set the to-be-displayed buttons.<br />
+`buttons` can be specified as a string for a single button, or as an array.<br />
+May be called both before the dialog is opened, for example for preparing a next run, or during the dialog execution.
+
+`pwixModal.setTarget( target )`
+
+Set the events target.<br />
+May be called both before the dialog is opened, for example for preparing a next run, or during the dialog execution.
 
 ### Blaze components
 
@@ -110,7 +143,6 @@ Dependencies as of v 1.0.0:
     'bootstrap': '^5.2.1'
     'jquery-ui-dist': '^1.13.2'
 ```
-
 Each of these dependencies should be installed at application level:
 ```
     meteor npm install <package> --save
@@ -118,8 +150,8 @@ Each of these dependencies should be installed at application level:
 
 ## Translations
 
-Translations are wilingly accepted. Please submit a PR on Github.
+New and updated translations are willingly accepted, and more than welcome. Just be kind enough to submit a PR on the [Github repository](https://github.com/trychlos/pwix-modal/pulls).
 
 ---
 P. Wieser
-- Last updated on 2023, Jan. 29th
+- Last updated on 2023, Feb. 2nd
