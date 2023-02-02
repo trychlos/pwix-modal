@@ -4,19 +4,19 @@
 
 pwixModal.i18n = {
     en_US: {
-        MODAL_BTN_OK: 'OK',
-        MODAL_BTN_CANCEL: 'Cancel',
-        MODAL_BTN_CLOSE: 'Close',
-        MODAL_BTN_SAVE: 'Save',
-        MODAL_BTN_YES: 'Yes',
-        MODAL_BTN_NO: 'No'
+        MD_BUTTON_OK: 'OK',
+        MD_BUTTON_CANCEL: 'Cancel',
+        MD_BUTTON_CLOSE: 'Close',
+        MD_BUTTON_SAVE: 'Save',
+        MD_BUTTON_YES: 'Yes',
+        MD_BUTTON_NO: 'No'
     },
     fr_FR: {
-        MODAL_BTN_OK: 'OK',
-        MODAL_BTN_CANCEL: 'Annuler',
-        MODAL_BTN_CLOSE: 'Fermer',
-        MODAL_BTN_SAVE: 'Enregistrer',
-        MODAL_BTN_YES: 'Oui',
-        MODAL_BTN_NO: 'Non'
+        MD_BUTTON_OK: 'OK',
+        MD_BUTTON_CANCEL: 'Annuler',
+        MD_BUTTON_CLOSE: 'Fermer',
+        MD_BUTTON_SAVE: 'Enregistrer',
+        MD_BUTTON_YES: 'Oui',
+        MD_BUTTON_NO: 'Non'
     }
 };

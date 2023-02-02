@@ -10,12 +10,12 @@ Package.onUse( function( api ){
     configure( api );
     api.export([
         'pwixModal',
-        'MODAL_BTN_OK',
-        'MODAL_BTN_CANCEL',
-        'MODAL_BTN_CLOSE',
-        'MODAL_BTN_SAVE',
-        'MODAL_BTN_YES',
-        'MODAL_BTN_NO'
+        'MD_BUTTON_OK',
+        'MD_BUTTON_CANCEL',
+        'MD_BUTTON_CLOSE',
+        'MD_BUTTON_SAVE',
+        'MD_BUTTON_YES',
+        'MD_BUTTON_NO'
     ]);
     api.mainModule( 'src/client/js/index.js', 'client' );
     api.mainModule( 'src/server/js/index.js', 'server' );
