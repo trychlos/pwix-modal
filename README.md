@@ -1,4 +1,4 @@
-# pwix:modal
+# pwix:modal - README
 
 ## What is it ?
 
