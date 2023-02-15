@@ -6,32 +6,54 @@
  * The behavior relies on the fact that a modal is unique in the application: there can be only at any time.
  */
 
+import { ReactiveVar } from 'meteor/reactive-var';
+
 import '../../../common/js/index.js';
 
 import './mdModal.html';
 import './mdModal.less';
 
-/*
-// https://stackoverflow.com/questions/34372412/meteor-bind-events-outside-template-with-event-handlers-inside-the-template
-//  let us handle the events sents from the acUserLogin modal used by 'user_edit' template
-//  because the 'user_edit' template is attached to the body, no Blaze template can handle its events :(
-//  below, 'this' is bound to the 'users_manager' template instance
-//
-// jQueryUI overlay handling
-function eventHandler( event ){
-    console.log( 'overlay click, closing' );
-    if( this.MD.view ){
-        Blaze.remove( this.MD.view );
-    }
-}
-*/
-
 Template.mdModal.onCreated( function(){
     const self = this;
+    //console.log( self );
 
     self.MD = {
         minWidth: 0,
-        minHeight: 0
+        minHeight: 0,
+        bodyMinWidth: new ReactiveVar( 0 ),
+        footerMinWidth: new ReactiveVar( 0 ),
+        initialWidth: new ReactiveVar( false ),
+
+        // compute the width of the content
+        computeBody(){
+            if( !self.MD.bodyMinWidth.get()){
+                let width = self.MD.maxWidth( '.modal-body' );
+                // an approximation so that something is rendered
+                if( width > 100 ){
+                    self.MD.bodyMinWidth.set( width );
+                }
+            }
+        },
+
+        // compute the width of the footer
+        computeFooter(){
+            if( !self.MD.footerMinWidth.get()){
+                let width = self.MD.maxWidth( '.modal-footer' );
+                // an approximation so that something is rendered
+                if( width > 100 ){
+                    self.MD.footerMinWidth.set( width );
+                }
+            }
+        },
+
+        // compute the max width between a div and its first child
+        maxWidth( selector ){
+            let div = self.$( selector );
+            const parentWidth = div[0].clientWidth;
+            div = div.children().first();
+            const childWidth = div[0].clientWidth;
+            return parentWidth < childWidth ? childWidth : parentWidth;
+        }
     };
 
     // make sure we have at least one button
@@ -46,6 +68,21 @@ Template.mdModal.onCreated( function(){
     // record the current events target
     self.autorun(() => {
         pwixModal.setTarget( Template.currentData().mdTarget || null );
+    });
+
+    // record the footer if any
+    self.autorun(() => {
+        pwixModal.setFooter( Template.currentData().mdFooter || null );
+    });
+
+    // record the requested template
+    self.autorun(() => {
+        pwixModal.setTemplate( Template.currentData().mdTemplate || null );
+    });
+
+    // record the title
+    self.autorun(() => {
+        pwixModal.setTitle( Template.currentData().mdTitle || null );
     });
 });
 
@@ -65,33 +102,25 @@ Template.mdModal.onRendered( function(){
         });
     }
 
+    // show the dialog before trying to compute the minimal sizes
+    self.$( '.modal' ).modal( 'show' );
+
     // make resizable if possible
-    //  it happens that Bootstrap initialize the dialog at its minimal height
+    //  it happens that Bootstrap initialize the dialog at its minimal height, but may overflow the content width
     if( self.$( '.modal-content' ).resizable ){
         self.$( '.modal-content' ).resizable({
             handles: 'all'
         });
         self.$( '.modal-content' ).on( 'resize', ( event, ui ) => {
             //console.log( 'resize', event, ui );
-            const div = self.$( '.modal-content' )[0];
             if( !self.MD.minWidth ){
+                const div = self.$( '.modal-content' )[0];
                 //console.log( 'width', 'client='+div.clientWidth, 'offset='+div.offsetWidth, 'scroll='+div.scrollWidth );
                 if( div.scrollWidth - div.clientWidth > 5 ){
                     self.MD.minWidth = div.scrollWidth + 18;
-                    console.log( 'setting minWidth to', self.MD.minWidth );
+                    console.log( 'overflow detected, setting minWidth to', self.MD.minWidth );
                     self.$( '.modal-content' ).resizable({
                         minWidth: self.MD.minWidth
-                    });
-                    event.preventDefault();
-                }
-            }
-            if( !self.MD.minHeight ){
-                //console.log( 'height', 'client='+div.clientHeight, 'offset='+div.offsetHeight, 'scroll='+div.scrollHeight );
-                if( div.scrollHeight - div.clientHeight > 5 ){
-                    self.MD.minHeight = ui.originalSize.height;
-                    console.log( 'setting minHeight to', self.MD.minHeight );
-                    self.$( '.modal-content' ).resizable({
-                        minHeight: self.MD.minHeight
                     });
                     event.preventDefault();
                 }
@@ -99,10 +128,27 @@ Template.mdModal.onRendered( function(){
         });
     }
 
-    // at the end, actually show the dialog
-    self.$( '.modal' ).modal( 'show' );
+    // set the minimal width of the dialog
+    //  if we display a dynamic footer, then the dialog may have some issues to find the right width
+    //  if we find here that the footer width is greater than the content, then we adjust th dialog width
+    self.autorun(() => {
+        const bodyWidth = self.MD.bodyMinWidth.get();
+        const footerWidth = self.MD.footerMinWidth.get();
+        if( bodyWidth && footerWidth && !self.MD.initialWidth.get()){
+            if( footerWidth > bodyWidth ){
+                let width = footerWidth+40;
+                width = width > screen.availWidth ? screen.availWidth-16 : width;
+                console.log( 'setting width to', width );
+                self.$( '.modal-content' ).width( width );
+            }
+            self.MD.initialWidth.set( true );
+        }
+    });
 
-    /*
+    // at the end, actually show the dialog
+    //self.$( '.modal' ).modal( 'show' );
+
+    /* *********
     // jQuery UI
     // =========
     //  defaults to be non-modal: several dialogs can be opened
@@ -124,7 +170,8 @@ Template.mdModal.onRendered( function(){
 
     // on modal, intercept clicks on overlay to close the dialog
     $( 'body .ui-widget-overlay' ).on( 'click', eventHandler.bind( self ));
-    */
+    //
+    ********* */
 });
 
 Template.mdModal.helpers({
@@ -136,14 +183,29 @@ Template.mdModal.helpers({
         return btns.indexOf( btn ) === btns.length-1 ? 'btn-primary' : 'btn-secondary';
     },
 
+    // the list of buttons
+    buttons(){
+        return pwixModal._buttons.get();
+    },
+
+    // the footer if any
+    footer(){
+        return pwixModal._footer.get();
+    },
+
     // the i18n namespace
     namespace(){
         return pwixModal.i18n;
     },
 
-    // the list of buttons
-    buttons(){
-        return pwixModal._buttons.get();
+    // the template to be rendered
+    template(){
+        return pwixModal._template.get();
+    },
+
+    // the modal title
+    title(){
+        return pwixModal._title.get();
     }
 });
 
@@ -161,10 +223,15 @@ Template.mdModal.events({
             self.$( '.modal' ).modal( 'hide' );
             return false;
         }
-        let $target = pwixModal._target.get();
-        $target = $target ? $target : instance.$( '.mdModal' );
-        $target.trigger( 'md-click', btn );
+        const target = pwixModal._target.get() || instance.$( event.currentTarget );
+        target.trigger( 'md-click', btn );
         // and let bubble up
+    },
+
+    // about to close the modal
+    'hide.bs.modal .mdModal'( event, instance ){
+        const target = pwixModal._target.get() || instance.$( event.currentTarget );
+        target.trigger( 'md-modal-close' );
     },
 
     // remove the Blaze element from the DOM
@@ -175,6 +242,8 @@ Template.mdModal.events({
 
     // set the focus on first input field
     'shown.bs.modal .mdModal'( event, instance ){
+        instance.MD.computeBody();
+        instance.MD.computeFooter();
         instance.$( '.modal-body input' ).first().focus();
     }
 });
