@@ -7,14 +7,17 @@ import { ReactiveVar } from 'meteor/reactive-var';
 import '../components/mdModal/mdModal.js';
 
 pwixModal._buttons = new ReactiveVar( null );
+pwixModal._footer = new ReactiveVar( null );
 pwixModal._target = new ReactiveVar( null );
+pwixModal._template = new ReactiveVar( null );
+pwixModal._title = new ReactiveVar( null );
 
 /**
  * @summary Close the opened dialog
  * @locus Client
  */
 pwixModal.close = function(){
-    return $( '.mdModal .modal' ).modal( 'hide' );
+    $( '.mdModal .modal' ).modal( 'hide' );
 };
 
 /**
@@ -89,6 +92,17 @@ pwixModal.setButtons = function( buttons ){
 };
 
 /**
+ * @summary Set the template to be rendered as the modal footer
+ * @locus Client
+ * @param {String} template the name of the Blaze template
+ */
+pwixModal.setFooter = function( template ){
+    if( template ){
+        pwixModal._footer.set( template );
+    }
+};
+
+/**
  * @summary Set the events target
  * @locus Client
  * @param {Object} target the jQuery target of the click events
@@ -96,5 +110,27 @@ pwixModal.setButtons = function( buttons ){
 pwixModal.setTarget = function( target ){
     if( target ){
         pwixModal._target.set( target );
+    }
+};
+
+/**
+ * @summary Set the template to be rendered as the modal body
+ * @locus Client
+ * @param {String} template the name of the Blaze template
+ */
+pwixModal.setTemplate = function( template ){
+    if( template ){
+        pwixModal._template.set( template );
+    }
+};
+
+/**
+ * @summary Set the modal title
+ * @locus Client
+ * @param {String} title the modal title
+ */
+pwixModal.setTitle = function( title ){
+    if( title ){
+        pwixModal._title.set( title );
     }
 };

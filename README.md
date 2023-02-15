@@ -30,31 +30,56 @@ Creates and shows a modal dialog with `parms` parameters.
 
 `pwixModal.close()`
 
-Close the current modal dialog.
+Close the current modal dialog from the caller.
+
+Of course, it is always possible to close the modal dialog from the `Close` (resp. `OK`, resp. `Cancel`) button, or by clicking anywhere outside of the modal!
 
 `pwixModal.enableButton( button, enable )`
 
-Enable (resp. disable) the specified button.<br />
-Only relevant in a dialog is currently opened.
+Enable (resp. disable) the specified button.
+
+Only relevant if a dialog is currently opened.
 
 `pwixModal.findButton( button )`
 
-Returns the specfied button as a jQuery object.<br />
-Only relevant in a dialog is currently opened.
+Returns the specfied button as a jQuery object.
+
+Only relevant if a dialog is currently opened.
 
 `pwixModal.knownButtons()`
 
-Returns an array which contains managed buttons.
+Returns an array which contains buttons by `pwixModal`.
 
 `pwixModal.setButtons( buttons )`
 
-Set the to-be-displayed buttons.<br />
-`buttons` can be specified as a string for a single button, or as an array.<br />
+Set the to-be-displayed buttons.
+
+`buttons` can be specified as a string for a single button, or as an array.
+
+May be called both before the dialog is opened, for example for preparing a next run, or during the dialog execution.
+
+`pwixModal.setFooter( template )`
+
+Set the template to be rendered as the modal footer.
+
 May be called both before the dialog is opened, for example for preparing a next run, or during the dialog execution.
 
 `pwixModal.setTarget( target )`
 
-Set the events target.<br />
+Set the events target.
+
+May be called both before the dialog is opened, for example for preparing a next run, or during the dialog execution.
+
+`pwixModal.setTemplate( template )`
+
+Set the template to be rendered as the modal body.
+
+May be called both before the dialog is opened, for example for preparing a next run, or during the dialog execution.
+
+`pwixModal.setTitle( title )`
+
+Set the title of the modal.
+
 May be called both before the dialog is opened, for example for preparing a next run, or during the dialog execution.
 
 ### Blaze components
@@ -70,7 +95,7 @@ mdTemplate
 </td>
 <td style="vertical-align: top;">
 The name of the template to be rendered in the body.<br />
-If omitted, then the body will be empty.
+If omitted, and not previously set with `pwixModal.setTemplate()`, then the body will be empty.
 </td>
 </tr>
 
@@ -101,7 +126,7 @@ No default.
 mdButtons
 </td>
 <td style="vertical-align: top;">
-A button constant, o an array of button constants to be displayed in the footer.<br />
+A button constant, or an array of button constants to be displayed in the footer.<br />
 Buttons are identified by the constants:
 <ul>
 <li>MD_BUTTON_OK</li>
@@ -111,7 +136,19 @@ Buttons are identified by the constants:
 <li>MD_BUTTON_YES</li>
 <li>MD_BUTTON_NO</li>
 </ul>
-Default is to have at least a <code>MD_BUTTON_OK</code> button.
+All buttons will have `btn-secondary` class, but the last one which will be `btn-primary`.<br />
+Default is to have one <code>MD_BUTTON_OK</code> button.
+</td>
+</tr>
+
+<tr>
+<td style="vertical-align: top;">
+mdFooter
+</td>
+<td style="vertical-align: top;">
+The name of a Blaze template to be used to render the modal footer.<br />
+If provided, `mdButtons` parameter is not used.<br />
+Default is to use a standard footer, and the `mdButtons` parameter.
 </td>
 </tr>
 
@@ -121,7 +158,7 @@ mdTarget
 </td>
 <td style="vertical-align: top;">
 The jQuery element to which the <code>click</code> events must be redirected as <code>md-click</code> messages.<br />
-The messgae will have button constants as its data.<br />
+The event will have button constants as its data.<br />
 Default is to send these messages to the <code>mdModal</code> itself.
 </td>
 </tr>
@@ -130,6 +167,12 @@ Default is to send these messages to the <code>mdModal</code> itself.
 All other parameters passed here will be directly passed to the template rendered in the body of the dialog.
 
 _Note_: the package is cool enough to destroy itself the Blaze created view on dialog close. So you don't have to take care about that.
+
+### Events
+
+`md-modal-close`
+
+An event sent when the modal is about to close, whatever be the reason.
 
 ## NPM peer dependencies
 
