@@ -20,28 +20,28 @@ Template.mdModal.onCreated( function(){
     self.MD = {
         minWidth: 0,
         minHeight: 0,
-        bodyMinWidth: new ReactiveVar( 0 ),
-        footerMinWidth: new ReactiveVar( 0 ),
+        bodyMinWidth: 0,
+        footerMinWidth: 0,
         initialWidth: new ReactiveVar( false ),
 
         // compute the width of the content
         computeBody(){
-            if( !self.MD.bodyMinWidth.get()){
+            if( !self.MD.bodyMinWidth ){
                 let width = self.MD.maxWidth( '.modal-body' );
                 // an approximation so that something is rendered
                 if( width > 100 ){
-                    self.MD.bodyMinWidth.set( width );
+                    self.MD.bodyMinWidth = width;
                 }
             }
         },
 
         // compute the width of the footer
         computeFooter(){
-            if( !self.MD.footerMinWidth.get()){
+            if( !self.MD.footerMinWidth ){
                 let width = self.MD.maxWidth( '.modal-footer' );
                 // an approximation so that something is rendered
                 if( width > 100 ){
-                    self.MD.footerMinWidth.set( width );
+                    self.MD.footerMinWidth = width;
                 }
             }
         },
@@ -132,11 +132,9 @@ Template.mdModal.onRendered( function(){
     //  if we display a dynamic footer, then the dialog may have some issues to find the right width
     //  if we find here that the footer width is greater than the content, then we adjust th dialog width
     self.autorun(() => {
-        const bodyWidth = self.MD.bodyMinWidth.get();
-        const footerWidth = self.MD.footerMinWidth.get();
-        if( bodyWidth && footerWidth && !self.MD.initialWidth.get()){
-            if( footerWidth > bodyWidth ){
-                let width = footerWidth+40;
+        if( self.MD.bodyMinWidth && self.MD.footerMinWidth && !self.MD.initialWidth.get()){
+            if( self.MD.footerMinWidth > self.MD.bodyMinWidth ){
+                let width = self.MD.footerMinWidth+40;
                 width = width > screen.availWidth ? screen.availWidth-16 : width;
                 console.log( 'setting width to', width );
                 self.$( '.modal-content' ).width( width );
