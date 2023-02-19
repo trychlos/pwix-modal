@@ -79,6 +79,15 @@ export class mdModal {
     }
 
     /**
+     * @summary
+     * @param {String} button the searched button
+     * @returns {jQuery} the found button as a jQuery object, or null
+     */
+    buttonFind( button ){
+        return $( '.md-modal .modal-footer' ).find( '[data-pwix-btn='+button+']' );
+    }
+
+    /**
      * @summary Getter/Setter
      * @param {Array} buttons the list of buttons to be displayed in the standard footer
      * @returns {Array} the current list of buttons

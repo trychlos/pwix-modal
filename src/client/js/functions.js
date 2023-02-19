@@ -9,14 +9,6 @@ import { mdModal } from '../classes/md_modal.class.js';
 // Life of a modal (birth and death)
 
 /**
- * @summary Close the topmost opened dialog
- * @locus Client
- */
-pwixModal.close = function(){
-    pwixModal._client.Stack.pop().close();
-};
-
-/**
  * @summary Opens a new modal dialog
  * @locus Client
  * @param {Object} parms the running parameters of the new dialog
@@ -37,6 +29,14 @@ pwixModal.run = function( parms ){
 pwixModal.setTarget = function( target, id ){
     const modal = pwixModal._client.Stack.modal( id );
     modal.target( target );
+};
+
+/**
+ * @summary Close the topmost opened dialog
+ * @locus Client
+ */
+pwixModal.close = function(){
+    pwixModal._client.Stack.pop().close();
 };
 
 // Header management
@@ -81,7 +81,53 @@ pwixModal.setFooter = function( template, id ){
 };
 
 /**
+ * @summary Enable/disable a button
+ *  Only if a specific footer has not been set via pwixModal.setFooter()
+ * @locus Client
+ * @param {String} button the button to enable/disable
+ * @param {Boolean} enable whether the button should be enabled
+ * @param {String} id the identifier of the targeted dialog, defaulting to the topmost
+ */
+pwixModal.buttonEnable = function( button, enable, id ){
+    const btn = pwixModal.buttonFind( button, id );
+    if( btn ){
+        btn.prop( 'disabled', !enable );
+    } else {
+        console.error( 'button not found', button, id );
+    }
+};
+
+/**
+ * @summary Find a button element
+ *  Only if a specific footer has not been set via pwixModal.setFooter()
+ * @locus Client
+ * @param {String} button the button to search for
+ * @param {String} id the identifier of the targeted dialog, defaulting to the topmost
+ * @eturns {Object} the found button as a jQuery object, or null
+ */
+pwixModal.buttonFind = function( button, id ){
+    const modal = pwixModal._client.Stack.modal( id );
+    return modal.buttonFind( button );
+};
+
+/**
+ * @locus Client
+ * @return {Array} known buttons
+ */
+pwixModal.knownButtons = function(){
+    return [
+        MD_BUTTON_OK,
+        MD_BUTTON_CANCEL,
+        MD_BUTTON_CLOSE,
+        MD_BUTTON_SAVE,
+        MD_BUTTON_YES,
+        MD_BUTTON_NO
+    ];
+};
+
+/**
  * @summary Set the buttons of the currently opened dialog
+ *  Only if a specific footer has not been set via pwixModal.setFooter()
  * @locus Client
  * @param {Array|String} buttons the button or array of buttons to be set
  *  Only set the provided buttons if valid.
@@ -106,42 +152,4 @@ pwixModal.setButtons = function( buttons, id ){
         console.error( 'invalid provided buttons', buttons );
     }
     return ok;
-};
-
-/**
- * @summary Enable/disable a button
- * @locus Client
- * @param {String} button the button to enable/disable
- * @param {Boolean} enable whether the button should be enabled
- */
-pwixModal.enableButton = function( button, enable ){
-    const btn = pwixModal.findButton( button );
-    if( btn ){
-        btn.prop( 'disabled', !enable );
-    }
-};
-
-/**
- * @summary Find a button element
- * @locus Client
- * @param {String} button the button to search for
- * @eturns {Object} the found button as a jQuery object, or null
- */
-pwixModal.findButton = function( button ){
-    return $( '.mdModal .modal-footer' ).find( '[data-pwix-btn='+button+']' );
-};
-
-/**
- * @locus Client
- * @return {Array} known buttons
- */
-pwixModal.knownButtons = function(){
-    return [
-        MD_BUTTON_OK,
-        MD_BUTTON_CANCEL,
-        MD_BUTTON_CLOSE,
-        MD_BUTTON_SAVE,
-        MD_BUTTON_YES,
-        MD_BUTTON_NO
-    ];
 };
