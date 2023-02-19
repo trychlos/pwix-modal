@@ -215,13 +215,14 @@ Template.mdModal.events({
     //  - if only button
     'click .md-btn'( event, instance ){
         const btn = instance.$( event.currentTarget ).attr( 'data-pwix-btn' );
+        const target = pwixModal._target.get() || instance.$( event.currentTarget );
+
         const buttons = pwixModal._buttons.get();
         const dismiss = buttons.length === 1 || btn === MD_BUTTON_CANCEL;
         if( dismiss ){
             self.$( '.modal' ).modal( 'hide' );
-            return false;
         }
-        const target = pwixModal._target.get() || instance.$( event.currentTarget );
+
         target.trigger( 'md-click', btn );
         // and let bubble up
     },

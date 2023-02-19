@@ -48,7 +48,7 @@ Only relevant if a dialog is currently opened.
 
 `pwixModal.knownButtons()`
 
-Returns an array which contains buttons by `pwixModal`.
+Returns an array which contains buttons known by `pwixModal`.
 
 `pwixModal.setButtons( buttons )`
 
@@ -169,6 +169,12 @@ All other parameters passed here will be directly passed to the template rendere
 _Note_: the package is cool enough to destroy itself the Blaze created view on dialog close. So you don't have to take care about that.
 
 ### Events
+
+`md-click`
+
+A button has been clicked.
+
+The clicked button is provided as data of the event.
 
 `md-modal-close`
 
