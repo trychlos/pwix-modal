@@ -4,13 +4,29 @@
 
 A Bootstrap-based Meteor package which provides draggable and resizable modal dialogs.
 
+## Installation
+
+As simple as:
+
+```
+    meteor add pwix:modal
+```
+
 ## Usage
 
-The dialog makes use of Blaze templating for its rendering. It expects be called with a template to render in its body. Just call
+Just call
 ```
     pwixModal.run( parms )
 ```
 and you're done!
+
+Without any parameters, the displayed modal will have a header with a dismiss button but no title, an empty body, and a footer with a single `OK` button.
+
+See below for the available parameters.
+
+### Opening several modals
+
+Though the [Bootstrap documentation](https://getbootstrap.com/docs/5.2/components/modal/) prevents against it, this package let you open more than only one modal at a time. Each is stacked on top of the previous and take the focus while it is active, and no modal is opened on top of it.
 
 ## Configuration
 
@@ -22,7 +38,11 @@ None at the moment.
 
 `pwixModal`
 
+This global object, unique in your application, may be thought as a singleton for the `pwix:modal` usage.
+
 ### Methods
+
+#### The life of the modal
 
 `pwixModal.run( parms )`
 
@@ -32,7 +52,19 @@ Creates and shows a modal dialog with `parms` parameters.
 
 Close the current modal dialog from the caller.
 
-Of course, it is always possible to close the modal dialog from the `Close` (resp. `OK`, resp. `Cancel`) button, or by clicking anywhere outside of the modal!
+Of course, it is always possible to close the modal dialog via the usual ways:
+
+- from the dismiss button in the header
+
+- from the `Close` (resp. `OK`, resp. `Cancel`) button in the footer,
+
+- or by clicking anywhere outside of the modal.
+
+#### Manage the header
+
+#### Manage the body
+
+#### Manage the footer
 
 `pwixModal.enableButton( button, enable )`
 
@@ -186,11 +218,10 @@ Starting with v 1.0.0, and in accordance with advices from [the Meteor Guide](ht
 
 Instead we check npm versions of installed packages at runtime, on server startup, in development environment.
 
-Dependencies as of v 1.0.0:
+Dependencies as of v 1.1.0:
 ```
     '@popperjs/core': '^2.11.6'
     'bootstrap': '^5.2.1'
-    'jquery-ui-dist': '^1.13.2'
 ```
 Each of these dependencies should be installed at application level:
 ```

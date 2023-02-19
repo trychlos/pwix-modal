@@ -34,6 +34,7 @@ function configure( api ){
     api.use( 'ecmascript' );
     api.use( 'less@4.0.0', 'client' );
     api.use( 'pwix:i18n@1.0.0' );
+    api.use( 'random', 'client' );
     api.use( 'tmeasday:check-npm-versions@1.0.2', 'server' );
     api.addFiles( 'src/client/components/mdModal/mdModal.js', 'client' );
 }
