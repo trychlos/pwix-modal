@@ -89,8 +89,6 @@ Template.mdModal.onCreated( function(){
 Template.mdModal.onRendered( function(){
     const self = this;
 
-    // Bootstrap
-    // =========
     // add a tag class to body element to let the stylesheet identify *this* modal
     $( 'body' ).addClass( 'pwix-modal-dialog-body-class' );
 
@@ -142,34 +140,6 @@ Template.mdModal.onRendered( function(){
             self.MD.initialWidth.set( true );
         }
     });
-
-    // at the end, actually show the dialog
-    //self.$( '.modal' ).modal( 'show' );
-
-    /* *********
-    // jQuery UI
-    // =========
-    //  defaults to be non-modal: several dialogs can be opened
-
-    self.$( '.mdModal' ).resizable({
-        handles: 'all'
-    });
-
-    self.$( '.mdModal' ).dialog({
-        draggable: true,
-        resizable: true,
-        modal: true,
-        close: function( ev, ui ){
-            Blaze.remove( self.view );
-        }
-    });
-
-    self.MD.view = self.view;
-
-    // on modal, intercept clicks on overlay to close the dialog
-    $( 'body .ui-widget-overlay' ).on( 'click', eventHandler.bind( self ));
-    //
-    ********* */
 });
 
 Template.mdModal.helpers({
@@ -245,12 +215,4 @@ Template.mdModal.events({
         instance.MD.computeFooter();
         instance.$( '.modal-body input' ).first().focus();
     }
-});
-
-Template.mdModal.onDestroyed( function(){
-    /*
-    // jQuery UI overlay handling
-    console.log( 'onDestroyed' );
-    $( 'body .ui-widget-overlay' ).off( 'click', eventHandler );
-    */
 });
