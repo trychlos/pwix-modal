@@ -10,7 +10,10 @@
 
 |   Id | Date       | Description and comment(s) |
 | ---: | :---       | :---                       |
-|    5 | | |
+|    5 | 2023- 2-19 | integrate pwix:modal-info into pwix:modal |
+|    6 | 2023- 2-19 | have a mdWidth parameter |
+|    7 | 2023- 2-19 | integrate pwix:bootbox into pwix:modal |
+|    8 |  | |
 
 ---
 ## Done
@@ -29,4 +32,4 @@
 
 ---
 P. Wieser
-- Last updated on 2023, Feb. 2nd
+- Last updated on 2023, Feb. 19

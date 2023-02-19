@@ -16,10 +16,10 @@ export class mdStack {
     static Singleton = null;
 
     // the starting z-index level
-    static zIndex = 1000;
+    static zIndexStart = 1000;
 
     // the computing tick
-    static tick = 100;
+    static zIndexTick = 10;
 
     // static methods
     //
@@ -29,7 +29,7 @@ export class mdStack {
      * @returns {Integer} the first z-index level (display of the backdrops)
      */
     static firstZindex(){
-        return mdStack.zIndex;
+        return mdStack.zIndexStart;
     }
 
     /**
@@ -37,10 +37,11 @@ export class mdStack {
      * @returns {Integer} the z-index level of the last modal
      */
     static lastZindex(){
-        if( !mdStack.Singleton._stack.length ){
+        const stack = mdStack.Singleton._stack;
+        if( !stack.length ){
             throw new Error( 'trying to compute the z-index of a modal while none is opened' );
         }
-        return mdStack.zIndex + ( mdStack.tick * ( this._stack.length-1 ));
+        return mdStack.zIndexStart + ( mdStack.zIndexTick * stack.length );
     }
 
     // private data

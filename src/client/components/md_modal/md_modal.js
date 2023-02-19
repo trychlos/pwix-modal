@@ -9,10 +9,9 @@
 
 import { ReactiveVar } from 'meteor/reactive-var';
 
-import '../../../common/js/index.js';
-
-import { mdModal } from '../../classes/md_modal.class.js';
 import { mdStack } from '../../classes/md_stack.class.js';
+
+import '../../../common/js/index.js';
 
 import './md_modal.html';
 import './md_modal.less';
@@ -23,7 +22,7 @@ Template.md_modal.onCreated( function(){
 
     self.MD = {
         // the class added to the body to identify *this* dialog backdrop
-        myClass: '',
+        myClass: new ReactiveVar( '' ),
 
         // the size of the content
         minWidth: 0,
@@ -65,7 +64,9 @@ Template.md_modal.onCreated( function(){
     };
 
     // compute our body class name
-    self.MD.myClass = 'pwix-modal-class-'+Template.currentData().modal.id();
+    self.autorun(() => {
+        self.MD.myClass.set( 'pwix-modal-class-'+Template.currentData().modal.id());
+    });
 });
 
 Template.md_modal.onRendered( function(){
@@ -81,12 +82,6 @@ Template.md_modal.onRendered( function(){
 
     // show the dialog before trying to compute the minimal sizes
     self.$( '.modal' ).modal( 'show' );
-
-    // add a tag class to body element to let the stylesheet identify the modal
-    $( 'body' ).addClass( self.MD.myClass );
-
-    // set the backdrop style accordingly (we want it to not be visible)
-    $( 'body.'+self.MD.myClass+' div.modal-backdrop.show' ).css({ display: 'none' });
 
     // make resizable if possible
     //  it happens that Bootstrap initialize the dialog at its minimal height, but may overflow the content width
@@ -111,14 +106,6 @@ Template.md_modal.onRendered( function(){
         });
     }
 
-    // set the z-Index of the backdrop and the modal
-    /*
-    console.log( mdStack.firstZindex());
-    console.log( $( 'body div.modal-backdrop.show' ).zIndex( mdStack.firstZindex()));
-    console.log( mdStack.lastZindex());
-    console.log( $( 'body .modal#'+Template.currentData().modal.id()).zIndex( mdStack.lastZindex()));
-    */
-
     // set the minimal width of the dialog
     //  if we display a dynamic footer, then the dialog may have some issues to find the right width
     //  if we find here that the footer width is greater than the content, then we adjust th dialog width
@@ -132,6 +119,27 @@ Template.md_modal.onRendered( function(){
             }
             self.MD.initialWidth.set( true );
         }
+    });
+
+    // add a tag class to body element to let the stylesheet identify the modal
+    self.autorun(() => {
+        $( 'body' ).addClass( self.MD.myClass.get());
+    });
+
+    // set the backdrop style accordingly (we want it to not be visible)
+    //  we use the 'myClass' to have a more-specific CSS selector than the Bootstrap default one
+    self.autorun(() => {
+        $( 'body.'+self.MD.myClass.get()+' div.modal-backdrop.show' ).css({
+            display: 'none',
+            'z-index': mdStack.firstZindex()
+        });
+    });
+
+    // set the z-index of the modal
+    self.autorun(() => {
+        $( 'body .modal#'+Template.currentData().modal.id()).css({
+            'z-index': mdStack.lastZindex()
+        });
     });
 });
 
@@ -217,7 +225,7 @@ Template.md_modal.events({
     // remove the Blaze element from the DOM
     'hidden.bs.modal .modal'( event, instance ){
         //console.log( event );
-        $( 'body' ).removeClass( instance.MD.myClass );
+        $( 'body' ).removeClass( instance.MD.myClass.get());
         Blaze.remove( instance.view );
     },
 
