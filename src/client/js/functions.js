@@ -42,6 +42,17 @@ pwixModal.close = function(){
 // Header management
 
 /**
+ * @summary Set the classes of the dialog
+ * @locus Client
+ * @param {String} classes the classes to be added to the '.modal' element
+ * @param {String} id the identifier of the targeted dialog, defaulting to the topmost
+ */
+pwixModal.setClasses = function( classes, id ){
+    const modal = pwixModal._client.Stack.modal( id );
+    modal.classes( classes );
+};
+
+/**
  * @summary Set the title of the dialog
  * @locus Client
  * @param {String} title the title to be set
