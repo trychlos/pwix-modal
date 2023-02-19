@@ -36,7 +36,6 @@ function configure( api ){
     api.use( 'pwix:i18n@1.0.0' );
     api.use( 'random', 'client' );
     api.use( 'tmeasday:check-npm-versions@1.0.2', 'server' );
-    api.addFiles( 'src/client/components/mdModal/mdModal.js', 'client' );
 }
 
 // NPM dependencies are checked in /src/server/js/check_npms.js
