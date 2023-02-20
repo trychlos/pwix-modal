@@ -56,10 +56,16 @@ Template.md_modal.onCreated( function(){
         // compute the max width between a div and its first child
         maxWidth( selector ){
             let div = self.$( selector );
-            const parentWidth = div[0].clientWidth;
+            let parentWidth = 0;
+            let childWidth = 0;
+            if( div && div.length ){
+                parentWidth = div[0].clientWidth;
+            }
             div = div.children().first();
-            const childWidth = div[0].clientWidth;
-            return parentWidth < childWidth ? childWidth : parentWidth;
+            if( div && div.length ){
+                childWidth = div[0].clientWidth;
+            }
+        return parentWidth < childWidth ? childWidth : parentWidth;
         }
     };
 

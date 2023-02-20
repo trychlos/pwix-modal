@@ -66,6 +66,13 @@ export class mdStack {
     }
 
     /**
+     * @returns {Integer} the count of opened modals
+     */
+    count(){
+        return this._stack.length;
+    }
+
+    /**
      * @summary Find the searched for modal
      * @param {String} id the identifier of the searched modal, may be undefined
      * @returns {mdModal} either the identified modal, or the topmost one
@@ -73,23 +80,24 @@ export class mdStack {
      * @throws {Error} if an identified modal is not found
      */
     modal( id ){
-        if( !this._stack.length ){
-            throw new Error( 'trying to find a modal while none is opened', id );
-        }
         let modal = null;
-        if( id ){
-            this._stack.every(( m ) => {
-                if( m.id() === id ){
-                    modal = m;
-                    return false;
+        if( this._stack.length ){
+            if( id ){
+                this._stack.every(( m ) => {
+                    if( m.id() === id ){
+                        modal = m;
+                        return false;
+                    }
+                    return true;
+                });
+                if( !modal ){
+                    throw new Error( 'modal not found', id );
                 }
-                return true;
-            });
-            if( !modal ){
-                throw new Error( 'modal not found', id );
+            } else {
+                modal = this._stack[this._stack.length-1];
             }
         } else {
-            modal = this._stack[this._stack.length-1];
+            console.log( 'trying to find a modal while none is opened', id );
         }
         return modal;
     }
@@ -99,10 +107,11 @@ export class mdStack {
      * @returns {mdModal} the removed dialog which was the topmost
      */
     pop(){
-        if( !this._stack.length ){
-            throw new Error( 'trying to pop a modal while none is opened' );
+        if( this._stack.length ){
+            return this._stack.pop();
         }
-        return this._stack.pop();
+        console.error( 'trying to pop a modal while none is opened' );
+        return null;
     }
 
     /**

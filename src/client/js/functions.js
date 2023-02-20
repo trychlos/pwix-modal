@@ -28,7 +28,9 @@ pwixModal.run = function( parms ){
  */
 pwixModal.setTarget = function( target, id ){
     const modal = pwixModal._client.Stack.modal( id );
-    modal.target( target );
+    if( modal ){
+        modal.target( target );
+    }
 };
 
 /**
@@ -36,7 +38,18 @@ pwixModal.setTarget = function( target, id ){
  * @locus Client
  */
 pwixModal.close = function(){
-    pwixModal._client.Stack.pop().close();
+    const modal = pwixModal._client.Stack.pop();
+    if( modal ){
+        modal.close();
+    }
+};
+
+/**
+ * @locus Client
+ * @returns {Integer} the count of opened modals
+ */
+pwixModal.count = function(){
+    return pwixModal._client.Stack.count();
 };
 
 // Header management
@@ -49,7 +62,9 @@ pwixModal.close = function(){
  */
 pwixModal.setClasses = function( classes, id ){
     const modal = pwixModal._client.Stack.modal( id );
-    modal.classes( classes );
+    if( modal ){
+        modal.classes( classes );
+    }
 };
 
 /**
@@ -60,7 +75,9 @@ pwixModal.setClasses = function( classes, id ){
  */
 pwixModal.setTitle = function( title, id ){
     const modal = pwixModal._client.Stack.modal( id );
-    modal.title( title );
+    if( modal ){
+        modal.title( title );
+    }
 };
 
 // Body management
@@ -71,9 +88,11 @@ pwixModal.setTitle = function( title, id ){
  * @param {String} template the name of the template
  * @param {String} id the identifier of the targeted dialog, defaulting to the topmost
  */
-pwixModal.setBody = function( template ){
+pwixModal.setBody = function( template, id ){
     const modal = pwixModal._client.Stack.modal( id );
-    modal.body( template );
+    if( modal ){
+        modal.body( template );
+    }
 };
 
 // Footer management
@@ -88,7 +107,9 @@ pwixModal.setBody = function( template ){
  */
 pwixModal.setFooter = function( template, id ){
     const modal = pwixModal._client.Stack.modal( id );
-    modal.footer( template );
+    if( modal ){
+        modal.footer( template );
+    }
 };
 
 /**
@@ -118,7 +139,9 @@ pwixModal.buttonEnable = function( button, enable, id ){
  */
 pwixModal.buttonFind = function( button, id ){
     const modal = pwixModal._client.Stack.modal( id );
-    return modal.buttonFind( button );
+    if( modal ){
+        return modal.buttonFind( button );
+    }
 };
 
 /**
@@ -158,7 +181,9 @@ pwixModal.setButtons = function( buttons, id ){
     });
     if( ok ){
         const modal = pwixModal._client.Stack.modal( id );
-        modal.buttons( btns );
+        if( modal ){
+            modal.buttons( btns );
+        }
     } else {
         console.error( 'invalid provided buttons', buttons );
     }
