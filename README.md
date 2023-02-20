@@ -92,7 +92,7 @@ This method returns a string which is the unique identifier of the new modal.
 
 Set the events target as a jQuery object for the specified opened modal, defaulting to the topmost one.
 
-Specifying a particular footer takes precedence over the standard one. When it is specified, then the button methods are no more operationnal.
+This method will be usually called from the rendered body template `onRendered()` function. At that time, not only the DOM is rendered for this element, but it is very probable that the triggered events will be useful in this template.
 
 `pwixModal.close()`
 
@@ -105,6 +105,10 @@ Of course, it is always possible to close the modal dialog via the usual ways:
 - from the `Close` (resp. `Cancel`) button in the footer,
 
 - or by clicking anywhere outside of the modal.
+
+`pwixModal.count()`
+
+Returns the count of opened modals.
 
 #### Manage the header
 
@@ -129,6 +133,8 @@ Set the name of the body template for the specified opened modal, defaulting to 
 Set the name of the footer template for the specified opened modal, defaulting to the topmost one.
 
 Just set to `null` to pass from a specific footer to the standard one.
+
+Specifying a particular footer takes precedence over the standard one. When it is specified, then the button methods are no more operationnal.
 
 `pwixModal.buttonEnable( button, enable [, id ] )`
 
@@ -158,20 +164,74 @@ Set the to-be-displayed buttons for the specified opened modal, defaulting to th
 
 A button has been clicked.
 
-The event holds a data object:
+The event holds a data object with:
 
 - `modal`: the modal identifier
 - `button`: the button identifier.
 
-If the button is `MD_BUTTON_CANCEL` or this is the only button of the standard footer, then the dialog is closed.
+If the button is `MD_BUTTON_CANCEL` or is the only button of the standard footer, then the dialog is closed.
+
+It is the responsability of the event receiver to close the modal when needed.
 
 `md-close`
 
 An event sent when the modal is about to close, whatever be the reason.
 
-The event holds a data object:
+The event holds a data object with:
 
 - `modal`: the modal identifier.
+
+## Example
+
+Say you have a template you want render in a modal:
+```
+    <template name="my_panel">
+        <div class="my-panel">
+
+            <form>
+                <label for="" class="form-label form-label-sm frs-one">{{ i18n label="title_label" }}</label>
+                <input type="text" class="form-control form-control-sm frs-title" placeholder="{{ i18n label="title_placeholder" }}" value="{{ catTitle }}" />
+
+                <label for="" class="form-label form-label-sm frs-one">{{ i18n label="description_label" }}</label>
+                <textarea class="form-control form-control-sm frs-description" placeholder="{{ i18n label="description_placeholder" }}" rows="3">{{ catDescription }}</textarea>
+            </form>
+
+        </div>
+    </template>
+```
+
+From the parent who mades the open decision, just run:
+```
+    pwixModal.run({
+        mdBody: 'my_panel',
+        mdTitle: 'A simple form',
+        mdButtons: [ MD_BUTTON_CANCEL, MD_BUTTON_SAVE ]
+    });
+```
+
+In the template JS:
+```
+    Template.my_panel.onRendered( function(){
+        pwixModal.setTarget( this.$( '.my-panel' ));
+    });
+
+    ...
+
+    Template.my_panel.events({
+        'md-click .my-panel'( event, instance, data ){
+            if( data.button === MD_BUTTON_SAVE ){
+                // do something
+                pwixModal.close();
+            }
+        }
+    });
+```
+
+## Modal attachment in the DOM
+
+`pwix:modal` attaches its modals to the document `body`.
+
+If you do not set a target, the events will eventually bubble until the `body` DOM element.
 
 ## NPM peer dependencies
 
@@ -195,4 +255,4 @@ New and updated translations are willingly accepted, and more than welcome. Just
 
 ---
 P. Wieser
-- Last updated on 2023, Feb. 2nd
+- Last updated on 2023, Feb. 20th
