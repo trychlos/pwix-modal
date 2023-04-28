@@ -28,6 +28,7 @@ export class mdModal {
     _footer = new ReactiveVar( null );
     _target = new ReactiveVar( null );
     _title = new ReactiveVar( null );
+    _sizekey = new ReactiveVar( null );
 
     /**
      * Constructor
@@ -59,6 +60,9 @@ export class mdModal {
         }
         if( parms.mdTitle ){
             this._title.set( parms.mdTitle );
+        }
+        if( parms.mdSizeKey ){
+            this._sizekey.set( parms.mdSizeKey );
         }
 
         Blaze.renderWithData( Template.md_modal, { modal: this }, $( 'body' )[0] );
@@ -144,6 +148,14 @@ export class mdModal {
      */
     parms(){
         return this._parms;
+    }
+
+    /**
+     * @summary Getter
+     * @returns {String} the name of the localStorage item which stores the width and height
+     */
+    sizeKey(){
+        return this._sizekey.get();
     }
 
     /**

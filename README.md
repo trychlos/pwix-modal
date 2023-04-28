@@ -1,4 +1,4 @@
-# pwix:modal - README
+# pwix:modal
 
 ## What is it ?
 
@@ -86,13 +86,29 @@ Creates and shows a modal dialog with `parms` parameters object. Known parameter
 
     Note that at the time of the modal creation, you are not yet able to set the rendered body as the events target (as it has not yet been rendered). See also `pwixModal.setTarget()`.
 
+- `mdSizeKey`
+
+    The string name of the `localStorage` item which will record the last used width and height.
+
+    No default.
+
+    As a reminder, using this feature requires the user has accepted the use of functional cookies. They will be stored as two `localStorage` items named:
+    - &lt;mdSizeKey&gt; + `-width`
+    - &lt;mdSizeKey&gt; + `-height`.
+
 This method returns a string which is the unique identifier of the new modal.
 
 `pwixModal.setTarget( target [, id ] )`
 
+Obsoleted as of v1.2.0, will be removed on 2.0, redirected to `pwixModal.target()` getter/setter.
+
+`pwixModal.target({ target [, id ] })`
+
 Set the events target as a jQuery object for the specified opened modal, defaulting to the topmost one.
 
 This method will be usually called from the rendered body template `onRendered()` function. At that time, not only the DOM is rendered for this element, but it is very probable that the triggered events will be useful in this template.
+
+Returns the target of the identified modal, or of the topmost one, or null.
 
 `pwixModal.close()`
 
@@ -241,8 +257,9 @@ Instead we check npm versions of installed packages at runtime, on server startu
 
 Dependencies as of v 1.1.0:
 ```
-    '@popperjs/core': '^2.11.6'
-    'bootstrap': '^5.2.1'
+    '@popperjs/core': '^2.11.6',
+    'bootstrap': '^5.2.1',
+    'jquery-ui-dist': '^1.13.2'
 ```
 Each of these dependencies should be installed at application level:
 ```

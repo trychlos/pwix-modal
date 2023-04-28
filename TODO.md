@@ -13,7 +13,8 @@
 |    5 | 2023- 2-19 | integrate pwix:modal-info into pwix:modal |
 |    6 | 2023- 2-19 | have a mdWidth parameter + the corresponding setWidth() method |
 |    7 | 2023- 2-19 | integrate pwix:bootbox into pwix:modal |
-|    8 |  | |
+|    8 | 2023- 4-27 | when preparing 2.0, remove pwixModal.setTarget() obsolete method |
+|    9 |  | |
 
 ---
 ## Done

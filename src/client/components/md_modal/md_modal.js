@@ -9,6 +9,9 @@
 
 import { ReactiveVar } from 'meteor/reactive-var';
 
+//  provides 'draggable()' and 'resizable()' methods
+import 'jquery-ui-dist/jquery-ui.min.js';
+
 import { mdStack } from '../../classes/md_stack.class.js';
 
 import '../../../common/js/index.js';
@@ -53,6 +56,31 @@ Template.md_modal.onCreated( function(){
             }
         },
 
+        // if a localStorage key has been provided, get it
+        lastSizeGet(){
+            const key = Template.currentData().modal.sizeKey();
+            if( key ){
+                const w = localStorage.getItem( key+'-width' );
+                const h = localStorage.getItem( key+'-height' );
+                //console.log( w, h );
+                if( w && h ){
+                    self.$( '.modal-content' ).css({
+                        width: w,
+                        height: h
+                    });
+                }
+            }
+        },
+
+        // if a localStorage key has been provided, set it
+        lastSizeSet(){
+            const key = Template.currentData().modal.sizeKey();
+            if( key ){
+                localStorage.setItem( key+'-width', self.$( '.modal-content' ).css( 'width' ));
+                localStorage.setItem( key+'-height', self.$( '.modal-content' ).css( 'height' ));
+            }
+        },
+
         // compute the max width between a div and its first child
         maxWidth( selector ){
             let div = self.$( selector );
@@ -65,7 +93,7 @@ Template.md_modal.onCreated( function(){
             if( div && div.length ){
                 childWidth = div[0].clientWidth;
             }
-        return parentWidth < childWidth ? childWidth : parentWidth;
+            return parentWidth < childWidth ? childWidth : parentWidth;
         }
     };
 
@@ -95,6 +123,7 @@ Template.md_modal.onRendered( function(){
         self.$( '.modal-content' ).resizable({
             handles: 'all'
         });
+        //console.log( 'resizable', res );
         self.$( '.modal-content' ).on( 'resize', ( event, ui ) => {
             //console.log( 'resize', event, ui );
             if( !self.MD.minWidth ){
@@ -110,6 +139,8 @@ Template.md_modal.onRendered( function(){
                 }
             }
         });
+        // get/set the width and height ?
+        self.MD.lastSizeGet();
     }
 
     // set the minimal width of the dialog
@@ -225,6 +256,8 @@ Template.md_modal.events({
         //console.log( event );
         const modal = Template.currentData().modal;
         const target = modal.target() || instance.$( event.currentTarget );
+        //console.log( target );
+        instance.MD.lastSizeSet();
         target.trigger( 'md-close', { id: modal.id() });
     },
 
