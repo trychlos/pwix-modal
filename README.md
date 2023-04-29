@@ -270,6 +270,12 @@ Each of these dependencies should be installed at application level:
 
 New and updated translations are willingly accepted, and more than welcome. Just be kind enough to submit a PR on the [Github repository](https://github.com/trychlos/pwix-modal/pulls).
 
+## Cookies and comparable technologies
+
+`pwix:modal` may use `localStorage` to record the size of a dialog through the `mdSizeKey` argument of the `pwixModal.run()` method.
+
+Because this is dynamically done on a per dialog basis, and only on the caller request, the package doesn't advertize of this use, relying on the caller own declaration.
+
 ---
 P. Wieser
 - Last updated on 2023, Feb. 20th
