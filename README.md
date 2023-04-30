@@ -48,21 +48,21 @@ This global object, unique in your application, is the single access point for t
 
 Creates and shows a modal dialog with `parms` parameters object. Known parameters are:
 
-- `mdClasses`
-
-    A string which contains the classes to be added to the '`.modal`' element.
-
-    No default.
-
-- `mdTitle`
-
-    The title of the dialog.
-
-    No default.
-
 - `mdBody`
 
     The name of a Blaze template to be rendered as the dialog body.
+
+    No default.
+
+- `mdButtons`
+
+    The buttons to be displayed in the standard footer, as a string or an array of strings.
+
+    Default is have at least one `OK` button.
+
+- `mdClasses`
+
+    A string which contains the classes to be added to the '`.modal`' element.
 
     No default.
 
@@ -72,19 +72,11 @@ Creates and shows a modal dialog with `parms` parameters object. Known parameter
 
     Default is to render a standard footer with at least one `OK` button.
 
-- `mdButtons`
+- `mdOutsideClose`
 
-    The buttons to be displayed in the standard footer, as a string or an array of strings.
+    Whether clicking outside of the dialog should close it.
 
-    Default is have at least one `OK` button.
-
-- `mdTarget`
-
-    The target of the events as a jQuery object.
-
-    Default is let bubble the events.
-
-    Note that at the time of the modal creation, you are not yet able to set the rendered body as the events target (as it has not yet been rendered). See also `pwixModal.setTarget()`.
+    Default to `true`.
 
 - `mdSizeKey`
 
@@ -95,6 +87,20 @@ Creates and shows a modal dialog with `parms` parameters object. Known parameter
     As a reminder, using this feature requires the user has accepted the use of functional cookies. They will be stored as two `localStorage` items named:
     - &lt;mdSizeKey&gt; + `-width`
     - &lt;mdSizeKey&gt; + `-height`.
+
+- `mdTarget`
+
+    The target of the events as a jQuery object.
+
+    Default is let bubble the events.
+
+    Note that at the time of the modal creation, you are not yet able to set the rendered body as the events target (as it has not yet been rendered). See also `pwixModal.setTarget()`.
+
+- `mdTitle`
+
+    The title of the dialog.
+
+    No default.
 
 This method returns a string which is the unique identifier of the new modal.
 

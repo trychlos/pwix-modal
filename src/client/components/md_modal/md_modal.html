@@ -1,7 +1,7 @@
 <template name="md_modal">
     <div class="md-modal">
 
-        <div class="modal" id="{{ id }}" tabindex="-1">
+        <div class="modal" id="{{ id }}" data-bs-backdrop="{{ outsideClose }}" tabindex="-1">
             <div class="modal-dialog {{ classes }}">
                 <div class="modal-content">
                     <div class="modal-header">

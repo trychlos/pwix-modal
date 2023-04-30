@@ -219,6 +219,11 @@ Template.md_modal.helpers({
         return pwixModal.i18n;
     },
 
+    // whether backdrop is static
+    outsideClose(){
+        return Template.currentData().modal.outsideClose() ? 'true' : 'static';
+    },
+
     // the parms initially passed in by the caller to pwixModal.run()
     parms(){
         return Template.currentData().modal.parms();

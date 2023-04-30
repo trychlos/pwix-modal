@@ -26,9 +26,29 @@ export class mdModal {
     _buttons = new ReactiveVar( null );
     _classes = new ReactiveVar( null );
     _footer = new ReactiveVar( null );
+    _outclose = new ReactiveVar( true );
+    _sizekey = new ReactiveVar( null );
     _target = new ReactiveVar( null );
     _title = new ReactiveVar( null );
-    _sizekey = new ReactiveVar( null );
+
+    // private methods
+    //
+
+    _argBool( obj, arg, def ){
+        let _res = def;
+        if( Object.keys( obj ).includes( arg )){
+            const b = obj[arg];
+            if( b === true || b === false ){
+                _res = b;
+            } else if( b === 'true' || b === 'false' ){
+                console.warn( 'pwix:editor mdModal expects \''+arg+'\' to be a boolean, found', b, 'string' );
+                _res = ( b === 'true' );
+            } else {
+                console.warn( 'pwix:editor mdModal expects \''+arg+'\' to be a boolean, found', b );
+            }
+        }
+        return _res;
+    }
 
     /**
      * Constructor
@@ -55,14 +75,15 @@ export class mdModal {
         if( parms.mdFooter ){
             this._footer.set( parms.mdFooter );
         }
+        this._outclose.set( this._argBool( parms, 'mdOutsideClose', false ));
+        if( parms.mdSizeKey ){
+            this._sizekey.set( parms.mdSizeKey );
+        }
         if( parms.mdTarget ){
             this._target.set( parms.mdTarget );
         }
         if( parms.mdTitle ){
             this._title.set( parms.mdTitle );
-        }
-        if( parms.mdSizeKey ){
-            this._sizekey.set( parms.mdSizeKey );
         }
 
         Blaze.renderWithData( Template.md_modal, { modal: this }, $( 'body' )[0] );
@@ -140,6 +161,15 @@ export class mdModal {
      */
     id(){
         return this._id;
+    }
+
+    /**
+     * @summary Getter
+     * @returns {Boolean} whether clicking outside of the dialog should close it
+     *  In other terms, should we have a static backdrop ?
+     */
+    outsideClose(){
+        return this._outclose.get();
     }
 
     /**
