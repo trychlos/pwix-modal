@@ -2,8 +2,8 @@
 
 | Version | Release    | Content |
 | ---:    | :---       | :---    |
-| 1.2.0   |  | Re-add jQueryUI dependency as needed to have resizable() and draggable() methods |
-|         |            | Add mdSizeKey and mdOutsideClose parameter to pwixModal.run() method |
+| 1.2.0   | 2023- 5- 1 | Re-add jQueryUI dependency as needed to have resizable() and draggable() methods |
+|         |            | Add mdSizeKey and mdOutsideClose parameters to pwixModal.run() method |
 |         |            | Add pwixModal.target() getter/setter method |
 |         |            | Obsolete pwixModal.setTarget() method |
 | 1.1.0   | 2023- 2-19 | A deep rewriting under the hood, letting several modals be stacked |
@@ -13,4 +13,4 @@
 
 ---
 P. Wieser
-- Last updated on 2023, Apr. 29th
+- Last updated on 2023, May 1st
