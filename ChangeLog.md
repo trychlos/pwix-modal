@@ -2,6 +2,7 @@
 
 | Version | Release    | Content |
 | ---:    | :---       | :---    |
+| 1.2.1   | 2023- 5- 1 | Remove jquery-ui npm dependency, keeping pwix:jquery-ui Meteor package requirement, as this later itself requires jquiry-ui npm |
 | 1.2.0   | 2023- 5- 1 | Re-add jQueryUI dependency as needed to have resizable() and draggable() methods |
 |         |            | Add mdSizeKey and mdOutsideClose parameters to pwixModal.run() method |
 |         |            | Add pwixModal.target() getter/setter method |
