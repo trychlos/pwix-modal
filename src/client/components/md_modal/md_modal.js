@@ -60,13 +60,12 @@ Template.md_modal.onCreated( function(){
         lastSizeGet(){
             const key = Template.currentData().modal.sizeKey();
             if( key ){
-                const w = localStorage.getItem( key+'-width' );
-                const h = localStorage.getItem( key+'-height' );
-                //console.log( w, h );
-                if( w && h ){
+                const str = localStorage.getItem( key );
+                if( str ){
+                    const words = str.split( ',' );
                     self.$( '.modal-content' ).css({
-                        width: w,
-                        height: h
+                        width: words[0],
+                        height: words[1]
                     });
                 }
             }
@@ -76,8 +75,7 @@ Template.md_modal.onCreated( function(){
         lastSizeSet(){
             const key = Template.currentData().modal.sizeKey();
             if( key ){
-                localStorage.setItem( key+'-width', self.$( '.modal-content' ).css( 'width' ));
-                localStorage.setItem( key+'-height', self.$( '.modal-content' ).css( 'height' ));
+                localStorage.setItem( key, self.$( '.modal-content' ).css( 'width' ) + ',' + self.$( '.modal-content' ).css( 'height' ));
             }
         },
 
@@ -258,17 +256,14 @@ Template.md_modal.events({
 
     // about to close the modal
     'hide.bs.modal .modal'( event, instance ){
-        //console.log( event );
         const modal = Template.currentData().modal;
         const target = modal.target() || instance.$( event.currentTarget );
-        //console.log( target );
         instance.MD.lastSizeSet();
         target.trigger( 'md-close', { id: modal.id() });
     },
 
     // remove the Blaze element from the DOM
     'hidden.bs.modal .modal'( event, instance ){
-        //console.log( event );
         $( 'body' ).removeClass( instance.MD.myClass.get());
         Blaze.remove( instance.view );
     },

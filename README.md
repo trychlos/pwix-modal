@@ -84,9 +84,7 @@ Creates and shows a modal dialog with `parms` parameters object. Known parameter
 
     No default.
 
-    As a reminder, using this feature requires the user has accepted the use of functional cookies. They will be stored as two `localStorage` items named:
-    - &lt;mdSizeKey&gt; + `-width`
-    - &lt;mdSizeKey&gt; + `-height`.
+    Using this feature requires the user has accepted the use of functional cookies. The size will be stored as a `localStorage` item.
 
 - `mdTarget`
 
@@ -106,15 +104,15 @@ This method returns a string which is the unique identifier of the new modal.
 
 `pwixModal.setTarget( target [, id ] )`
 
-Obsoleted as of v1.2.0, will be removed on 2.0, redirected to `pwixModal.target()` getter/setter.
+Obsoleted as of v 1.2.0, will be removed on 2.0, redirected to `pwixModal.target()` getter/setter.
 
-`pwixModal.target({ target [, id ] })`
+`pwixModal.target({ target: <target> [, id: <id> ] })`
 
 Set the events target as a jQuery object for the specified opened modal, defaulting to the topmost one.
 
 This method will be usually called from the rendered body template `onRendered()` function. At that time, not only the DOM is rendered for this element, but it is very probable that the triggered events will be useful in this template.
 
-Returns the target of the identified modal, or of the topmost one, or null.
+Returns the target of the identified modal, or of the topmost one, or null if none apply.
 
 `pwixModal.close()`
 
