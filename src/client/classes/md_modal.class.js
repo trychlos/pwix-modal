@@ -25,8 +25,10 @@ export class mdModal {
     _body = new ReactiveVar( null );
     _buttons = new ReactiveVar( null );
     _classes = new ReactiveVar( null );
+    _closebackdrop = new ReactiveVar( true );
+    _closeheader = new ReactiveVar( true );
+    _closekeyboard = new ReactiveVar( true );
     _footer = new ReactiveVar( null );
-    _outclose = new ReactiveVar( true );
     _sizekey = new ReactiveVar( null );
     _target = new ReactiveVar( null );
     _title = new ReactiveVar( null );
@@ -72,10 +74,14 @@ export class mdModal {
         if( parms.mdClasses ){
             this._classes.set( parms.mdClasses );
         }
+
+        this._closebackdrop.set( this._argBool( parms, 'mdCloseByBackdrop', true ));
+        this._closeheader.set( this._argBool( parms, 'mdCloseByHeader', true ));
+        this._closekeyboard.set( this._argBool( parms, 'mdCloseByKeyboard', true ));
+
         if( parms.mdFooter ){
             this._footer.set( parms.mdFooter );
         }
-        this._outclose.set( this._argBool( parms, 'mdOutsideClose', false ));
         if( parms.mdSizeKey ){
             this._sizekey.set( parms.mdSizeKey );
         }
@@ -144,6 +150,31 @@ export class mdModal {
     }
 
     /**
+     * @summary Getter
+     * @returns {Boolean} whether clicking outside of the dialog should close it
+     *  In other terms, should we have a static backdrop ?
+     */
+    closeByBackdrop(){
+        return this._closebackdrop.get();
+    }
+
+    /**
+     * @summary Getter
+     * @returns {Boolean} whether the header has a close button which let the user close the modal ?
+     */
+    closeByHeader(){
+        return this._closeheader.get();
+    }
+
+    /**
+     * @summary Getter
+     * @returns {Boolean} whether Escape key let the user close the modal ?
+     */
+    closeByKeyboard(){
+        return this._closekeyboard.get();
+    }
+
+    /**
      * @summary Getter/Setter
      * @param {String} footer the name of the template to be rendered in the dialog footer
      * @returns {String} the current footer template
@@ -161,15 +192,6 @@ export class mdModal {
      */
     id(){
         return this._id;
-    }
-
-    /**
-     * @summary Getter
-     * @returns {Boolean} whether clicking outside of the dialog should close it
-     *  In other terms, should we have a static backdrop ?
-     */
-    outsideClose(){
-        return this._outclose.get();
     }
 
     /**

@@ -66,17 +66,29 @@ Creates and shows a modal dialog with `parms` parameters object. Known parameter
 
     No default.
 
+- `mdCloseByBackdrop`
+
+    Whether clicking outside of the dialog should close it.
+
+    Defaults to `true`.
+
+- `mdCloseByHeader`
+
+    Whether the header holds a `Close` button.
+
+    Defaults to `true`.
+
+- `mdCloseByKeyboard`
+
+    Whether `Escape` key closes the modal.
+
+    Defaults to `true`.
+
 - `mdFooter`
 
     The name of a Blaze template to be rendered as the dialog footer.
 
     Default is to render a standard footer with at least one `OK` button.
-
-- `mdOutsideClose`
-
-    Whether clicking outside of the dialog should close it.
-
-    Default to `true`.
 
 - `mdSizeKey`
 

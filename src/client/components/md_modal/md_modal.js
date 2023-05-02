@@ -202,6 +202,21 @@ Template.md_modal.helpers({
         return Template.currentData().modal.classes();
     },
 
+    // whether backdrop is static ?
+    closeBackdrop(){
+        return Template.currentData().modal.closeByBackdrop() ? 'true' : 'static';
+    },
+
+    // whether header has a close button ?
+    closeHeader(){
+        return Template.currentData().modal.closeByHeader();
+    },
+
+    // whether Escape closes the modal
+    closeKeyboard(){
+        return Template.currentData().modal.closeByKeyboard() ? 'true' : 'false';
+    },
+
     // the footer if any
     footer(){
         return Template.currentData().modal.footer();
@@ -215,11 +230,6 @@ Template.md_modal.helpers({
     // the i18n namespace
     namespace(){
         return pwixModal.i18n;
-    },
-
-    // whether backdrop is static
-    outsideClose(){
-        return Template.currentData().modal.outsideClose() ? 'true' : 'static';
     },
 
     // the parms initially passed in by the caller to pwixModal.run()
