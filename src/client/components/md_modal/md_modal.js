@@ -181,7 +181,7 @@ Template.md_modal.onRendered( function(){
     // make sure the modal doesn't override the screen width
     self.autorun(() => {
         const margin = self.$( '.md-foo' ).css( 'margin' );
-        console.log( 'margin', margin );
+        //console.log( 'margin', margin ); // '4px'
         self.$( '.modal-content' ).css({ maxWidth: uiLayout.width()-2*parseInt( margin )});
     });
 });
