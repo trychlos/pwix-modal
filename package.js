@@ -35,6 +35,7 @@ function configure( api ){
     api.use( 'less@4.0.0', 'client' );
     api.use( 'pwix:i18n@1.0.0' );
     api.use( 'pwix:jquery-ui@0.1.0' );
+    api.use( 'pwix:layout@1.2.0' );
     api.use( 'random', 'client' );
     api.use( 'tmeasday:check-npm-versions@1.0.2', 'server' );
 }

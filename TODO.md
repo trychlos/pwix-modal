@@ -15,7 +15,7 @@
 |    7 | 2023- 2-19 | integrate pwix:bootbox into pwix:modal |
 |    8 | 2023- 4-27 | when preparing 2.0, remove pwixModal.setTarget() obsolete method |
 |   10 | 2023- 5- 2 | would it be relevant to also allow to keep a position ? |
-|   12 |  | |
+|   13 |  | |
 
 ---
 ## Done
@@ -35,7 +35,9 @@
 |      | 2023- 5- 2 | done - see rationale in ChangeLog |
 |   11 | 2023- 5- 2 | even with a static backdrop, we keep the header 'cross' close button - and escape also close the dialog.. so is it useful ? |
 |      | 2023- 5- 2 | done with mdCloseByHeader and mdCloseByKeyboard parameters |
+|   12 | 2023- 5-29 | the modal should be constraint to max width of the device |
+|      | 2023- 5-29 | done - released with 1.3.1 |
 
 ---
 P. Wieser
-- Last updated on 2023, May 1st
+- Last updated on 2023, May 29th

@@ -7,6 +7,7 @@
  * - modal: the mdModal instance
  */
 
+import { uiLayout } from 'meteor/pwix:layout';
 import { ReactiveVar } from 'meteor/reactive-var';
 
 //  provides 'draggable()' and 'resizable()' methods
@@ -175,6 +176,13 @@ Template.md_modal.onRendered( function(){
         $( 'body .modal#'+Template.currentData().modal.id()).css({
             'z-index': mdStack.lastZindex()
         });
+    });
+
+    // make sure the modal doesn't override the screen width
+    self.autorun(() => {
+        const margin = self.$( '.md-foo' ).css( 'margin' );
+        console.log( 'margin', margin );
+        self.$( '.modal-content' ).css({ maxWidth: uiLayout.width()-2*parseInt( margin )});
     });
 });
 

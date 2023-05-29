@@ -2,12 +2,30 @@
  * pwix:modal/src/client/components/md_modal/md_modal.less
  */
 
+@import "{pwix:layout}/src/client/css/ui_constants.less";
+
 .md-modal {
+
+    --md-modal-margin: 0.25em;
+    @media screen and ( min-width: @ui-md-width ){
+        --md-modal-margin: 0.5em;
+    }
+
+    .modal-dialog {
+        margin: var( --md-modal-margin );
+    }
+
     .modal-content.ui-resizable {
         overflow: hidden;
     }
     // added to have a vertical scrollbar in cookieManager
     .modal-body {
         overflow-y: auto;
+    }
+
+    // this class to allow the javascript to get our values
+    .md-foo {
+        display: none;
+        margin: var( --md-modal-margin );
     }
 }

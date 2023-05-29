@@ -2,6 +2,8 @@
 
 | Version | Release    | Content |
 | ---:    | :---       | :---    |
+| 1.3.1   | 2023- 5-29 | Prevent the modal dialog to override the screen width (todo #12), introducing a new dependency on pwix:layout |
+|         |            | Decrease the dialog margins on small devices for a better user experience |
 | 1.3.0   | 2023- 5- 2 | - mdOutsideClose parameter is renamed mdCloseByBackdrop |
 |         |            | - Define mdCloseByKeyboard and mdCloseByHeader parameters |
 |         |            | - mdSizeKey writes width and height in a single string |
@@ -22,4 +24,4 @@
 
 ---
 P. Wieser
-- Last updated on 2023, May 1st
+- Last updated on 2023, May 29th
