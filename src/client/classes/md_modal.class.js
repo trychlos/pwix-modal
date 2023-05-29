@@ -69,7 +69,11 @@ export class mdModal {
             this._body.set( parms.mdBody );
         }
         if( parms.mdButtons ){
-            this._buttons.set( parms.mdButtons );
+            if( Array.isArray( parms.mdButtons )){
+                this._buttons.set( parms.mdButtons );
+            } else if( typeof parms.mdButtons === 'string' || parms.mdButtons instanceof String ){
+                this._buttons.set([ parms.mdButtons ]);
+            }
         }
         if( parms.mdClasses ){
             this._classes.set( parms.mdClasses );
