@@ -2,6 +2,7 @@
 
 | Version | Release    | Content |
 | ---:    | :---       | :---    |
+| 1.4.0   | 2023- 5-29 | Actually, adding a dependency is one of the reason to increment the minor version number which should have been done with 1.3.1, so this new version |
 | 1.3.1   | 2023- 5-29 | Prevent the modal dialog to override the screen width (todo #12), introducing a new dependency on pwix:layout |
 |         |            | Decrease the dialog margins on small devices for a better user experience |
 | 1.3.0   | 2023- 5- 2 | - mdOutsideClose parameter is renamed mdCloseByBackdrop |
