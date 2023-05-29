@@ -44,174 +44,185 @@ This global object, unique in your application, is the single access point for t
 
 #### The life of the modal
 
-`pwixModal.run({ parms })`
+- `pwixModal.run({ parms })`
 
-Creates and shows a modal dialog with `parms` parameters object. Known parameters are:
+    Creates and shows a modal dialog with `parms` parameters object. Known parameters are:
 
-- `mdBody`
+    - `mdBody`
 
-    The name of a Blaze template to be rendered as the dialog body.
+        The name of a Blaze template to be rendered as the dialog body.
 
-    No default.
+        No default.
 
-- `mdButtons`
+    - `mdButtons`
 
-    The buttons to be displayed in the standard footer, as a string or an array of strings.
+        The buttons to be displayed in the standard footer, as a string or an array of strings.
 
-    Default is have at least one `OK` button.
+        Default is have at least one `OK` button.
 
-- `mdClasses`
+    - `mdClasses`
 
-    A string which contains the classes to be added to the '`.modal`' element.
+        A string which contains the classes to be added to the '`.modal`' element.
 
-    No default.
+        No default.
 
-- `mdCloseByBackdrop`
+    - `mdCloseByBackdrop`
 
-    Whether clicking outside of the dialog should close it.
+        Whether clicking outside of the dialog should close it.
 
-    Defaults to `true`.
+        Defaults to `true`.
 
-- `mdCloseByHeader`
+    - `mdCloseByHeader`
 
-    Whether the header holds a `Close` button.
+        Whether the header holds a `Close` button.
 
-    Defaults to `true`.
+        Defaults to `true`.
 
-- `mdCloseByKeyboard`
+    - `mdCloseByKeyboard`
 
-    Whether `Escape` key closes the modal.
+        Whether `Escape` key closes the modal.
 
-    Defaults to `true`.
+        Defaults to `true`.
 
-- `mdFooter`
+    - `mdFooter`
 
-    The name of a Blaze template to be rendered as the dialog footer.
+        The name of a Blaze template to be rendered as the dialog footer.
 
-    Default is to render a standard footer with at least one `OK` button.
+        Default is to render a standard footer with at least one `OK` button.
 
-- `mdSizeKey`
+    - `mdSizeKey`
 
-    The string name of the `localStorage` item which will record the last used width and height.
+        The string name of the `localStorage` item which will record the last used width and height.
 
-    No default.
+        No default.
 
-    Using this feature requires the user has accepted the use of functional cookies. The size will be stored as a `localStorage` item.
+        Using this feature requires the user has accepted the use of functional cookies. The size will be stored as a `localStorage` item.
 
-- `mdTarget`
+    - `mdTarget`
 
-    The target of the events as a jQuery object.
+        The target of the events as a jQuery object.
 
-    Default is let bubble the events.
+        Default is let bubble the events.
 
-    Note that at the time of the modal creation, you are not yet able to set the rendered body as the events target (as it has not yet been rendered). See also `pwixModal.setTarget()`.
+        Note that at the time of the modal creation, you are not yet able to set the rendered body as the events target (as it has not yet been rendered). See also `pwixModal.setTarget()`.
 
-- `mdTitle`
+    - `mdTitle`
 
-    The title of the dialog.
+        The title of the dialog.
 
-    No default.
+        No default.
 
-This method returns a string which is the unique identifier of the new modal.
+    This method returns a string which is the unique identifier of the new modal.
 
-`pwixModal.setTarget( target [, id ] )`
+- `pwixModal.setTarget( target [, id ] )`
 
-Obsoleted as of v 1.2.0, will be removed on 2.0, redirected to `pwixModal.target()` getter/setter.
+    Obsoleted as of v 1.2.0, will be removed on 2.0, redirected to `pwixModal.target()` getter/setter.
 
-`pwixModal.target({ target: <target> [, id: <id> ] })`
+- `pwixModal.target({ target: <target> [, id: <id> ] })`
 
-Set the events target as a jQuery object for the specified opened modal, defaulting to the topmost one.
+    Set the events target as a jQuery object for the specified opened modal, defaulting to the topmost one.
 
-This method will be usually called from the rendered body template `onRendered()` function. At that time, not only the DOM is rendered for this element, but it is very probable that the triggered events will be useful in this template.
+    This method will be usually called from the rendered body template `onRendered()` function. At that time, not only the DOM is rendered for this element, but it is very probable that the triggered events will be useful in this template.
 
-Returns the target of the identified modal, or of the topmost one, or null if none apply.
+    Returns the target of the identified modal, or of the topmost one, or null if none apply.
 
-`pwixModal.close()`
+- `pwixModal.close()`
 
-Close the current modal dialog from the caller.
+    Close the current modal dialog from the caller.
 
-Of course, it is always possible to close the modal dialog via the usual ways:
+    Of course, it is always possible to close the modal dialog via the usual ways:
 
-- from the always displayed dismiss button in the header
+    - from the always displayed dismiss button in the header
 
-- from the `Close` (resp. `Cancel`) button in the footer,
+    - from the `Close` (resp. `Cancel`) button in the footer,
 
-- or by clicking anywhere outside of the modal.
+    - or by clicking anywhere outside of the modal.
 
-`pwixModal.count()`
+- `pwixModal.count()`
 
-Returns the count of opened modals.
+    Returns the count of opened modals.
 
 #### Manage the header
 
-`pwixModal.setClasses( classes [, id ] )`
+- `pwixModal.setClasses( classes [, id ] )`
 
-Set the supplementary '`.modal`' classes for the specified opened modal, defaulting to the topmost one.
+    Set the supplementary '`.modal`' classes for the specified opened modal, defaulting to the topmost one.
 
-`pwixModal.setTitle( title [, id ] )`
+- `pwixModal.setTitle( title [, id ] )`
 
-Set the title for the specified opened modal, defaulting to the topmost one.
+    Set the title for the specified opened modal, defaulting to the topmost one.
 
 #### Manage the body
 
-`pwixModal.setBody( template [, id ] )`
+- `pwixModal.setBody( template [, id ] )`
 
-Set the name of the body template for the specified opened modal, defaulting to the topmost one.
+    Set the name of the body template for the specified opened modal, defaulting to the topmost one.
 
 #### Manage the footer
 
-`pwixModal.setFooter( template [, id ] )`
+- `pwixModal.setFooter( template [, id ] )`
 
-Set the name of the footer template for the specified opened modal, defaulting to the topmost one.
+    Set the name of the footer template for the specified opened modal, defaulting to the topmost one.
 
-Just set to `null` to pass from a specific footer to the standard one.
+    Just set to `null` to pass from a specific footer to the standard one.
 
-Specifying a particular footer takes precedence over the standard one. When it is specified, then the button methods are no more operationnal.
+    Specifying a particular footer takes precedence over the standard one. When it is specified, then the button methods are no more operationnal.
 
-`pwixModal.buttonEnable( button, enable [, id ] )`
+- `pwixModal.buttonEnable( button, enable [, id ] )`
 
-Enable (resp. disable) the specified button for the specified opened modal, defaulting to the topmost one.
+    Enable (resp. disable) the specified button for the specified opened modal, defaulting to the topmost one.
 
-Not relevant when a particular footer has been specified.
+    Not relevant when a particular footer has been specified.
 
-`pwixModal.buttonFind( button [, id ] )`
+- `pwixModal.buttonFind( button [, id ] )`
 
-Returns the specfied button as a jQuery object for the specified opened modal, defaulting to the topmost one.
+    Returns the specfied button as a jQuery object for the specified opened modal, defaulting to the topmost one.
 
-Not relevant when a particular footer has been specified.
+    Not relevant when a particular footer has been specified.
 
-`pwixModal.knownButtons()`
+- `pwixModal.knownButtons()`
 
-Returns an array which contains the buttons known by `pwixModal`.
+    Returns an array which contains the buttons known by `pwixModal`.
 
-`pwixModal.setButtons( buttons [, id ] )`
+- `pwixModal.setButtons( buttons [, id ] )`
 
-Set the to-be-displayed buttons for the specified opened modal, defaulting to the topmost one.
+    Set the to-be-displayed buttons for the specified opened modal, defaulting to the topmost one.
 
-`buttons` can be specified as a string for a single button, or as an array.
+    `buttons` can be specified as a string for a single button, or as an array.
+
+### Constants
+
+#### Buttons
+
+- `MD_BUTTON_OK`
+- `MD_BUTTON_CANCEL`
+- `MD_BUTTON_CLOSE`
+- `MD_BUTTON_SAVE`
+- `MD_BUTTON_YES`
+- `MD_BUTTON_NO`
 
 ### Events
 
-`md-click`
+- `md-click`
 
-A button has been clicked.
+    A button has been clicked.
 
-The event holds a data object with:
+    The event holds a data object with:
 
-- `modal`: the modal identifier
-- `button`: the button identifier.
+    - `modal`: the modal identifier
+    - `button`: the button identifier.
 
-If the button is `MD_BUTTON_CANCEL` or is the only button of the standard footer, then the dialog is closed.
+    If the button is `MD_BUTTON_CANCEL` or is the only button of the standard footer, then the dialog is closed.
 
-It is the responsability of the event receiver to close the modal when needed.
+    It is the responsability of the event receiver to close the modal when needed.
 
-`md-close`
+- `md-close`
 
-An event sent when the modal is about to close, whatever be the reason.
+    An event sent when the modal is about to close, whatever be the reason.
 
-The event holds a data object with:
+    The event holds a data object with:
 
-- `modal`: the modal identifier.
+    - `modal`: the modal identifier.
 
 ## Example
 
@@ -250,7 +261,7 @@ In the template JS:
     ...
 
     Template.my_panel.events({
-        'md-click .my-panel'( event, instance, data ){
+- `md-click .my-panel'( event, instance, data ){
             if( data.button === MD_BUTTON_SAVE ){
                 // do something
                 pwixModal.close();
