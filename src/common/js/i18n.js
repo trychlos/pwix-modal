@@ -20,3 +20,7 @@ pwixModal.i18n = {
         MD_BUTTON_NO: 'Non'
     }
 };
+
+// actually a package should only provide these short language fallbacks
+pwixModal.i18n.en = pwixModal.i18n.en_US;
+pwixModal.i18n.fr = pwixModal.i18n.fr_FR;
