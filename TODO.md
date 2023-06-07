@@ -13,7 +13,10 @@
 |    6 | 2023- 2-19 | have a mdWidth parameter + the corresponding setWidth() method |
 |    8 | 2023- 4-27 | when preparing 2.0, remove pwixModal.setTarget() obsolete method |
 |   10 | 2023- 5- 2 | would it be relevant to also allow to keep a position ? |
-|   13 |  | |
+|   13 | 2023- 6- 1 | review examples in the README to be up to date with obsoleted apis |
+|   14 | 2023- 6- 1 | have an option so that the modal covers all the device screen (usefull in XS and SM displays) |
+|   15 | 2023- 6- 7 | have an option so that the modal is centered on the viewport |
+|   16 |  | |
 
 ---
 ## Done
