@@ -16,7 +16,9 @@
 |   13 | 2023- 6- 1 | review examples in the README to be up to date with obsoleted apis |
 |   14 | 2023- 6- 1 | have an option so that the modal covers all the device screen (usefull in XS and SM displays) |
 |   15 | 2023- 6- 7 | have an option so that the modal is centered on the viewport |
-|   16 |  | |
+|   16 | 2023- 6-10 | have a verbosity level to trace 'trying to find a modal while none is opened' |
+|   17 | 2023- 6-10 | have a verbosity level to trace resizing |
+|   18 |  | |
 
 ---
 ## Done
