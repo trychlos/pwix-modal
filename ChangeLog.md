@@ -2,9 +2,9 @@
 
 ## ChangeLog
 
-### 1.5.2-rc
+### 1.5.2
 
-    Release date: 
+    Release date: 2023- 6-11
 
     - Fix defaults settings
 
