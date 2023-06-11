@@ -12,4 +12,6 @@ if( false ){
 checkNpmVersions({
     '@popperjs/core': '^2.11.6',
     'bootstrap': '^5.2.1'
-}, 'pwix:modal' );
+},
+    'pwix:modal'
+);
