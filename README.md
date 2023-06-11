@@ -102,13 +102,27 @@ The globally exported object.
 
         Default is let bubble the events.
 
-        Note that at the time of the modal creation, you are not yet able to set the rendered body as the events target (as it has not yet been rendered). See also `pwixModal.setTarget()`.
+        Note that at the time of the modal creation, you are not yet able to set the rendered body as the events target (as it has not yet been rendered). See also `pwixModal.target()`.
 
     - `mdTitle`
 
         The title of the dialog.
 
         No default.
+
+    - `mdVerticalPosition`
+
+        How to vertically position the modal.
+
+        Accepted values are either a standard position value as described in [MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/top), or one of constants:
+
+        - `MD_POSITION_CENTER`
+
+            Vertically center the modal in the screen
+
+        Default is to position about 2em of the top (depending of the size of the screen).
+
+        Note that this vertical position might be shifted if several modals are stacked at this time.
 
     This method returns a string which is the unique identifier of the new modal.
 

@@ -195,12 +195,27 @@ Template.md_modal.onRendered( function(){
         self.$( '.modal' ).css({ left: (( viewWidth-contentWidth ) / 2 )+'px' });
     });
 
+    // vertically position the modal
+    self.autorun(() => {
+        const position = Template.currentData().modal.verticalPosition();
+        //console.debug( 'position', position );
+        if( position ){
+            let top = position;
+            if( position === MD_POSITION_CENTER ){
+                const viewHeight = parseInt( uiLayout.height());
+                const contentHeight = parseInt( self.$( '.modal-content' ).css( 'height' ));
+                top = (( viewHeight - contentHeight ) / 2 )+'px';
+            }
+            self.$( '.modal' ).css({ top: top });
+        }
+    });
+
     // shift the stacked modals
     self.autorun(() => {
-        let count = pwixModal.count();
+        const count = pwixModal.count();
         //console.debug( 'count', count );
         if( count > 1 ){
-            let shift = parseInt( self.$( '.md-foo' ).css( 'left' ));
+            const shift = parseInt( self.$( '.md-foo' ).css( 'left' ));
             self.$( '.modal' ).css({
                 top: '+=' + (( count - 1 ) * shift ) + 'px',
                 left: '+=' + (( count - 1 ) * shift ) + 'px'

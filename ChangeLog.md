@@ -2,10 +2,11 @@
 
 ## ChangeLog
 
-### 1.4.2-rc
+### 1.5.0-rc
 
     Release date: 
 
+    - Define new 'mdVerticalPosition' parameter (todo #15)
     - Position dialogs on the top center of the view (todo #18)
 
 ### 1.4.1

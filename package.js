@@ -1,6 +1,6 @@
 Package.describe({
     name: 'pwix:modal',
-    version: '1.4.2-rc',
+    version: '1.5.0-rc',
     summary: 'A Bootstrap-based package which provides draggable and resizable modal dialogs to Meteor',
     git: 'https://github.com/trychlos/pwix-modal',
     documentation: 'README.md'
@@ -15,7 +15,8 @@ Package.onUse( function( api ){
         'MD_BUTTON_CLOSE',
         'MD_BUTTON_SAVE',
         'MD_BUTTON_YES',
-        'MD_BUTTON_NO'
+        'MD_BUTTON_NO',
+        'MD_POSITION_CENTER'
     ]);
     api.mainModule( 'src/client/js/index.js', 'client' );
     api.mainModule( 'src/server/js/index.js', 'server' );
