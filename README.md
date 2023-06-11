@@ -28,9 +28,31 @@ See below for the available parameters.
 
 Though the [Bootstrap documentation](https://getbootstrap.com/docs/5.2/components/modal/) prevents against it, this package let you open more than only one modal at a time. Each is stacked on top of the previous one, and take the focus while it is active and no modal is opened on top of it.
 
-## Configuration
+## Configuring
 
-None at the moment.
+The package's behavior can be configured through a call to the `pwixModal.configure()` method, with just a single javascript object argument, which itself should only contains the options you want override.
+
+Known configuration options are:
+
+- `verbosity`
+
+    The verbosity level as:
+    
+    - `MD_VERBOSE_NONE`
+    
+    or an OR-ed value of integer constants:
+
+    - `MD_VERBOSE_CONFIGURE`
+
+        Trace configuration operations
+
+    - `MD_VERBOSE_NOMODAL`
+
+        Trace the modal research when there is none
+
+    Defaults to `MD_VERBOSE_NONE`.
+
+Remind too that Meteor packages are instanciated at application level. They are so only configurable once, or, in other words, only one instance has to be or can be configured. Addtionnal calls to `pwixModal.configure()` will just override the previous one. You have been warned: **only the application should configure a package**.
 
 ## What does it provide ?
 

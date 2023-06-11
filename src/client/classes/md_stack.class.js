@@ -96,8 +96,12 @@ export class mdStack {
             } else {
                 modal = this._stack[this._stack.length-1];
             }
-        } else {
-            console.log( 'trying to find a modal while none is opened', id );
+        } else if( pwixModal._conf.verbosity & MD_VERBOSE_NOMODAL ){
+            if( id ){
+                console.log( 'pwix:modal trying to find a modal while none is opened', id );
+            } else {
+                console.log( 'pwix:modal trying to find an undefined modal' );
+            }
         }
         return modal;
     }

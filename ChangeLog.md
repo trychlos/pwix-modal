@@ -6,6 +6,7 @@
 
     Release date: 
 
+    - Define new pwixModal.configure() to handle verbosity levels (todo #16)
     - Define new 'mdVerticalPosition' parameter (todo #15)
     - Position dialogs on the top center of the view (todo #18)
     - Fix responsivity with large footer (todo #19)
