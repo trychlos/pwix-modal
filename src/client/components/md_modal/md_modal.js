@@ -7,8 +7,8 @@
  * - modal: the mdModal instance
  */
 
-import { uiLayout } from 'meteor/pwix:layout';
 import { ReactiveVar } from 'meteor/reactive-var';
+import { uiLayout } from 'meteor/pwix:layout';
 
 //  provides 'draggable()' and 'resizable()' methods
 import 'jquery-ui-dist/jquery-ui.min.js';
@@ -28,33 +28,36 @@ Template.md_modal.onCreated( function(){
         // the class added to the body to identify *this* dialog backdrop
         myClass: new ReactiveVar( '' ),
 
-        // the size of the content
-        minWidth: 0,
-        minHeight: 0,
-        bodyMinWidth: 0,
-        footerMinWidth: 0,
-        initialWidth: new ReactiveVar( false ),
-
-        // compute the width of the content
-        computeBody(){
-            if( !self.MD.bodyMinWidth ){
-                let width = self.MD.maxWidth( '.modal-body' );
-                // an approximation so that something is rendered
-                if( width > 100 ){
-                    self.MD.bodyMinWidth = width;
-                }
-            }
+        // css values read from .md-foo div
+        cssFoo: {
+            padding: new ReactiveVar( 0 )
         },
 
-        // compute the width of the footer
-        computeFooter(){
-            if( !self.MD.footerMinWidth ){
-                let width = self.MD.maxWidth( '.modal-footer' );
-                // an approximation so that something is rendered
-                if( width > 100 ){
-                    self.MD.footerMinWidth = width;
-                }
+        // the size of the content
+        minWidth: 0,
+        contentWidth: new ReactiveVar( 0 ),
+
+        // compute the content min width
+        //  which depends of the respective width of the body (and its children), of the footer (and its children)
+        //  and of the available width in the screen
+        computeContentWidth( maxWidth ){
+            //console.debug( 'modal-body' );
+            let bodyWidth = self.MD.maxWidth( '.modal-body' );
+            //console.debug( 'modal-footer' );
+            let footerWidth = self.MD.maxWidth( '.modal-footer' );
+            let width = bodyWidth > footerWidth ? bodyWidth : footerWidth;
+            self.MD.contentWidth.set( width > maxWidth ? maxWidth : width );
+        },
+
+        // get the css padding from .md-foo div
+        cssPadding(){
+            let padding = self.MD.cssFoo.padding.get();
+            if( !padding ){
+                padding = parseInt( self.$( '.md-foo ').css( 'padding' ));
+                self.MD.cssFoo.padding.set( padding );
             }
+            //console.debug( 'padding', padding );
+            return padding;
         },
 
         // if a localStorage key has been provided, get it
@@ -81,18 +84,23 @@ Template.md_modal.onCreated( function(){
         },
 
         // compute the max width between a div and its first child
+        //  if the final width comes from the children, then add the paddings
         maxWidth( selector ){
             let div = self.$( selector );
             let parentWidth = 0;
             let childWidth = 0;
             if( div && div.length ){
                 parentWidth = div[0].clientWidth;
+                //console.debug( 'parentWidth', parentWidth );
             }
             div = div.children().first();
             if( div && div.length ){
                 childWidth = div[0].clientWidth;
+                //console.debug( 'childWidth', childWidth );
             }
-            return parentWidth < childWidth ? childWidth : parentWidth;
+            const maxWidth = parentWidth < childWidth ? childWidth + ( 2 * self.MD.cssPadding()) : parentWidth;
+            //console.debug( 'maxWidth', maxWidth );
+            return maxWidth;
         }
     };
 
@@ -167,15 +175,9 @@ Template.md_modal.onRendered( function(){
     //  if we display a dynamic footer, then the dialog may have some issues to find the right width
     //  if we find here that the footer width is greater than the content, then we adjust the dialog width
     self.autorun(() => {
-        if( self.MD.bodyMinWidth && self.MD.footerMinWidth && !self.MD.initialWidth.get()){
-            if( self.MD.footerMinWidth > self.MD.bodyMinWidth ){
-                let width = self.MD.footerMinWidth+40;
-                width = width > screen.availWidth ? screen.availWidth-16 : width;
-                console.log( 'setting width to', width );
-                self.$( '.modal-content' ).width( width );
-            }
-            self.MD.initialWidth.set( true );
-        }
+        const maxWidth = uiLayout.width();
+        self.MD.computeContentWidth( maxWidth );
+        self.$( '.modal-content' ).width( self.MD.contentWidth.get());
     });
 
     // make sure the modal doesn't override the screen width
@@ -326,8 +328,6 @@ Template.md_modal.events({
 
     // set the focus on first input field
     'shown.bs.modal .modal'( event, instance ){
-        instance.MD.computeBody();
-        instance.MD.computeFooter();
         instance.$( '.modal#'+Template.currentData().modal.id()+' .modal-body input' ).first().focus();
     }
 });

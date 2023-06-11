@@ -16,7 +16,6 @@
 |   14 | 2023- 6- 1 | have an option so that the modal covers all the device screen (useful in XS and SM displays) |
 |   16 | 2023- 6-10 | have a verbosity level to trace 'trying to find a modal while none is opened' |
 |   17 | 2023- 6-10 | have a verbosity level to trace resizing |
-|   19 | 2023- 6-11 | responsivity is deficient when footer is large |
 |   20 |  |  |
 
 ---
@@ -50,6 +49,8 @@
 |   15 | 2023- 6- 7 | have an option so that the modal is centered on the viewport |
 |      | 2023- 6-11 | done (mdVerticalPosition) |
 |   18 | 2023- 6-10 | dialogs are now positioned on top left, while they used to be on top center |
+|      | 2023- 6-11 | fixed |
+|   19 | 2023- 6-11 | responsivity is deficient when footer is large |
 |      | 2023- 6-11 | fixed |
 
 ---

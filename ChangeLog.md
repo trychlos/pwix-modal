@@ -8,6 +8,7 @@
 
     - Define new 'mdVerticalPosition' parameter (todo #15)
     - Position dialogs on the top center of the view (todo #18)
+    - Fix responsivity with large footer (todo #19)
 
 ### 1.4.1
 
