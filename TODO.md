@@ -16,7 +16,8 @@
 |   14 | 2023- 6- 1 | have an option so that the modal covers all the device screen (useful in XS and SM displays) |
 |   16 | 2023- 6-10 | have a verbosity level to trace 'trying to find a modal while none is opened' |
 |   17 | 2023- 6-10 | have a verbosity level to trace resizing |
-|   19 |  | |
+|   19 | 2023- 6-11 | responsivity is deficient when footer is large |
+|   20 |  |  |
 
 ---
 ## Done
