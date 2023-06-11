@@ -142,21 +142,6 @@ Template.md_modal.onRendered( function(){
         self.MD.lastSizeGet();
     }
 
-    // set the minimal width of the dialog
-    //  if we display a dynamic footer, then the dialog may have some issues to find the right width
-    //  if we find here that the footer width is greater than the content, then we adjust the dialog width
-    self.autorun(() => {
-        if( self.MD.bodyMinWidth && self.MD.footerMinWidth && !self.MD.initialWidth.get()){
-            if( self.MD.footerMinWidth > self.MD.bodyMinWidth ){
-                let width = self.MD.footerMinWidth+40;
-                width = width > screen.availWidth ? screen.availWidth-16 : width;
-                console.log( 'setting width to', width );
-                self.$( '.modal-content' ).width( width );
-            }
-            self.MD.initialWidth.set( true );
-        }
-    });
-
     // add a tag class to body element to let the stylesheet identify the modal
     self.autorun(() => {
         $( 'body' ).addClass( self.MD.myClass.get());
@@ -176,6 +161,21 @@ Template.md_modal.onRendered( function(){
         $( 'body .modal#'+Template.currentData().modal.id()).css({
             'z-index': mdStack.lastZindex()
         });
+    });
+
+    // set the minimal width of the dialog
+    //  if we display a dynamic footer, then the dialog may have some issues to find the right width
+    //  if we find here that the footer width is greater than the content, then we adjust the dialog width
+    self.autorun(() => {
+        if( self.MD.bodyMinWidth && self.MD.footerMinWidth && !self.MD.initialWidth.get()){
+            if( self.MD.footerMinWidth > self.MD.bodyMinWidth ){
+                let width = self.MD.footerMinWidth+40;
+                width = width > screen.availWidth ? screen.availWidth-16 : width;
+                console.log( 'setting width to', width );
+                self.$( '.modal-content' ).width( width );
+            }
+            self.MD.initialWidth.set( true );
+        }
     });
 
     // make sure the modal doesn't override the screen width
