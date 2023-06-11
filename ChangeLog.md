@@ -2,6 +2,12 @@
 
 ## ChangeLog
 
+### 1.5.1
+
+    Release date: 2023- 6-11
+
+    - Meteor packaging: add version constraint on pwix:jquery-ui
+
 ### 1.5.0
 
     Release date: 2023- 6-11
