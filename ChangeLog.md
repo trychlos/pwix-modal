@@ -2,9 +2,9 @@
 
 ## ChangeLog
 
-### 1.5.0-rc
+### 1.5.0
 
-    Release date: 
+    Release date: 2023- 6-11
 
     - Define new pwixModal.configure() to handle verbosity levels (todo #16)
     - Define new 'mdVerticalPosition' parameter (todo #15)
@@ -76,4 +76,4 @@
 
 ---
 P. Wieser
-- Last updated on 2023, May 29th
+- Last updated on 2023, June 11th
