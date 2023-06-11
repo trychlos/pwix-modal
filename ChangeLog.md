@@ -6,7 +6,7 @@
 
     Release date: 
 
-    - 
+    - Position dialogs on the top center of the view (todo #18)
 
 ### 1.4.1
 

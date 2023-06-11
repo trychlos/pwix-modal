@@ -144,7 +144,7 @@ Template.md_modal.onRendered( function(){
 
     // set the minimal width of the dialog
     //  if we display a dynamic footer, then the dialog may have some issues to find the right width
-    //  if we find here that the footer width is greater than the content, then we adjust th dialog width
+    //  if we find here that the footer width is greater than the content, then we adjust the dialog width
     self.autorun(() => {
         if( self.MD.bodyMinWidth && self.MD.footerMinWidth && !self.MD.initialWidth.get()){
             if( self.MD.footerMinWidth > self.MD.bodyMinWidth ){
@@ -181,8 +181,31 @@ Template.md_modal.onRendered( function(){
     // make sure the modal doesn't override the screen width
     self.autorun(() => {
         const margin = self.$( '.md-foo' ).css( 'margin' );
-        //console.log( 'margin', margin ); // '4px'
+        //console.debug( 'margin', margin ); // '4px'
         self.$( '.modal-content' ).css({ maxWidth: uiLayout.width()-2*parseInt( margin )});
+    });
+
+    // horizontally center the modal
+    //  this was automatic with standard bootstrap, but has disappeared somewhere
+    self.autorun(() => {
+        const contentWidth = parseInt( self.$( '.modal-content' ).css( 'width' ));
+        //console.debug( 'contentWidth', contentWidth );
+        const viewWidth = parseInt( uiLayout.width());
+        //console.debug( 'viewWidth', viewWidth );
+        self.$( '.modal' ).css({ left: (( viewWidth-contentWidth ) / 2 )+'px' });
+    });
+
+    // shift the stacked modals
+    self.autorun(() => {
+        let count = pwixModal.count();
+        //console.debug( 'count', count );
+        if( count > 1 ){
+            let shift = parseInt( self.$( '.md-foo' ).css( 'left' ));
+            self.$( '.modal' ).css({
+                top: '+=' + (( count - 1 ) * shift ) + 'px',
+                left: '+=' + (( count - 1 ) * shift ) + 'px'
+            });
+        }
     });
 });
 

@@ -7,8 +7,17 @@
 .md-modal {
 
     --md-modal-margin: 0.25em;
+    --md-modal-top: 0.25em;
+    --md-modal-shift: 0.25em;
+
     @media screen and ( min-width: @ui-md-width ){
         --md-modal-margin: 0.5em;
+        --md-modal-top: 2em;
+        --md-modal-shift: 2em;
+    }
+
+    .modal {
+        top: var( --md-modal-top );
     }
 
     .modal-dialog {
@@ -27,5 +36,7 @@
     .md-foo {
         display: none;
         margin: var( --md-modal-margin );
+        top: var( --md-modal-top );
+        left: var( --md-modal-shift );
     }
 }
