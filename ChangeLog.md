@@ -6,7 +6,7 @@
 
     Release date: 
 
-    - 
+    - Fix defaults settings
 
 ### 1.5.1
 
