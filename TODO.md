@@ -13,7 +13,6 @@
 |    6 | 2023- 2-19 | have a mdWidth parameter + the corresponding setWidth() method |
 |    8 | 2023- 4-27 | when preparing 2.0, remove pwixModal.setTarget() obsolete method |
 |   10 | 2023- 5- 2 | would it be relevant to also allow to keep a position ? |
-|   13 | 2023- 6- 1 | review examples in the README to be up to date with obsoleted apis |
 |   14 | 2023- 6- 1 | have an option so that the modal covers all the device screen (usefull in XS and SM displays) |
 |   15 | 2023- 6- 7 | have an option so that the modal is centered on the viewport |
 |   16 | 2023- 6-10 | have a verbosity level to trace 'trying to find a modal while none is opened' |
@@ -47,6 +46,8 @@
 |      | 2023- 5- 2 | done with mdCloseByHeader and mdCloseByKeyboard parameters |
 |   12 | 2023- 5-29 | the modal should be constraint to max width of the device |
 |      | 2023- 5-29 | done - released with 1.3.1 |
+|   13 | 2023- 6- 1 | review examples in the README to be up to date with obsoleted apis |
+|      | 2023- 6-11 | done |
 
 ---
 P. Wieser

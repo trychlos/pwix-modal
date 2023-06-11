@@ -34,11 +34,9 @@ None at the moment.
 
 ## What does it provide ?
 
-### A global object
+### `pwixModal`
 
-`pwixModal`
-
-This global object, unique in your application, is the single access point for the `pwix:modal` usage.
+The globally exported object.
 
 ### Methods
 
@@ -282,12 +280,12 @@ Starting with v 1.0.0, and in accordance with advices from [the Meteor Guide](ht
 
 Instead we check npm versions of installed packages at runtime, on server startup, in development environment.
 
-Dependencies as of v 1.1.0:
+Dependencies as of v 1.4.0:
 ```
     '@popperjs/core': '^2.11.6',
     'bootstrap': '^5.2.1',
-    'jquery-ui-dist': '^1.13.2'
 ```
+
 Each of these dependencies should be installed at application level:
 ```
     meteor npm install <package> --save
