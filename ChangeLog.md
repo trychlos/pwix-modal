@@ -2,9 +2,9 @@
 
 ## ChangeLog
 
-### 1.5.3-rc
+### 1.5.3
 
-    Release date: 
+    Release date: 2023- 6-12
 
     - Fix modal positioning (on .modal-content class instead of .modal)
 
@@ -94,4 +94,4 @@
 
 ---
 P. Wieser
-- Last updated on 2023, June 11th
+- Last updated on 2023, June 12th
