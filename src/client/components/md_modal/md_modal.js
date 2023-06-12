@@ -194,7 +194,7 @@ Template.md_modal.onRendered( function(){
         //console.debug( 'contentWidth', contentWidth );
         const viewWidth = parseInt( uiLayout.width());
         //console.debug( 'viewWidth', viewWidth );
-        self.$( '.modal' ).css({ left: (( viewWidth-contentWidth ) / 2 )+'px' });
+        self.$( '.modal-content' ).css({ left: (( viewWidth-contentWidth ) / 2 )+'px' });
     });
 
     // vertically position the modal
@@ -208,7 +208,7 @@ Template.md_modal.onRendered( function(){
                 const contentHeight = parseInt( self.$( '.modal-content' ).css( 'height' ));
                 top = (( viewHeight - contentHeight ) / 2 )+'px';
             }
-            self.$( '.modal' ).css({ top: top });
+            self.$( '.modal-content' ).css({ top: top });
         }
     });
 
@@ -218,7 +218,7 @@ Template.md_modal.onRendered( function(){
         //console.debug( 'count', count );
         if( count > 1 ){
             const shift = parseInt( self.$( '.md-foo' ).css( 'left' ));
-            self.$( '.modal' ).css({
+            self.$( '.modal-content' ).css({
                 top: '+=' + (( count - 1 ) * shift ) + 'px',
                 left: '+=' + (( count - 1 ) * shift ) + 'px'
             });

@@ -6,7 +6,7 @@
 
     Release date: 
 
-    - 
+    - Fix modal positioning (on .modal-content class instead of .modal)
 
 ### 1.5.2
 
