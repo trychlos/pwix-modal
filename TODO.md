@@ -16,7 +16,8 @@
 |   14 | 2023- 6- 1 | have an option so that the modal covers all the device screen (useful in XS and SM displays) |
 |      | 2023- 6-11 | first try is not successful - see 'fullscreen' branch |
 |   17 | 2023- 6-10 | have a verbosity level to trace resizing |
-|   20 |  |  |
+|   20 | 2023- 6-12 | Have pwixModal.i18n.namespace() to let another package add a translation to this one |
+|   21 |  |  |
 
 ---
 ## Done
