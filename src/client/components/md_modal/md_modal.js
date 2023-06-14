@@ -301,14 +301,14 @@ Template.md_modal.events({
         const modal = Template.currentData().modal;
         const btn = instance.$( event.currentTarget ).attr( 'data-pwix-btn' );
         const target = modal.target() || instance.$( event.currentTarget );
+        //console.debug( target );
+        target.trigger( 'md-click', { id: modal.id(), button: btn });
 
         const buttons = modal.buttons();
         const dismiss = buttons.length === 1 || btn === MD_BUTTON_CANCEL;
         if( dismiss ){
             self.$( '.modal#'+modal.id()).modal( 'hide' );
         }
-
-        target.trigger( 'md-click', { id: modal.id(), button: btn });
         // and let bubble up
     },
 

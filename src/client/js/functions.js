@@ -188,10 +188,11 @@ pwixModal.setTitle = function( title, id ){
  * @locus Client
  * @param {Object} o an optional object which contains needed parameters to act as a setter
  *  - target: a jQuery object which is to be set as the target of the modal
- *  - id: a string identifier which identifier the modal, defaulting to the topmost one
+ *  - id: a string identifier which identifies the modal, defaulting to the topmost one
  * @returns {jQuery} the target of the modal, either explicitely identified or the topmost one, or null
  */
 pwixModal.target = function( o ){
+    //console.debug( o );
     let modal;
     if( o ){
         if( _isJSObject( o )){

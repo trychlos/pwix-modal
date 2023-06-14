@@ -6,7 +6,7 @@
 
     Release date: 
 
-    - 
+    - Fix md-click to be triggered before modal is hidden
 
 ### 1.5.3
 
