@@ -34,6 +34,9 @@ export class mdModal {
     _title = new ReactiveVar( null );
     _verticalposition = new ReactiveVar( null );
 
+    // the rendered view
+    _view = null;
+
     // private methods
     //
 
@@ -100,7 +103,8 @@ export class mdModal {
             this._verticalposition.set( parms.mdVerticalPosition );
         }
 
-        Blaze.renderWithData( Template.md_modal, { modal: this }, $( 'body' )[0] );
+        this._view = Blaze.renderWithData( Template.md_modal, { modal: this }, $( 'body' )[0] );
+        //console.debug( this._view );
 
         return this;
     }
