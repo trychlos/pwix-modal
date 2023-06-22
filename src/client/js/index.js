@@ -5,5 +5,4 @@
 import '../../common/js/index.js';
 
 import './allocate.js';
-import './constants.js';
 import './functions.js';
