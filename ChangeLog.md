@@ -7,6 +7,7 @@
     Release date: 
 
     - Fix md-click to be triggered before modal is hidden
+    - Fix jquery-ui import
 
 ### 1.5.3
 

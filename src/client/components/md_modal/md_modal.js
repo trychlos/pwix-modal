@@ -11,7 +11,7 @@ import { ReactiveVar } from 'meteor/reactive-var';
 import { uiLayout } from 'meteor/pwix:layout';
 
 //  provides 'draggable()' and 'resizable()' methods
-import 'jquery-ui-dist/jquery-ui.min.js';
+import 'jquery-ui/dist/jquery-ui.min.js';
 
 import { mdStack } from '../../classes/md_stack.class.js';
 
