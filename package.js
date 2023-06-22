@@ -1,6 +1,6 @@
 Package.describe({
     name: 'pwix:modal',
-    version: '1.5.4-rc',
+    version: '1.5.4',
     summary: 'A Bootstrap-based package which provides draggable and resizable modal dialogs to Meteor',
     git: 'https://github.com/trychlos/pwix-modal',
     documentation: 'README.md'

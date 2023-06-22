@@ -2,9 +2,9 @@
 
 ## ChangeLog
 
-### 1.5.4-rc
+### 1.5.4
 
-    Release date: 
+    Release date: 2023- 6-22
 
     - Fix md-click to be triggered before modal is hidden
     - Fix jquery-ui import
@@ -104,4 +104,4 @@
 
 ---
 P. Wieser
-- Last updated on 2023, June 12th
+- Last updated on 2023, June 22nd
