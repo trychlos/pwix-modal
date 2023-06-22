@@ -25,3 +25,7 @@ MD_POSITION_CENTER = 'MD_POSITION_CENTER';
 MD_VERBOSE_NONE           = 0x00;
 MD_VERBOSE_CONFIGURE      = 0x01 <<  0;
 MD_VERBOSE_NOMODAL        = 0x01 <<  1;
+
+// not exported
+
+I18N = 'pwix:modal:i18n:namespace';

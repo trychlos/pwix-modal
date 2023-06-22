@@ -277,7 +277,7 @@ Template.md_modal.helpers({
 
     // the i18n namespace
     namespace(){
-        return pwixModal.i18n;
+        return I18N;
     },
 
     // the parms initially passed in by the caller to pwixModal.run()

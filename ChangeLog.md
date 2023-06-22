@@ -10,6 +10,7 @@
     - Fix jquery-ui import
     - Add lodash dependency
     - configure() now acts both as a getter and a setter
+    - Define pwixModal.i18n.namespace() method (todo #20)
 
 ### 1.5.3
 

@@ -224,6 +224,12 @@ The globally exported object.
 
     `buttons` can be specified as a string for a single button, or as an array.
 
+#### Translations
+
+- `pwixModal.i18n.namespace()`
+
+    Returns the i18n namespace of the package.
+
 ### Constants
 
 #### Buttons
