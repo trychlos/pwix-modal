@@ -8,6 +8,8 @@
 
     - Fix md-click to be triggered before modal is hidden
     - Fix jquery-ui import
+    - Add lodash dependency
+    - configure() now acts both as a getter and a setter
 
 ### 1.5.3
 

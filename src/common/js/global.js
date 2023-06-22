@@ -3,4 +3,5 @@
  */
 
 pwixModal = {
+    _conf: {}
 };
