@@ -17,7 +17,8 @@
 |      | 2023- 6-11 | first try is not successful - see 'fullscreen' branch |
 |   17 | 2023- 6-10 | have a verbosity level to trace resizing |
 |   21 | 2023- 6-15 | must leave to the caller a chance to prevent the close (any close: click on backdrop, header close, escape, cancel) |
-|   22 |  |  |
+|   22 | 2023- 6-22 | md-foo div should be renamed md-hidden (and be hidden) |
+|   23 |  |  |
 
 ---
 ## Done
