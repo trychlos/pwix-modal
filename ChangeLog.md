@@ -2,9 +2,9 @@
 
 ## ChangeLog
 
-### 1.6.0-rc
+### 1.6.0
 
-    Release date: 
+    Release date: 2023- 7- 4
 
     - Upgrade pwix:layout version requirement to get layout.less constants
     - Rename globally exported pwixModal to Modal
@@ -113,4 +113,4 @@
 
 ---
 P. Wieser
-- Last updated on 2023, June 22nd
+- Last updated on 2023, July 4th
