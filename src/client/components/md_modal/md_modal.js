@@ -203,7 +203,7 @@ Template.md_modal.onRendered( function(){
         //console.debug( 'position', position );
         if( position ){
             let top = position;
-            if( position === MD_POSITION_CENTER ){
+            if( position === Modal.C.Position.CENTER ){
                 const viewHeight = parseInt( Layout.height());
                 const contentHeight = parseInt( self.$( '.modal-content' ).css( 'height' ));
                 top = (( viewHeight - contentHeight ) / 2 )+'px';

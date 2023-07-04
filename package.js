@@ -16,7 +16,6 @@ Package.onUse( function( api ){
         'MD_BUTTON_SAVE',
         'MD_BUTTON_YES',
         'MD_BUTTON_NO',
-        'MD_POSITION_CENTER',
     ]);
     api.mainModule( 'src/client/js/index.js', 'client' );
     api.mainModule( 'src/server/js/index.js', 'server' );

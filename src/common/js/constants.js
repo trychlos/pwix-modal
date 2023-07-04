@@ -3,6 +3,11 @@
  */
 
 Modal.C = {
+    // (vertical) position
+    Position: {
+        CENTER: 'CENTER'
+    },
+
     // verbosity levels
     Verbose: {
         NONE: 0,
@@ -26,9 +31,6 @@ MD_BUTTON_CLOSE = 'MD_BUTTON_CLOSE';
 MD_BUTTON_SAVE = 'MD_BUTTON_SAVE';
 MD_BUTTON_YES = 'MD_BUTTON_YES';
 MD_BUTTON_NO = 'MD_BUTTON_NO';
-
-// vertical position
-MD_POSITION_CENTER = 'MD_POSITION_CENTER';
 
 // not exported
 

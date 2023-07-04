@@ -138,7 +138,7 @@ The globally exported object.
 
         Accepted values are either a standard position value as described in [MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/top), or one of constants:
 
-        - `MD_POSITION_CENTER`
+        - `Modal.C.Position.CENTER`
 
             Vertically center the modal in the screen
 
