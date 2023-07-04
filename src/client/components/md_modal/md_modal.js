@@ -8,7 +8,7 @@
  */
 
 import { ReactiveVar } from 'meteor/reactive-var';
-import { uiLayout } from 'meteor/pwix:layout';
+import { Layout } from 'meteor/pwix:layout';
 
 //  provides 'draggable()' and 'resizable()' methods
 import 'jquery-ui/dist/jquery-ui.min.js';
@@ -28,8 +28,8 @@ Template.md_modal.onCreated( function(){
         // the class added to the body to identify *this* dialog backdrop
         myClass: new ReactiveVar( '' ),
 
-        // css values read from .md-foo div
-        cssFoo: {
+        // css values read from .md-hidden div
+        cssHidden: {
             padding: new ReactiveVar( 0 )
         },
 
@@ -49,12 +49,12 @@ Template.md_modal.onCreated( function(){
             self.MD.contentWidth.set( width > maxWidth ? maxWidth : width );
         },
 
-        // get the css padding from .md-foo div
+        // get the css padding from .md-hidden div
         cssPadding(){
-            let padding = self.MD.cssFoo.padding.get();
+            let padding = self.MD.cssHidden.padding.get();
             if( !padding ){
-                padding = parseInt( self.$( '.md-foo ').css( 'padding' ));
-                self.MD.cssFoo.padding.set( padding );
+                padding = parseInt( self.$( '.md-hidden ').css( 'padding' ));
+                self.MD.cssHidden.padding.set( padding );
             }
             //console.debug( 'padding', padding );
             return padding;
@@ -175,16 +175,16 @@ Template.md_modal.onRendered( function(){
     //  if we display a dynamic footer, then the dialog may have some issues to find the right width
     //  if we find here that the footer width is greater than the content, then we adjust the dialog width
     self.autorun(() => {
-        const maxWidth = uiLayout.width();
+        const maxWidth = Layout.width();
         self.MD.computeContentWidth( maxWidth );
         self.$( '.modal-content' ).width( self.MD.contentWidth.get());
     });
 
     // make sure the modal doesn't override the screen width
     self.autorun(() => {
-        const margin = self.$( '.md-foo' ).css( 'margin' );
+        const margin = self.$( '.md-hidden' ).css( 'margin' );
         //console.debug( 'margin', margin ); // '4px'
-        self.$( '.modal-content' ).css({ maxWidth: uiLayout.width()-2*parseInt( margin )});
+        self.$( '.modal-content' ).css({ maxWidth: Layout.width()-2*parseInt( margin )});
     });
 
     // horizontally center the modal
@@ -192,7 +192,7 @@ Template.md_modal.onRendered( function(){
     self.autorun(() => {
         const contentWidth = parseInt( self.$( '.modal-content' ).css( 'width' ));
         //console.debug( 'contentWidth', contentWidth );
-        const viewWidth = parseInt( uiLayout.width());
+        const viewWidth = parseInt( Layout.width());
         //console.debug( 'viewWidth', viewWidth );
         self.$( '.modal-content' ).css({ left: (( viewWidth-contentWidth ) / 2 )+'px' });
     });
@@ -204,7 +204,7 @@ Template.md_modal.onRendered( function(){
         if( position ){
             let top = position;
             if( position === MD_POSITION_CENTER ){
-                const viewHeight = parseInt( uiLayout.height());
+                const viewHeight = parseInt( Layout.height());
                 const contentHeight = parseInt( self.$( '.modal-content' ).css( 'height' ));
                 top = (( viewHeight - contentHeight ) / 2 )+'px';
             }
@@ -217,7 +217,7 @@ Template.md_modal.onRendered( function(){
         const count = pwixModal.count();
         //console.debug( 'count', count );
         if( count > 1 ){
-            const shift = parseInt( self.$( '.md-foo' ).css( 'left' ));
+            const shift = parseInt( self.$( '.md-hidden' ).css( 'left' ));
             self.$( '.modal-content' ).css({
                 top: '+=' + (( count - 1 ) * shift ) + 'px',
                 left: '+=' + (( count - 1 ) * shift ) + 'px'
