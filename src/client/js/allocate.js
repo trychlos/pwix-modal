@@ -6,6 +6,6 @@
 
 import { mdStack } from '../classes/md_stack.class.js';
 
-pwixModal._client = {
+Modal._client = {
     Stack: new mdStack()
 }

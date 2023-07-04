@@ -208,7 +208,7 @@ export class mdModal {
 
     /**
      * @summary Getter
-     * @returns {Object} the parms initially passed by the caller to pwixModal.run()
+     * @returns {Object} the parms initially passed by the caller to Modal.run()
      */
     parms(){
         return this._parms;

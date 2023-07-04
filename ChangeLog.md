@@ -7,6 +7,7 @@
     Release date: 
 
     - Upgrade pwix:layout version requirement to get layout.less constants
+    - Rename globally exported pwixModal to Modal
 
 ### 1.5.4
 

@@ -214,7 +214,7 @@ Template.md_modal.onRendered( function(){
 
     // shift the stacked modals
     self.autorun(() => {
-        const count = pwixModal.count();
+        const count = Modal.count();
         //console.debug( 'count', count );
         if( count > 1 ){
             const shift = parseInt( self.$( '.md-hidden' ).css( 'left' ));
@@ -280,7 +280,7 @@ Template.md_modal.helpers({
         return I18N;
     },
 
-    // the parms initially passed in by the caller to pwixModal.run()
+    // the parms initially passed in by the caller to Modal.run()
     parms(){
         return Template.currentData().modal.parms();
     },

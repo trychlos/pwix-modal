@@ -16,7 +16,7 @@ As simple as:
 
 Just call
 ```
-    pwixModal.run( parms )
+    Modal.run( parms )
 ```
 and you're done!
 
@@ -30,7 +30,7 @@ Though the [Bootstrap documentation](https://getbootstrap.com/docs/5.2/component
 
 ## Configuring
 
-The package's behavior can be configured through a call to the `pwixModal.configure()` method, with just a single javascript object argument, which itself should only contains the options you want override.
+The package's behavior can be configured through a call to the `Modal.configure()` method, with just a single javascript object argument, which itself should only contains the options you want override.
 
 Known configuration options are:
 
@@ -52,11 +52,11 @@ Known configuration options are:
 
     Defaults to `MD_VERBOSE_NONE`.
 
-Remind too that Meteor packages are instanciated at application level. They are so only configurable once, or, in other words, only one instance has to be or can be configured. Addtionnal calls to `pwixModal.configure()` will just override the previous one. You have been warned: **only the application should configure a package**.
+Remind too that Meteor packages are instanciated at application level. They are so only configurable once, or, in other words, only one instance has to be or can be configured. Addtionnal calls to `Modal.configure()` will just override the previous one. You have been warned: **only the application should configure a package**.
 
 ## What does it provide ?
 
-### `pwixModal`
+### `Modal`
 
 The globally exported object.
 
@@ -64,7 +64,7 @@ The globally exported object.
 
 #### The life of the modal
 
-- `pwixModal.run({ parms })`
+- `Modal.run({ parms })`
 
     Creates and shows a modal dialog with `parms` parameters object. Known parameters are:
 
@@ -124,7 +124,7 @@ The globally exported object.
 
         Default is let bubble the events.
 
-        Note that at the time of the modal creation, you are not yet able to set the rendered body as the events target (as it has not yet been rendered). See also `pwixModal.target()`.
+        Note that at the time of the modal creation, you are not yet able to set the rendered body as the events target (as it has not yet been rendered). See also `Modal.target()`.
 
     - `mdTitle`
 
@@ -148,11 +148,11 @@ The globally exported object.
 
     This method returns a string which is the unique identifier of the new modal.
 
-- `pwixModal.setTarget( target [, id ] )`
+- `Modal.setTarget( target [, id ] )`
 
-    Obsoleted as of v 1.2.0, will be removed on 2.0, redirected to `pwixModal.target()` getter/setter.
+    Obsoleted as of v 1.2.0, will be removed on 2.0, redirected to `Modal.target()` getter/setter.
 
-- `pwixModal.target({ target: <target> [, id: <id> ] })`
+- `Modal.target({ target: <target> [, id: <id> ] })`
 
     Set the events target as a jQuery object for the specified opened modal, defaulting to the topmost one.
 
@@ -160,7 +160,7 @@ The globally exported object.
 
     Returns the target of the identified modal, or of the topmost one, or null if none apply.
 
-- `pwixModal.close()`
+- `Modal.close()`
 
     Close the current modal dialog from the caller.
 
@@ -172,29 +172,29 @@ The globally exported object.
 
     - or by clicking anywhere outside of the modal.
 
-- `pwixModal.count()`
+- `Modal.count()`
 
     Returns the count of opened modals.
 
 #### Manage the header
 
-- `pwixModal.setClasses( classes [, id ] )`
+- `Modal.setClasses( classes [, id ] )`
 
     Set the supplementary '`.modal`' classes for the specified opened modal, defaulting to the topmost one.
 
-- `pwixModal.setTitle( title [, id ] )`
+- `Modal.setTitle( title [, id ] )`
 
     Set the title for the specified opened modal, defaulting to the topmost one.
 
 #### Manage the body
 
-- `pwixModal.setBody( template [, id ] )`
+- `Modal.setBody( template [, id ] )`
 
     Set the name of the body template for the specified opened modal, defaulting to the topmost one.
 
 #### Manage the footer
 
-- `pwixModal.setFooter( template [, id ] )`
+- `Modal.setFooter( template [, id ] )`
 
     Set the name of the footer template for the specified opened modal, defaulting to the topmost one.
 
@@ -202,23 +202,23 @@ The globally exported object.
 
     Specifying a particular footer takes precedence over the standard one. When it is specified, then the button methods are no more operationnal.
 
-- `pwixModal.buttonEnable( button, enable [, id ] )`
+- `Modal.buttonEnable( button, enable [, id ] )`
 
     Enable (resp. disable) the specified button for the specified opened modal, defaulting to the topmost one.
 
     Not relevant when a particular footer has been specified.
 
-- `pwixModal.buttonFind( button [, id ] )`
+- `Modal.buttonFind( button [, id ] )`
 
     Returns the specfied button as a jQuery object for the specified opened modal, defaulting to the topmost one.
 
     Not relevant when a particular footer has been specified.
 
-- `pwixModal.knownButtons()`
+- `Modal.knownButtons()`
 
-    Returns an array which contains the buttons known by `pwixModal`.
+    Returns an array which contains the buttons known by `Modal`.
 
-- `pwixModal.setButtons( buttons [, id ] )`
+- `Modal.setButtons( buttons [, id ] )`
 
     Set the to-be-displayed buttons for the specified opened modal, defaulting to the topmost one.
 
@@ -226,7 +226,7 @@ The globally exported object.
 
 #### Translations
 
-- `pwixModal.i18n.namespace()`
+- `Modal.i18n.namespace()`
 
     Returns the i18n namespace of the package.
 
@@ -285,7 +285,7 @@ Say you have a template you want render in a modal:
 
 From the parent who mades the open decision, just run:
 ```
-    pwixModal.run({
+    Modal.run({
         mdBody: 'my_panel',
         mdTitle: 'A simple form',
         mdButtons: [ MD_BUTTON_CANCEL, MD_BUTTON_SAVE ]
@@ -295,7 +295,7 @@ From the parent who mades the open decision, just run:
 In the template JS:
 ```
     Template.my_panel.onRendered( function(){
-        pwixModal.setTarget( this.$( '.my-panel' ));
+        Modal.setTarget( this.$( '.my-panel' ));
     });
 
     ...
@@ -304,7 +304,7 @@ In the template JS:
 - `md-click .my-panel'( event, instance, data ){
             if( data.button === MD_BUTTON_SAVE ){
                 // do something
-                pwixModal.close();
+                Modal.close();
             }
         }
     });
@@ -340,7 +340,7 @@ New and updated translations are willingly accepted, and more than welcome. Just
 
 ## Cookies and comparable technologies
 
-`pwix:modal` may use `localStorage` to record the size of a dialog through the `mdSizeKey` argument of the `pwixModal.run()` method.
+`pwix:modal` may use `localStorage` to record the size of a dialog through the `mdSizeKey` argument of the `Modal.run()` method.
 
 Because this is dynamically done on a per dialog basis, and only on the caller request, the package doesn't advertize of this use, relying on the caller own declaration.
 

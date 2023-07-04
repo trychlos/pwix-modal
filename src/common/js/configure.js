@@ -4,11 +4,11 @@
 
 import _ from 'lodash';
 
-pwixModal._defaults = {
+Modal._defaults = {
     verbosity: MD_VERBOSE_NONE
 };
 
-_.merge( pwixModal._conf, pwixModal._defaults );
+_.merge( Modal._conf, Modal._defaults );
 
 /**
  * @summary Package configuration
@@ -17,14 +17,14 @@ _.merge( pwixModal._conf, pwixModal._defaults );
  * @param {Object} o the runtime configuration of the package
  * @returns {Object} the package configuration
  */
-pwixModal.configure = function( o ){
+Modal.configure = function( o ){
     if( o && _.isObject( o )){
-        _.merge( pwixModal._conf, pwixModal._defaults, o );
+        _.merge( Modal._conf, Modal._defaults, o );
         // be verbose if asked for
-        if( pwixModal._conf.verbosity & MD_VERBOSE_CONFIGURE ){
-            console.log( 'pwix:modal configure() with', o, 'building', pwixModal._conf );
+        if( Modal._conf.verbosity & MD_VERBOSE_CONFIGURE ){
+            console.log( 'pwix:modal configure() with', o, 'building', Modal._conf );
         }
     }
     // also acts as a getter
-    return pwixModal._conf;
+    return Modal._conf;
 };

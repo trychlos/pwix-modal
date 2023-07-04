@@ -9,7 +9,7 @@ Package.describe({
 Package.onUse( function( api ){
     configure( api );
     api.export([
-        'pwixModal',
+        'Modal',
         'MD_BUTTON_OK',
         'MD_BUTTON_CANCEL',
         'MD_BUTTON_CLOSE',

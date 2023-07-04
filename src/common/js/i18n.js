@@ -4,7 +4,7 @@
 
 import { pwixI18n } from 'meteor/pwix:i18n';
 
-pwixModal.i18n = {
+Modal.i18n = {
     en_US: {
         MD_BUTTON_OK: 'OK',
         MD_BUTTON_CANCEL: 'Cancel',
@@ -24,14 +24,14 @@ pwixModal.i18n = {
 };
 
 // actually a package should only provide these short language fallbacks
-pwixModal.i18n.en = pwixModal.i18n.en_US;
-pwixModal.i18n.fr = pwixModal.i18n.fr_FR;
+Modal.i18n.en = Modal.i18n.en_US;
+Modal.i18n.fr = Modal.i18n.fr_FR;
 
-pwixI18n.namespace( I18N, pwixModal.i18n );
+pwixI18n.namespace( I18N, Modal.i18n );
 
 /**
  * @returns {String} the i18n namespace of the package
  */
-pwixModal.i18n.namespace = function(){
+Modal.i18n.namespace = function(){
     return I18N;
 };
