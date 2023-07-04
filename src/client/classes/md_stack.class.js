@@ -120,7 +120,7 @@ export class mdStack {
 
     /**
      * @summary Push on top of the stack the last opened dialog
-     * @param {mdModal} modal the newly instanciated modal
+     * @param {mdModal} modal the newly instanciated (being created and rendered) modal
      */
     push( modal ){
         if( !modal || !( modal instanceof mdModal )){

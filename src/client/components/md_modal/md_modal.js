@@ -315,9 +315,14 @@ Template.md_modal.events({
     // about to close the modal
     'hide.bs.modal .modal'( event, instance ){
         const modal = Template.currentData().modal;
-        const target = modal.target() || instance.$( event.currentTarget );
-        instance.MD.lastSizeSet();
-        target.trigger( 'md-close', { id: modal.id() });
+        const fn = modal.beforeClose();
+        if( !fn || fn( modal.id())){
+            const target = modal.target() || instance.$( event.currentTarget );
+            instance.MD.lastSizeSet();
+            target.trigger( 'md-close', { id: modal.id() });
+        } else {
+            event.preventDefault();
+        }
     },
 
     // remove the Blaze element from the DOM

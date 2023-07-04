@@ -9,6 +9,20 @@ import _ from 'lodash';
 import { mdModal } from '../classes/md_modal.class.js';
 
 /**
+ * @summary Get/set the function which allow the modal closing
+ * @locus Client
+ * @param {Function} fn the function to be set
+ * @param {String} id the identifier of the targeted dialog, defaulting to the topmost
+ * @returns {Function} the closing function
+ */
+Modal.beforeClose = function( fn, id ){
+    const modal = Modal._client.Stack.modal( id );
+    if( modal ){
+        return modal.beforeClose( fn );
+    }
+};
+
+/**
  * @summary Enable/disable a button
  *  Only if a specific footer has not been set via Modal.setFooter()
  * @locus Client

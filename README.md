@@ -68,6 +68,16 @@ The globally exported object.
 
     Creates and shows a modal dialog with `parms` parameters object. Known parameters are:
 
+    - `mdBeforeClose`
+
+        A function to be called when the user asks for close the modal, by clicking on the backdrop, or the close button of the header, or a close button in the footer. This function let the application allows or forbid the close:
+
+        - the function takes a unique argument, which is the modal identifier
+        - if the function returns `true`, the modal will be closed
+        - if the function returns `false`, the modal will not.
+
+        The default is to leave the modal be closed when the user asks for that.
+
     - `mdBody`
 
         The name of a Blaze template to be rendered as the dialog body.
@@ -150,17 +160,9 @@ The globally exported object.
 
     This method returns a string which is the unique identifier of the new modal.
 
-- `Modal.setTarget( target [, id ] )`
+- `Modal.beforeClose()`
 
-    Obsoleted as of v 1.2.0, will be removed on 2.0, redirected to `Modal.target()` getter/setter.
-
-- `Modal.target({ target: <target> [, id: <id> ] })`
-
-    Set the events target as a jQuery object for the specified opened modal, defaulting to the topmost one.
-
-    This method will be usually called from the rendered body template `onRendered()` function. At that time, not only the DOM is rendered for this element, but it is very probable that the triggered events will be useful in this template.
-
-    Returns the target of the identified modal, or of the topmost one, or null if none apply.
+    Get or set the function which allows the modal closing.
 
 - `Modal.close()`
 
@@ -177,6 +179,18 @@ The globally exported object.
 - `Modal.count()`
 
     Returns the count of opened modals.
+
+- `Modal.setTarget( target [, id ] )`
+
+    Obsoleted as of v 1.2.0, will be removed on 2.0, redirected to `Modal.target()` getter/setter.
+
+- `Modal.target({ target: <target> [, id: <id> ] })`
+
+    Set the events target as a jQuery object for the specified opened modal, defaulting to the topmost one.
+
+    This method will be usually called from the rendered body template `onRendered()` function. At that time, not only the DOM is rendered for this element, but it is very probable that the triggered events will be useful in this template.
+
+    Returns the target of the identified modal, or of the topmost one, or null if none apply.
 
 #### Manage the header
 

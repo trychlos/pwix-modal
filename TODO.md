@@ -16,7 +16,6 @@
 |   14 | 2023- 6- 1 | have an option so that the modal covers all the device screen (useful in XS and SM displays) |
 |      | 2023- 6-11 | first try is not successful - see 'fullscreen' branch |
 |   17 | 2023- 6-10 | have a verbosity level to trace resizing |
-|   21 | 2023- 6-15 | must leave to the caller a chance to prevent the close (any close: click on backdrop, header close, escape, cancel) |
 |   23 | 2023- 7- 4 | when preparing 2.0, remove obsolete Modal.knownButtons() |
 |   24 |  |  |
 
@@ -58,6 +57,8 @@
 |      | 2023- 6-11 | fixed |
 |   20 | 2023- 6-12 | Have Modal.i18n.namespace() to let another package add a translation to this one |
 |      | 2023- 6-22 | done |
+|   21 | 2023- 6-15 | must leave to the caller a chance to prevent the close (any close: click on backdrop, header close, escape, cancel) |
+|      | 2023- 7- 4 | done |
 |   22 | 2023- 6-22 | md-foo div should be renamed md-hidden (and be hidden) |
 |      | 2023- 7- 4 | done |
 

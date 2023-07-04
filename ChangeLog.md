@@ -9,6 +9,7 @@
     - Upgrade pwix:layout version requirement to get layout.less constants
     - Rename globally exported pwixModal to Modal
     - Reorganize constants definitions to not pollute the global space
+    - Provide mdBeforeClose parameter to leave the user a chance to prevent the close (todo #21)
 
 ### 1.5.4
 

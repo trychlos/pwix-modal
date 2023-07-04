@@ -22,6 +22,7 @@ export class mdModal {
     _parms = null;
 
     // the last version of the parameters
+    _beforeclose = new ReactiveVar( null );
     _body = new ReactiveVar( null );
     _buttons = new ReactiveVar( null );
     _classes = new ReactiveVar( null );
@@ -47,10 +48,10 @@ export class mdModal {
             if( b === true || b === false ){
                 _res = b;
             } else if( b === 'true' || b === 'false' ){
-                console.warn( 'pwix:editor mdModal expects \''+arg+'\' to be a boolean, found', b, 'string' );
+                console.warn( 'pwix:modal expects \''+arg+'\' to be a boolean, found', b, 'string' );
                 _res = ( b === 'true' );
             } else {
-                console.warn( 'pwix:editor mdModal expects \''+arg+'\' to be a boolean, found', b );
+                console.warn( 'pwix:modal expects \''+arg+'\' to be a boolean, found', b );
             }
         }
         return _res;
@@ -69,6 +70,9 @@ export class mdModal {
         this._id = Random.id();
         this._parms = parms;
 
+        if( parms.mdBeforeClose ){
+            this._beforeclose.set( parms.mdBeforeClose );
+        }
         if( parms.mdBody ){
             this._body.set( parms.mdBody );
         }
@@ -107,6 +111,18 @@ export class mdModal {
         //console.debug( this._view );
 
         return this;
+    }
+
+    /**
+     * @summary Getter/Setter
+     * @param {Function} fn a function to allow the close of the modal
+     * @returns {Function} the closing function
+     */
+    beforeClose( fn ){
+        if( fn !== undefined ){
+            this._beforeclose.set( fn );
+        }
+        return this._beforeclose.get() || '';
     }
 
     /**
