@@ -4,13 +4,9 @@
  * The public methods exposed through the Modal global object.
  */
 
-import { mdModal } from '../classes/md_modal.class.js';
+import _ from 'lodash';
 
-// https://stackoverflow.com/questions/8511281/check-if-a-value-is-an-object-in-javascript
-// make sure we have a valid object
-const _isJSObject = function( obj ){
-    return obj && typeof obj === 'object' && !Array.isArray( obj );
-};
+import { mdModal } from '../classes/md_modal.class.js';
 
 /**
  * @summary Enable/disable a button
@@ -189,7 +185,7 @@ Modal.target = function( o ){
     //console.debug( o );
     let modal;
     if( o ){
-        if( _isJSObject( o )){
+        if( _.isObject( o )){
             if( o.target ){
                 modal = Modal._client.Stack.modal( o.id );
                 if( modal ){
