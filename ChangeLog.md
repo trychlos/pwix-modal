@@ -2,7 +2,7 @@
 
 ## ChangeLog
 
-### 1.5.5-rc
+### 1.6.0-rc
 
     Release date: 
 
