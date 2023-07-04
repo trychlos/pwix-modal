@@ -218,6 +218,8 @@ The globally exported object.
 
     Returns an array which contains the buttons known by `Modal`.
 
+    This function is obsoleted as of v 1.6.0. It is now enough to get `Object.keys( Modal.C.Button )` array.
+
 - `Modal.setButtons( buttons [, id ] )`
 
     Set the to-be-displayed buttons for the specified opened modal, defaulting to the topmost one.
@@ -234,12 +236,12 @@ The globally exported object.
 
 #### Buttons
 
-- `MD_BUTTON_OK`
-- `MD_BUTTON_CANCEL`
-- `MD_BUTTON_CLOSE`
-- `MD_BUTTON_SAVE`
-- `MD_BUTTON_YES`
-- `MD_BUTTON_NO`
+- `Modal.C.Button.OK`
+- `Modal.C.Button.CANCEL`
+- `Modal.C.Button.CLOSE`
+- `Modal.C.Button.SAVE`
+- `Modal.C.Button.YES`
+- `Modal.C.Button.NO`
 
 ### Events
 
@@ -252,7 +254,7 @@ The globally exported object.
     - `modal`: the modal identifier
     - `button`: the button identifier.
 
-    If the button is `MD_BUTTON_CANCEL` or is the only button of the standard footer, then the dialog is closed.
+    If the button is `Modal.C.Button.CANCEL` or is the only button of the standard footer, then the dialog is closed.
 
     It is the responsability of the event receiver to close the modal when needed.
 
@@ -288,7 +290,7 @@ From the parent who mades the open decision, just run:
     Modal.run({
         mdBody: 'my_panel',
         mdTitle: 'A simple form',
-        mdButtons: [ MD_BUTTON_CANCEL, MD_BUTTON_SAVE ]
+        mdButtons: [ Modal.C.Button.CANCEL, Modal.C.Button.SAVE ]
     });
 ```
 
@@ -302,7 +304,7 @@ In the template JS:
 
     Template.my_panel.events({
         'md-click .my-panel'( event, instance, data ){
-            if( data.button === MD_BUTTON_SAVE ){
+            if( data.button === Modal.C.Button.SAVE ){
                 // do something
                 Modal.close();
             }

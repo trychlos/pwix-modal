@@ -139,7 +139,7 @@ export class mdModal {
         if( buttons !== undefined ){
             this._buttons.set( buttons );
         }
-        return this._buttons.get() || [ MD_BUTTON_OK ];
+        return this._buttons.get() || [ Modal.C.Button.OK ];
     }
 
     /**

@@ -8,6 +8,7 @@
 
     - Upgrade pwix:layout version requirement to get layout.less constants
     - Rename globally exported pwixModal to Modal
+    - Reorganize constants definitions to not pollute the global space
 
 ### 1.5.4
 

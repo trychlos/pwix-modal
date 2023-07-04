@@ -68,14 +68,8 @@ Modal.count = function(){
  * @return {Array} known buttons
  */
 Modal.knownButtons = function(){
-    return [
-        MD_BUTTON_OK,
-        MD_BUTTON_CANCEL,
-        MD_BUTTON_CLOSE,
-        MD_BUTTON_SAVE,
-        MD_BUTTON_YES,
-        MD_BUTTON_NO
-    ];
+    console.warn( 'pwix:modal knownButtons() obsolete method, use Object.keys( Modal.C.Button )' );
+    return Object.keys( Modal.C.Button );
 };
 
 /**

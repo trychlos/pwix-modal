@@ -9,13 +9,7 @@ Package.describe({
 Package.onUse( function( api ){
     configure( api );
     api.export([
-        'Modal',
-        'MD_BUTTON_OK',
-        'MD_BUTTON_CANCEL',
-        'MD_BUTTON_CLOSE',
-        'MD_BUTTON_SAVE',
-        'MD_BUTTON_YES',
-        'MD_BUTTON_NO',
+        'Modal'
     ]);
     api.mainModule( 'src/client/js/index.js', 'client' );
     api.mainModule( 'src/server/js/index.js', 'server' );

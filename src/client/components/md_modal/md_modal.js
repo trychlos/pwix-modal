@@ -305,7 +305,7 @@ Template.md_modal.events({
         target.trigger( 'md-click', { id: modal.id(), button: btn });
 
         const buttons = modal.buttons();
-        const dismiss = buttons.length === 1 || btn === MD_BUTTON_CANCEL;
+        const dismiss = buttons.length === 1 || btn === Modal.C.Button.CANCEL;
         if( dismiss ){
             self.$( '.modal#'+modal.id()).modal( 'hide' );
         }
