@@ -3,7 +3,7 @@
  */
 
 import './global.js';
+import './constants.js';
 //
 import './configure.js';
-import './constants.js';
 import './i18n.js';

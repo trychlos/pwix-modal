@@ -4,6 +4,8 @@
 
 import _ from 'lodash';
 
+Modal._conf = {};
+
 Modal._defaults = {
     verbosity: Modal.C.Verbose.NONE
 };
