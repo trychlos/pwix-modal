@@ -4,7 +4,7 @@
 
 Modal.C = {
 
-    // known buttons
+    // known standard button identifiers
     // note to the maintainer: each constant is:
     //  - defined here
     //  - have a internationalizable label in /src/common/js/i18n.js
