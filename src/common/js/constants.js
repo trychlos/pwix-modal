@@ -2,6 +2,15 @@
  * pwix:modal/src/client/js/constants.js
  */
 
+Modal.C = {
+    // verbosity levels
+    Verbose: {
+        NONE: 0,
+        CONFIGURE: 0x01 <<  0,
+        NOMODAL:   0x01 <<  1
+    }
+};
+
 // known buttons
 //
 // note to the maintainer: each constant is:
@@ -20,11 +29,6 @@ MD_BUTTON_NO = 'MD_BUTTON_NO';
 
 // vertical position
 MD_POSITION_CENTER = 'MD_POSITION_CENTER';
-
-// verbosity level
-MD_VERBOSE_NONE           = 0x00;
-MD_VERBOSE_CONFIGURE      = 0x01 <<  0;
-MD_VERBOSE_NOMODAL        = 0x01 <<  1;
 
 // not exported
 

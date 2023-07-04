@@ -38,19 +38,19 @@ Known configuration options are:
 
     The verbosity level as:
     
-    - `MD_VERBOSE_NONE`
+    - `Modal.C.Verbose.NONE`
     
     or an OR-ed value of integer constants:
 
-    - `MD_VERBOSE_CONFIGURE`
+    - `Modal.C.Verbose.CONFIGURE`
 
         Trace configuration operations
 
-    - `MD_VERBOSE_NOMODAL`
+    - `Modal.C.Verbose.NOMODAL`
 
         Trace the modal research when there is none
 
-    Defaults to `MD_VERBOSE_NONE`.
+    Defaults to `Modal.C.Verbose.NONE`.
 
 Remind too that Meteor packages are instanciated at application level. They are so only configurable once, or, in other words, only one instance has to be or can be configured. Addtionnal calls to `Modal.configure()` will just override the previous one. You have been warned: **only the application should configure a package**.
 
@@ -301,7 +301,7 @@ In the template JS:
     ...
 
     Template.my_panel.events({
-- `md-click .my-panel'( event, instance, data ){
+        'md-click .my-panel'( event, instance, data ){
             if( data.button === MD_BUTTON_SAVE ){
                 // do something
                 Modal.close();
@@ -322,7 +322,7 @@ Starting with v 1.0.0, and in accordance with advices from [the Meteor Guide](ht
 
 Instead we check npm versions of installed packages at runtime, on server startup, in development environment.
 
-Dependencies as of v 1.5.4:
+Dependencies as of v 1.6.0:
 ```
     '@popperjs/core': '^2.11.6',
     'bootstrap': '^5.2.1',

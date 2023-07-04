@@ -96,7 +96,7 @@ export class mdStack {
             } else {
                 modal = this._stack[this._stack.length-1];
             }
-        } else if( Modal._conf.verbosity & MD_VERBOSE_NOMODAL ){
+        } else if( Modal._conf.verbosity & Modal.C.Verbose.NOMODAL ){
             if( id ){
                 console.log( 'pwix:modal trying to find a modal while none is opened', id );
             } else {

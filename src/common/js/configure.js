@@ -5,7 +5,7 @@
 import _ from 'lodash';
 
 Modal._defaults = {
-    verbosity: MD_VERBOSE_NONE
+    verbosity: Modal.C.Verbose.NONE
 };
 
 _.merge( Modal._conf, Modal._defaults );
@@ -21,7 +21,7 @@ Modal.configure = function( o ){
     if( o && _.isObject( o )){
         _.merge( Modal._conf, Modal._defaults, o );
         // be verbose if asked for
-        if( Modal._conf.verbosity & MD_VERBOSE_CONFIGURE ){
+        if( Modal._conf.verbosity & Modal.C.Verbose.CONFIGURE ){
             console.log( 'pwix:modal configure() with', o, 'building', Modal._conf );
         }
     }
