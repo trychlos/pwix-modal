@@ -110,6 +110,8 @@ The globally exported object.
 
         Default is to render a standard footer with at least one `OK` button.
 
+        If both are specified, `mdFooter` takes precedence on `mdButtons`.
+
     - `mdSizeKey`
 
         The string name of the `localStorage` item which will record the last used width and height.
@@ -124,7 +126,7 @@ The globally exported object.
 
         Default is let bubble the events.
 
-        Note that at the time of the modal creation, you are not yet able to set the rendered body as the events target (as it has not yet been rendered). See also `Modal.target()`.
+        Note that at the time of the modal creation, you are not yet able to set the rendered template as the events target (as it has not yet been rendered). See also `Modal.target()`.
 
     - `mdTitle`
 
@@ -218,7 +220,7 @@ The globally exported object.
 
     Returns an array which contains the buttons known by `Modal`.
 
-    This function is obsoleted as of v 1.6.0. It is now enough to get `Object.keys( Modal.C.Button )` array.
+    This function is obsoleted as of v 1.6.0, will be removed on 2.0. It is now enough to get `Object.keys( Modal.C.Button )` array.
 
 - `Modal.setButtons( buttons [, id ] )`
 
