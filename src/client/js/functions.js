@@ -119,10 +119,9 @@ Modal.setBody = function( template, id ){
  */
 Modal.setButtons = function( buttons, id ){
     const btns = Array.isArray( buttons ) ? buttons : [ buttons ];
-    const knowns = Modal.knownButtons();
     let ok = true;
     btns.every(( btn ) => {
-        if( !knowns.includes( btn )){
+        if( !Object.keys( Modal.C.Button ).includes( btn )){
             ok = false;
         }
         return ok;
