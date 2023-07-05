@@ -109,6 +109,11 @@ Template.md_modal.onCreated( function(){
     self.autorun(() => {
         self.MD.myClass.set( 'pwix-modal-class-'+Template.currentData().modal.id());
     });
+
+    // push this modal in the stack
+    self.autorun(() => {
+        Modal._stack.push( Template.currentData().modal );
+    });
 });
 
 Template.md_modal.onRendered( function(){
@@ -167,8 +172,9 @@ Template.md_modal.onRendered( function(){
 
     // set the z-index of the modal
     self.autorun(() => {
+        //console.debug( 'modal onRendered', Modal._stack.count());
         $( 'body .modal#'+Template.currentData().modal.id()).css({
-            'z-index': mdStack.lastZindex()
+            'z-index': Modal._stack.lastZindex()
         });
     });
 
@@ -360,4 +366,8 @@ Template.md_modal.events({
     'shown.bs.modal .modal'( event, instance ){
         instance.$( '.modal#'+Template.currentData().modal.id()+' .modal-body input' ).first().focus();
     }
+});
+
+Template.md_modal.onDestroyed( function(){
+    Modal._stack.pop();
 });

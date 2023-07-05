@@ -4,5 +4,5 @@
 
 import '../../common/js/index.js';
 
-import './allocate.js';
 import './functions.js';
+import './stack.js';

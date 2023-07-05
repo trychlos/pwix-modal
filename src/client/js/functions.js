@@ -16,7 +16,7 @@ import { mdModal } from '../classes/md_modal.class.js';
  * @returns {Function} the closing function
  */
 Modal.beforeClose = function( fn, id ){
-    const modal = Modal._client.Stack.modal( id );
+    const modal = Modal._stack.modal( id );
     if( modal ){
         return modal.beforeClose( fn );
     }
@@ -48,7 +48,7 @@ Modal.buttonEnable = function( button, enable, id ){
  * @eturns {Object} the found button as a jQuery object, or null
  */
 Modal.buttonFind = function( button, id ){
-    const modal = Modal._client.Stack.modal( id );
+    const modal = Modal._stack.modal( id );
     if( modal ){
         return modal.buttonFind( button );
     }
@@ -59,7 +59,8 @@ Modal.buttonFind = function( button, id ){
  * @locus Client
  */
 Modal.close = function(){
-    const modal = Modal._client.Stack.pop();
+    console.error( 'no close at the moment' );
+    const modal = Modal._stack.modal();
     if( modal ){
         modal.close();
     }
@@ -70,7 +71,7 @@ Modal.close = function(){
  * @returns {Integer} the count of opened modals
  */
 Modal.count = function(){
-    return Modal._client.Stack.count();
+    return Modal._stack.count();
 };
 
 /**
@@ -90,7 +91,6 @@ Modal.knownButtons = function(){
  */
 Modal.run = function( parms ){
     const modal = new mdModal( parms );
-    Modal._client.Stack.push( modal );
     return modal.id();
 };
 
@@ -101,7 +101,7 @@ Modal.run = function( parms ){
  * @param {String} id the identifier of the targeted dialog, defaulting to the topmost
  */
 Modal.setBody = function( template, id ){
-    const modal = Modal._client.Stack.modal( id );
+    const modal = Modal._stack.modal( id );
     if( modal ){
         modal.body( template );
     }
@@ -118,7 +118,7 @@ Modal.setBody = function( template, id ){
 Modal.setButtons = function( buttons, id ){
     const installable = mdModal.CheckButtons( buttons );
     if( installable.length > 0 ){
-        const modal = Modal._client.Stack.modal( id );
+        const modal = Modal._stack.modal( id );
         if( modal ){
             modal.buttons( installable );
         }
@@ -133,7 +133,7 @@ Modal.setButtons = function( buttons, id ){
  * @param {String} id the identifier of the targeted dialog, defaulting to the topmost
  */
 Modal.setClasses = function( classes, id ){
-    const modal = Modal._client.Stack.modal( id );
+    const modal = Modal._stack.modal( id );
     if( modal ){
         modal.classes( classes );
     }
@@ -146,7 +146,7 @@ Modal.setClasses = function( classes, id ){
  * @param {String} id the identifier of the targeted dialog, defaulting to the topmost
  */
 Modal.setFooter = function( template, id ){
-    const modal = Modal._client.Stack.modal( id );
+    const modal = Modal._stack.modal( id );
     if( modal ){
         modal.footer( template );
     }
@@ -169,7 +169,7 @@ Modal.setTarget = function(){
  * @param {String} id the identifier of the targeted dialog, defaulting to the topmost
  */
 Modal.setTitle = function( title, id ){
-    const modal = Modal._client.Stack.modal( id );
+    const modal = Modal._stack.modal( id );
     if( modal ){
         modal.title( title );
     }
@@ -189,7 +189,7 @@ Modal.target = function( o ){
     if( o ){
         if( _.isObject( o )){
             if( o.target ){
-                modal = Modal._client.Stack.modal( o.id );
+                modal = Modal._stack.modal( o.id );
                 if( modal ){
                     modal.target( o.target );
                 }
@@ -200,7 +200,7 @@ Modal.target = function( o ){
             console.error( 'pwix:modal target() expects an Object argument, found', o );
         }
     } else {
-        modal = Modal._client.Stack.modal();
+        modal = Modal._stack.modal();
     }
     return modal ? modal.target() : null;
 };

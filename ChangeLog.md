@@ -8,6 +8,7 @@
 
     - Accept button labels and non-standard button identifiers (todo #24)
     - Accept a property object for each button (todo #25, #26)
+    - Fix race condition between stack management and modal life
 
 ### 1.6.0
 

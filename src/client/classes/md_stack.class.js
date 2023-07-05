@@ -21,27 +21,12 @@ export class mdStack {
     // the computing tick
     static zIndexTick = 10;
 
-    // static methods
-    //
-
     /**
      * @summary Make sure each modal in on top of the previous ones
      * @returns {Integer} the first z-index level (display of the backdrops)
      */
     static firstZindex(){
         return mdStack.zIndexStart;
-    }
-
-    /**
-     * @summary Make sure each modal in on top of the previous ones
-     * @returns {Integer} the z-index level of the last modal
-     */
-    static lastZindex(){
-        const stack = mdStack.Singleton._stack;
-        if( !stack.length ){
-            throw new Error( 'trying to compute the z-index of a modal while none is opened' );
-        }
-        return mdStack.zIndexStart + ( mdStack.zIndexTick * stack.length );
     }
 
     // private data
@@ -59,9 +44,7 @@ export class mdStack {
             return mdStack.Singleton;
         }
 
-        const self = this;
-
-        mdStack.Singleton = self;
+        mdStack.Singleton = this;
         return this;
     }
 
@@ -70,6 +53,17 @@ export class mdStack {
      */
     count(){
         return this._stack.length;
+    }
+
+    /**
+     * @summary Make sure each modal in on top of the previous ones
+     * @returns {Integer} the z-index level of the last modal
+     */
+    lastZindex(){
+        if( !this._stack.length ){
+            throw new Error( 'trying to compute the z-index of a modal while none is opened' );
+        }
+        return mdStack.zIndexStart + ( mdStack.zIndexTick * this._stack.length );
     }
 
     /**
@@ -112,6 +106,7 @@ export class mdStack {
      */
     pop(){
         if( this._stack.length ){
+            //console.debug( 'before pop length', this.count());
             return this._stack.pop();
         }
         console.error( 'trying to pop a modal while none is opened' );
@@ -127,5 +122,6 @@ export class mdStack {
             throw new Error( 'expecting mdModal instance, found', modal );
         }
         this._stack.push( modal );
+        //console.debug( 'after push length', this.count());
     }
 }

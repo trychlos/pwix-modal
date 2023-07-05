@@ -29,7 +29,7 @@ export class mdModal {
             if( _.isString( _def )){
                 // a string must be a valid known standard button identifier
                 if( !Object.keys( Modal.C.Button ).includes( _def )){
-                    console.warning( 'pwix:modal unknown identifier', _def );
+                    console.warn( 'pwix:modal unknown identifier', _def );
                     ok = false;
                 }
                 if( ok ){
@@ -38,7 +38,7 @@ export class mdModal {
             } else if( _.isObject( _def )){
                 // a label is mandatory is we have a non-standard id
                 if( !_def.id ){
-                    console.warning( 'pwix:modal missing mandatory button identifier', _def );
+                    console.warn( 'pwix:modal missing mandatory button identifier', _def );
                     ok = false;
                 }
                 if( ok ){

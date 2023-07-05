@@ -17,7 +17,8 @@
 |      | 2023- 6-11 | first try is not successful - see 'fullscreen' branch |
 |   17 | 2023- 6-10 | have a verbosity level to trace resizing |
 |   23 | 2023- 7- 4 | when preparing 2.0, remove obsolete Modal.knownButtons() |
-|   27 |  |  |
+|   27 | 2023- 7- 5 | be verbose about stack push/pop |
+|   28 |  |  |
 
 ---
 ## Done
