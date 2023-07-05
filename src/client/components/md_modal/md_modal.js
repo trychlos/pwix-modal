@@ -225,6 +225,17 @@ Template.md_modal.onRendered( function(){
             });
         }
     });
+
+    // attach data to the buttons
+    self.autorun(() => {
+        Template.currentData().modal.buttons().every(( btn ) => {
+            const element = $( '.modal-footer' ).find( '[data-pwix-btn='+btn.id+']' );
+            if( element.length ){
+                element.data( BTNKEY, btn );
+            }
+            return true;
+        });
+    });
 });
 
 Template.md_modal.helpers({
@@ -237,8 +248,7 @@ Template.md_modal.helpers({
     // the class to be added to the button
     //  the last is set as primary - all others secondary
     btnClass( btn ){
-        const buttons = Template.currentData().modal.buttons();
-        return btn.index === buttons.length-1 ? 'btn-primary' : 'btn-secondary';
+        return btn.last ? 'btn-primary' : 'btn-secondary';
     },
 
     // the standard label or a provided one
@@ -298,20 +308,32 @@ Template.md_modal.events({
     // click on a button
     // note that the Blaze templating system doesn't let us add the 'data-bs-dismiss="modal"' to the button
     // so all events come here, and we have to dismiss the dialog ourselves:
-    //  - if Cancel
     //  - if only button
+    //  - if button exhibits a 'dismiss' attribute
     'click .md-btn'( event, instance ){
         const modal = Template.currentData().modal;
-        const btn = instance.$( event.currentTarget ).attr( 'data-pwix-btn' );
-        const target = modal.target() || instance.$( event.currentTarget );
+        const btnElement = instance.$( event.currentTarget );
+        //console.debug( btnElement, btnElement.data());
+        const btnId = btnElement.attr( 'data-pwix-btn' );
+        const btnObj = btnElement.data( BTNKEY );
+        const target = modal.target() || btnElement;
         //console.debug( target );
-        target.trigger( 'md-click', { id: modal.id(), button: btn });
+        target.trigger( 'md-click', { id: modal.id(), button: btnId, btnObj: btnObj });
 
+        // whether to dismiss the dialog ?
         const buttons = modal.buttons();
-        const dismiss = buttons.length === 1 || btn === Modal.C.Button.CANCEL;
+        let dismiss = false;
+        if( buttons.length === 1 ){
+            dismiss = true;
+        } else if( Object.keys( Modal.C.Button ).includes( btnId )){
+            dismiss = Modal._btnDefs[btnId].dismiss;
+        } else {
+            dismiss = btnObj && Object.keys( btnObj ).includes( 'dismiss' ) ? btnObj.dismiss : false;
+        }
         if( dismiss ){
             self.$( '.modal#'+modal.id()).modal( 'hide' );
         }
+
         // and let bubble up
     },
 

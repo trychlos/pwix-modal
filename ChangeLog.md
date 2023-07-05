@@ -7,6 +7,7 @@
     Release date: 
 
     - Accept button labels and non-standard button identifiers (todo #24)
+    - Accept a property object for each button (todo #25, #26)
 
 ### 1.6.0
 

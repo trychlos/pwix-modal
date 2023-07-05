@@ -244,12 +244,19 @@ The globally exported object.
 
     `buttons` can be specified as a string, or an object, or as an array of strings of objects:
 
-    - strings are considered to be a known, standard, button identifier; in that case, they describe the default behavior of that button
+    - strings are expected to be known, standard, button identifiers; in that case, the default behavior of the relevant button is provided
 
     - objects fully describe a button. Following keys may be specified:
 
-        - id: the button identifier, may belong to the caller, mandatory
-        - label: default to the identifier if this identifier is not one of our known standard buttons
+        - `id`: the button identifier, may belong to the caller, mandatory
+
+        - `label`: default to the identifier if this identifier is not one of our known standard buttons
+
+        - `cb`: a function `(modal_id, button_id)` to be called when the button is clicked
+
+        - `dismiss`: whether clicking on the button should dismiss the modal,
+            - defaulting to `true` if there is one single button, and for known standard buttons
+            - to `false` else (caller-provided button identifiers)
 
 #### Translations
 
@@ -279,11 +286,10 @@ These are our known, standard, button identifiers. Their labels are localizable.
     The event holds a data object with:
 
     - `modal`: the modal identifier
-    - `button`: the button identifier.
+    - `button`: the button identifier
+    - `btnObj`: the button properties as passed to `Modal.setButtons()` function or as `mdButtons` parameter
 
-    If the button is `Modal.C.Button.CANCEL` or is the only button of the standard footer, then the dialog is closed.
-
-    It is the responsability of the event receiver to close the modal when needed.
+    If the button holds a truely `dismiss` property, or is the only button of the standard footer, then the dialog is closed. In other cases, it is the responsability of the event receiver to close the modal.
 
 - `md-close`
 
@@ -292,6 +298,8 @@ These are our known, standard, button identifiers. Their labels are localizable.
     The event holds a data object with:
 
     - `modal`: the modal identifier.
+
+    Note that this event is only for information. It does not let the receiver to prevent the modal closing. In order to do that, see the `mdBeforeClose` parameter.
 
 ## Example
 

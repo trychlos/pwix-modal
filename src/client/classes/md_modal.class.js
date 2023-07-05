@@ -18,6 +18,7 @@ export class mdModal {
     //
     // check the buttons parameters
     //  either from mdButtons parameter passed to Modal.run() or from Modal.setButtons()
+    //  the last object has a last=true indicator
     static CheckButtons( buttons ){
         const _btns = Array.isArray( buttons ) ? buttons : [ buttons ];
         let _installable = [];
@@ -46,6 +47,10 @@ export class mdModal {
             }
             return true;
         });
+        // flag the last object
+        if( _installable.length ){
+            _installable[_installable.length-1].last = true;
+        }
         return _installable;
     }
 
@@ -191,7 +196,7 @@ export class mdModal {
         if( buttons !== undefined ){
             this._buttons.set( buttons );
         }
-        return this._buttons.get() || [{ id: Modal.C.Button.OK, index: 0 }];
+        return this._buttons.get() || [{ id: Modal.C.Button.OK, index: 0, last:true }];
     }
 
     /**

@@ -31,6 +31,32 @@ Modal.C = {
     }
 };
 
+// private
+
+Modal._btnDefs = {
+    OK: {
+        dismiss: true
+    },
+    CANCEL: {
+        dismiss: true
+    },
+    CLOSE: {
+        dismiss: true
+    },
+    SAVE: {
+        dismiss: true
+    },
+    YES: {
+        dismiss: true
+    },
+    NO: {
+        dismiss: true
+    }
+};
+
 // not exported
 
 I18N = 'pwix:modal:i18n:namespace';
+
+// key of the data attached to button element
+BTNKEY = 'pwix:modal/button:data'

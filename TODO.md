@@ -17,8 +17,6 @@
 |      | 2023- 6-11 | first try is not successful - see 'fullscreen' branch |
 |   17 | 2023- 6-10 | have a verbosity level to trace resizing |
 |   23 | 2023- 7- 4 | when preparing 2.0, remove obsolete Modal.knownButtons() |
-|   25 | 2023- 7- 4 | the button which closes the modal (Cancel) should be a configuration option or a button option |
-|   26 | 2023- 7- 4 | added buttons (and ours) should have more options, at least an info to identify it |
 |   27 |  |  |
 
 ---
@@ -65,6 +63,10 @@
 |      | 2023- 7- 4 | done |
 |   24 | 2023- 7- 4 | should be more tolerant when the app set buttons (this is only text after all) |
 |      | 2023- 7- 5 | accept labels distincts from ids |
+|   25 | 2023- 7- 4 | the button which closes the modal (Cancel) should be a configuration option or a button option |
+|      | 2023- 7- 5 | accept a properties object for each button |
+|   26 | 2023- 7- 4 | added buttons (and ours) should have more options, at least an info to identify it |
+|      | 2023- 7- 5 | accept a properties object for each button |
 
 ---
 P. Wieser
