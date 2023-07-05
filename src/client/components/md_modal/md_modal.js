@@ -9,6 +9,7 @@
 
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Layout } from 'meteor/pwix:layout';
+import { pwixI18n } from 'meteor/pwix:i18n';
 
 //  provides 'draggable()' and 'resizable()' methods
 import 'jquery-ui/dist/jquery-ui.min.js';
@@ -237,11 +238,18 @@ Template.md_modal.helpers({
     //  the last is set as primary - all others secondary
     btnClass( btn ){
         const buttons = Template.currentData().modal.buttons();
-        return buttons.indexOf( btn ) === buttons.length-1 ? 'btn-primary' : 'btn-secondary';
+        return btn.index === buttons.length-1 ? 'btn-primary' : 'btn-secondary';
+    },
+
+    // the standard label or a provided one
+    btnLabel( btn ){
+        //console.debug( btn );
+        return btn.label || ( Object.keys( Modal.C.Button ).includes( btn.id ) ? pwixI18n.label( I18N, btn.id ) : btn.id );
     },
 
     // the list of buttons
     buttons(){
+        //console.debug( 'buttons', Template.currentData().modal.buttons());
         return Template.currentData().modal.buttons();
     },
 
@@ -273,11 +281,6 @@ Template.md_modal.helpers({
     // the modal identifier
     id(){
         return Template.currentData().modal.id();
-    },
-
-    // the i18n namespace
-    namespace(){
-        return I18N;
     },
 
     // the parms initially passed in by the caller to Modal.run()

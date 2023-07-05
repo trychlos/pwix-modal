@@ -21,7 +21,7 @@
                             {{> Template.dynamic template=(footer) data=(parms) }}
                         {{else}}
                             {{#each btn in buttons }}
-                                <button type="button" class="btn {{ btnClass btn }} md-btn" data-pwix-btn="{{ btn }}">{{_ namespace btn }}</button>
+                                <button type="button" class="btn {{ btnClass btn }} md-btn" data-pwix-btn="{{ btn.id }}">{{ btnLabel btn }}</button>
                             {{/each}}
                         {{/if}}
                     </div>

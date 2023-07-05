@@ -6,7 +6,7 @@
 
     Release date: 
 
-    - 
+    - Accept button labels and non-standard button identifiers (todo #24)
 
 ### 1.6.0
 

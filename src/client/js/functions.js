@@ -111,30 +111,19 @@ Modal.setBody = function( template, id ){
  * @summary Set the buttons of the currently opened dialog
  *  Only if a specific footer has not been set via Modal.setFooter()
  * @locus Client
- * @param {Array|String} buttons the button or array of buttons to be set
- *  Only set the provided buttons if valid.
- *  Doesn't provide any default here.
+ * @param {Array|String|Object} buttons the buttons to be set
  * @param {String} id the identifier of the targeted dialog, defaulting to the topmost
- * @returns {Boolean} whether the provided buttons were valid and have been set
+ * @returns {Integer} the count of valid buttons installed
  */
 Modal.setButtons = function( buttons, id ){
-    const btns = Array.isArray( buttons ) ? buttons : [ buttons ];
-    let ok = true;
-    btns.every(( btn ) => {
-        if( !Object.keys( Modal.C.Button ).includes( btn )){
-            ok = false;
-        }
-        return ok;
-    });
-    if( ok ){
+    const installable = mdModal.CheckButtons( buttons );
+    if( installable.length > 0 ){
         const modal = Modal._client.Stack.modal( id );
         if( modal ){
-            modal.buttons( btns );
+            modal.buttons( installable );
         }
-    } else {
-        console.error( 'invalid provided buttons', buttons );
     }
-    return ok;
+    return installable.length;
 };
 
 /**

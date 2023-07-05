@@ -86,9 +86,11 @@ The globally exported object.
 
     - `mdButtons`
 
-        The buttons to be displayed in the standard footer, as a string or an array of strings.
+        The buttons to be displayed in the standard footer, as a string, an object or an array of strings or objects.
 
-        Default is have at least one `OK` button.
+        Default is to have one `OK` button.
+
+        See also `Modal.setButtons()` method for the syntax of this data.
 
     - `mdClasses`
 
@@ -218,13 +220,13 @@ The globally exported object.
 
     Specifying a particular footer takes precedence over the standard one. When it is specified, then the button methods are no more operationnal.
 
-- `Modal.buttonEnable( button, enable [, id ] )`
+- `Modal.buttonEnable( button_id, enable [, id ] )`
 
-    Enable (resp. disable) the specified button for the specified opened modal, defaulting to the topmost one.
+    Enable (resp. disable) the specified button identifier for the specified opened modal, defaulting to the topmost one.
 
     Not relevant when a particular footer has been specified.
 
-- `Modal.buttonFind( button [, id ] )`
+- `Modal.buttonFind( button_id [, id ] )`
 
     Returns the specfied button as a jQuery object for the specified opened modal, defaulting to the topmost one.
 
@@ -240,7 +242,14 @@ The globally exported object.
 
     Set the to-be-displayed buttons for the specified opened modal, defaulting to the topmost one.
 
-    `buttons` can be specified as a string for a single button, or as an array.
+    `buttons` can be specified as a string, or an object, or as an array of strings of objects:
+
+    - strings are considered to be a known, standard, button identifier; in that case, they describe the default behavior of that button
+
+    - objects fully describe a button. Following keys may be specified:
+
+        - id: the button identifier, may belong to the caller, mandatory
+        - label: default to the identifier if this identifier is not one of our known standard buttons
 
 #### Translations
 
@@ -258,6 +267,8 @@ The globally exported object.
 - `Modal.C.Button.SAVE`
 - `Modal.C.Button.YES`
 - `Modal.C.Button.NO`
+
+These are our known, standard, button identifiers. Their labels are localizable.
 
 ### Events
 

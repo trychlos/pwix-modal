@@ -6,11 +6,48 @@
 
 import { Random } from 'meteor/random';
 
+import _ from 'lodash';
+
 import '../../common/js/index.js';
 
 import '../components/md_modal/md_modal.js';
 
 export class mdModal {
+
+    // static methods
+    //
+    // check the buttons parameters
+    //  either from mdButtons parameter passed to Modal.run() or from Modal.setButtons()
+    static CheckButtons( buttons ){
+        const _btns = Array.isArray( buttons ) ? buttons : [ buttons ];
+        let _installable = [];
+        let _index = 0;
+        _btns.every(( _def ) => {
+            let ok = true;
+            //console.debug( _def );
+            if( _.isString( _def )){
+                // a string must be a valid known standard button identifier
+                if( !Object.keys( Modal.C.Button ).includes( _def )){
+                    console.warning( 'pwix:modal unknown identifier', _def );
+                    ok = false;
+                }
+                if( ok ){
+                    _installable.push({ id: _def, index: _index++ });
+                }
+            } else if( _.isObject( _def )){
+                // a label is mandatory is we have a non-standard id
+                if( !_def.id ){
+                    console.warning( 'pwix:modal missing mandatory button identifier', _def );
+                    ok = false;
+                }
+                if( ok ){
+                    _installable.push({ ..._def, index: _index++ });
+                }
+            }
+            return true;
+        });
+        return _installable;
+    }
 
     // private data
     //
@@ -77,10 +114,9 @@ export class mdModal {
             this._body.set( parms.mdBody );
         }
         if( parms.mdButtons ){
-            if( Array.isArray( parms.mdButtons )){
-                this._buttons.set( parms.mdButtons );
-            } else if( typeof parms.mdButtons === 'string' || parms.mdButtons instanceof String ){
-                this._buttons.set([ parms.mdButtons ]);
+            const _installable = mdModal.CheckButtons( parms.mdButtons );
+            if( _installable.length ){
+                this._buttons.set( _installable );
             }
         }
         if( parms.mdClasses ){
@@ -155,7 +191,7 @@ export class mdModal {
         if( buttons !== undefined ){
             this._buttons.set( buttons );
         }
-        return this._buttons.get() || [ Modal.C.Button.OK ];
+        return this._buttons.get() || [{ id: Modal.C.Button.OK, index: 0 }];
     }
 
     /**
