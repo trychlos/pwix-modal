@@ -59,7 +59,7 @@ Modal.buttonFind = function( button, id ){
  * @locus Client
  */
 Modal.close = function(){
-    console.error( 'no close at the moment' );
+    //console.error( 'a console error to trace the call stack' );
     const modal = Modal._stack.modal();
     if( modal ){
         modal.close();

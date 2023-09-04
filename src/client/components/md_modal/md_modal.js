@@ -336,6 +336,7 @@ Template.md_modal.events({
         } else {
             dismiss = btnObj && Object.keys( btnObj ).includes( 'dismiss' ) ? btnObj.dismiss : false;
         }
+        //console.debug( 'dismiss', dismiss );
         if( dismiss ){
             self.$( '.modal#'+modal.id()).modal( 'hide' );
         }

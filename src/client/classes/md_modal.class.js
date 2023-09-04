@@ -215,6 +215,7 @@ export class mdModal {
      * @summary Close the modal
      */
     close(){
+        //console.debug( 'closing', '.md-modal .modal#'+this.id());
         $( '.md-modal .modal#'+this.id()).modal( 'hide' );
     }
 
