@@ -297,7 +297,7 @@ These are our known, standard, button identifiers. Their labels are localizable.
 
     The event holds a data object with:
 
-    - `modal`: the modal identifier.
+    - `id`: the modal identifier.
 
     Note that this event is only for information. It does not let the receiver to prevent the modal closing. In order to do that, see the `mdBeforeClose` parameter.
 
