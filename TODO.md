@@ -20,7 +20,6 @@
 |   27 | 2023- 7- 5 | be verbose about stack push/pop |
 |   28 | 2023- 9- 9 | Have an option to put a type on each provided button, and notably 'submit' on OK button |
 |   29 | 2023- 9- 9 | provide additional classes for modal-content, modal-header, modal-body and modal-footer |
-|   30 | 2023- 9-10 | obsolete Modal.beforeClose() method, replaced with a set() with option |
 |   32 | 2023- 9-10 | obsolete Modal.setClasses() method, replaced with a set() with option |
 |   33 | 2023- 9-10 | obsolete Modal.setTitle() method, replaced with a set() with option |
 |   34 | 2023- 9-10 | obsolete Modal.setBody() method, replaced with a set() with option |
@@ -76,6 +75,8 @@
 |      | 2023- 7- 5 | accept a properties object for each button |
 |   26 | 2023- 7- 4 | added buttons (and ours) should have more options, at least an info to identify it |
 |      | 2023- 7- 5 | accept a properties object for each button |
+|   30 | 2023- 9-10 | obsolete Modal.beforeClose() method, replaced with a set() with option |
+|      | 2023- 9-10 | done |
 |   31 | 2023- 9-10 | obsolete Modal.target() method, replaced with a set() with option |
 |      | 2023- 9-10 | done |
 

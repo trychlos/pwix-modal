@@ -166,7 +166,7 @@ The globally exported object.
 
 - `Modal.beforeClose()`
 
-    Get or set the function which allows the modal closing.
+    Obsoleted as of v 1.7.0, will be removed on 2.0, redirected to `Modal.set()` setter.
 
 - `Modal.close()`
 
@@ -191,6 +191,10 @@ The globally exported object.
     `arg` must be a Javascript object with following keys:
 
     - `id`: the identifier of the to-be-configured modal, defaulting to the current topmost
+
+    - `beforeClose`: when specified, the function to be called by the modal to get an authorization to close.
+
+        See the `mdBeforeClose` parameter to get a description of the function.
 
     - `target`: when specified, the JQuery object which must receive events for that modal
 
@@ -246,7 +250,7 @@ The globally exported object.
 
     Returns an array which contains the buttons known by `Modal`.
 
-    This function is obsoleted as of v 1.6.0, will be removed on 2.0. It is now enough to get `Object.keys( Modal.C.Button )` array.
+    This function is obsoleted as of v 1.6.0, will be removed on 2.0. It is enough to get `Object.keys( Modal.C.Button )` array.
 
 - `Modal.setButtons( buttons [, id ] )`
 

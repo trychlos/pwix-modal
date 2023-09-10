@@ -2,7 +2,7 @@
 
 ## ChangeLog
 
-### 1.6.1-rc
+### 1.7.0-rc
 
     Release date: 
 
@@ -11,7 +11,8 @@
     - Fix race condition between stack management and modal life
     - Bump pwix:i18n version requirement
     - Bump pwix:jquery-ui version requirement
-    - Obsoletize Modal.target() replaced with Modal.set() (todo #31)
+    - Obsoletize Modal.target() replaced with Modal.set() (todo #31) bumping candidate version number
+    - Obsoletize Modal.beforeClose() replaced with Modal.set() (todo #30)
 
 ### 1.6.0
 

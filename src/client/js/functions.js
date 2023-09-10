@@ -16,10 +16,12 @@ import { mdModal } from '../classes/md_modal.class.js';
  * @returns {Function} the closing function
  */
 Modal.beforeClose = function( fn, id ){
-    const modal = Modal._stack.modal( id );
-    if( modal ){
-        return modal.beforeClose( fn );
+    console.warn( 'pwix:modal beforeClose() method is obsolete, redirected to set()' );
+    let o = { beforeClose: fn };
+    if( id ){
+        o.id = id;
     }
+    Modal.set( o );
 };
 
 /**
@@ -79,7 +81,7 @@ Modal.count = function(){
  * @return {Array} known buttons
  */
 Modal.knownButtons = function(){
-    console.warn( 'pwix:modal knownButtons() obsolete method, use Object.keys( Modal.C.Button )' );
+    console.warn( 'pwix:modal knownButtons() method is obsolete, use Object.keys( Modal.C.Button )' );
     return Object.keys( Modal.C.Button );
 };
 
@@ -101,6 +103,9 @@ Modal.run = function( parms ){
  */
 Modal.set = function( arg ){
     const modal = Modal._stack.modal( arg.id );
+    if( arg.beforeClose ){
+        modal.beforeClose( fn );
+    }
     if( arg.target ){
         modal.target( arg.target );
     }
@@ -170,7 +175,7 @@ Modal.setFooter = function( template, id ){
  *  WILL BE REMOVED ON 2.0 VERSION
  */
 Modal.setTarget = function( target, id ){
-    console.warn( 'pwix:modal setTarget() obsoleted method, redirected to set()' );
+    console.warn( 'pwix:modal setTarget() method is obsolete, redirected to set()' );
     let o = { target: target };
     if( id ){
         o.id = id;
@@ -200,6 +205,6 @@ Modal.setTitle = function( title, id ){
  * @returns {jQuery} the target of the modal, either explicitely identified or the topmost one, or null
  */
 Modal.target = function( o ){
-    console.warn( 'pwix:modal target() obsoleted method, redirected to set()' );
+    console.warn( 'pwix:modal target() method is obsolete, redirected to set()' );
     Modal.set( o );
 };
