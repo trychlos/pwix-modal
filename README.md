@@ -140,6 +140,8 @@ The globally exported object.
 
         Note that at the time of the modal creation, you are not yet able to set the rendered template as the events target (as it has not yet been rendered). See also `Modal.target()`.
 
+        Note also that the modal will be attached to the `body` of the page. Events will so bubble directly from the modal to the body.
+
     - `mdTitle`
 
         The title of the dialog.
@@ -170,9 +172,9 @@ The globally exported object.
 
     Close the current modal dialog from the caller.
 
-    Of course, it is always possible to close the modal dialog via the usual ways:
+    Of course, and if this has not been prevented in the modal configuration, it is still possible to close the modal dialog via the usual ways:
 
-    - from the always displayed dismiss button in the header
+    - from the dismiss button in the header
 
     - from the `Close` (resp. `Cancel`) button in the footer,
 
@@ -182,17 +184,25 @@ The globally exported object.
 
     Returns the count of opened modals.
 
+- `Modal.set( arg )`
+
+    A generic method to configure a running modal.
+
+    `arg` must be a Javascript object with following keys:
+
+    - `id`: the identifier of the to-be-configured modal, defaulting to the current topmost
+
+    - `target`: when specified, the JQuery object which must receive events for that modal
+
+        This method is usually called from the rendered body template `onRendered()` function. At that time, not only the DOM is rendered for this element, but it is very probable that this is in this template that the triggered events will be useful.
+
 - `Modal.setTarget( target [, id ] )`
 
     Obsoleted as of v 1.2.0, will be removed on 2.0, redirected to `Modal.target()` getter/setter.
 
 - `Modal.target({ target: <target> [, id: <id> ] })`
 
-    Set the events target as a jQuery object for the specified opened modal, defaulting to the topmost one.
-
-    This method will be usually called from the rendered body template `onRendered()` function. At that time, not only the DOM is rendered for this element, but it is very probable that the triggered events will be useful in this template.
-
-    Returns the target of the identified modal, or of the topmost one, or null if none apply.
+    Obsoleted as of v 1.7.0, will be removed on 2.0, redirected to `Modal.set()` setter.
 
 #### Manage the header
 
@@ -379,7 +389,7 @@ New and updated translations are willingly accepted, and more than welcome. Just
 
 `pwix:modal` may use `localStorage` to record the size of a dialog through the `mdSizeKey` argument of the `Modal.run()` method.
 
-Because this is dynamically done on a per dialog basis, and only on the caller request, the package doesn't advertize of this use, relying on the caller own declaration.
+Because this is dynamically done on a per dialog basis, and only on the caller request, the package cannot advertize of this use, relying on the caller own declaration.
 
 ---
 P. Wieser

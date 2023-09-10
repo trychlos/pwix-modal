@@ -95,6 +95,18 @@ Modal.run = function( parms ){
 };
 
 /**
+ * @summary Generic setter
+ * @locus Client
+ * @param {Object} arg the argument object
+ */
+Modal.set = function( arg ){
+    const modal = Modal._stack.modal( arg.id );
+    if( arg.target ){
+        modal.target( arg.target );
+    }
+};
+
+/**
  * @summary Set the template to be rendered as the modal body
  * @locus Client
  * @param {String} template the name of the template
@@ -157,9 +169,13 @@ Modal.setFooter = function( template, id ){
  *  OBSOLETED
  *  WILL BE REMOVED ON 2.0 VERSION
  */
-Modal.setTarget = function(){
-    console.warn( 'pwix:modal setTarget() obsoleted method, redirected to target()' );
-    Modal.target( ...arguments );
+Modal.setTarget = function( target, id ){
+    console.warn( 'pwix:modal setTarget() obsoleted method, redirected to set()' );
+    let o = { target: target };
+    if( id ){
+        o.id = id;
+    }
+    Modal.set( o );
 };
 
 /**
@@ -184,23 +200,6 @@ Modal.setTitle = function( title, id ){
  * @returns {jQuery} the target of the modal, either explicitely identified or the topmost one, or null
  */
 Modal.target = function( o ){
-    //console.debug( o );
-    let modal;
-    if( o ){
-        if( _.isObject( o )){
-            if( o.target ){
-                modal = Modal._stack.modal( o.id );
-                if( modal ){
-                    modal.target( o.target );
-                }
-            } else {
-                console.error( 'pwix:modal target() expects the Object argument provides a \'target\' jQuery object, found', o.target );
-            }
-        } else {
-            console.error( 'pwix:modal target() expects an Object argument, found', o );
-        }
-    } else {
-        modal = Modal._stack.modal();
-    }
-    return modal ? modal.target() : null;
+    console.warn( 'pwix:modal target() obsoleted method, redirected to set()' );
+    Modal.set( o );
 };
