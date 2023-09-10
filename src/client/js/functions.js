@@ -101,6 +101,7 @@ Modal.run = function( parms ){
  * @param {Object} arg the argument object
  */
 Modal.set = function( arg ){
+    //console.debug( arg );
     const modal = Modal._stack.modal( arg.id );
     if( Object.keys( arg ).includes( 'beforeClose' )){
         modal.beforeClose( fn );
