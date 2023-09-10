@@ -274,6 +274,26 @@ Template.md_modal.helpers({
         return Template.currentData().modal.classes();
     },
 
+    // the classes to be added to the modal body
+    classesBody(){
+        return Template.currentData().modal.classesBody();
+    },
+
+    // the classes to be added to the modal content
+    classesContent(){
+        return Template.currentData().modal.classesContent();
+    },
+
+    // the classes to be added to the modal footer
+    classesFooter(){
+        return Template.currentData().modal.classesFooter();
+    },
+
+    // the classes to be added to the modal header
+    classesHeader(){
+        return Template.currentData().modal.classesHeader();
+    },
+
     // whether backdrop is static ?
     closeBackdrop(){
         return Template.currentData().modal.closeByBackdrop() ? 'true' : 'static';

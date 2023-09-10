@@ -98,6 +98,30 @@ The globally exported object.
 
         No default.
 
+    - `mdClassesBody`
+
+        A string which contains the classes to be added to the '`.modal-body`' element.
+
+        No default.
+
+    - `mdClassesContent`
+
+        A string which contains the classes to be added to the '`.modal-content`' element.
+
+        No default.
+
+    - `mdClassesFooter`
+
+        A string which contains the classes to be added to the '`.modal-footer`' element.
+
+        No default.
+
+    - `mdClassesHeader`
+
+        A string which contains the classes to be added to the '`.modal-header`' element.
+
+        No default.
+
     - `mdCloseByBackdrop`
 
         Whether clicking outside of the dialog should close it.
@@ -199,6 +223,14 @@ The globally exported object.
     - `boddy`: when specified, the name of the Blaze template to be set as the modal body
 
     - `classes`: when specified, classes to be added to the '`.modal`' element
+
+    - `classesBody`: when specified, classes to be added to the '`.modal-body`' element
+
+    - `classesContent`: when specified, classes to be added to the '`.modal-content`' element
+
+    - `classesFooter`: when specified, classes to be added to the '`.modal-footer`' element
+
+    - `classesHeader`: when specified, classes to be added to the '`.modal-header`' element
 
     - `footer`: when specified, the name of the Blaze template to be set as the modal footer
 

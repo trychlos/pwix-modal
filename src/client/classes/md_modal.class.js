@@ -68,6 +68,10 @@ export class mdModal {
     _body = new ReactiveVar( null );
     _buttons = new ReactiveVar( null );
     _classes = new ReactiveVar( null );
+    _classesbody = new ReactiveVar( null );
+    _classescontent = new ReactiveVar( null );
+    _classesfooter = new ReactiveVar( null );
+    _classesheader = new ReactiveVar( null );
     _closebackdrop = new ReactiveVar( true );
     _closeheader = new ReactiveVar( true );
     _closekeyboard = new ReactiveVar( true );
@@ -126,6 +130,18 @@ export class mdModal {
         }
         if( parms.mdClasses ){
             this._classes.set( parms.mdClasses );
+        }
+        if( parms.mdClassesBody ){
+            this._classesbody.set( parms.mdClassesBody );
+        }
+        if( parms.mdClassesContent ){
+            this._classescontent.set( parms.mdClassesContent );
+        }
+        if( parms.mdClassesFooter ){
+            this._classesfooter.set( parms.mdClassesFooter );
+        }
+        if( parms.mdClassesHeader ){
+            this._classesheader.set( parms.mdClassesHeader );
         }
 
         this._closebackdrop.set( this._argBool( parms, 'mdCloseByBackdrop', true ));
@@ -209,6 +225,54 @@ export class mdModal {
             this._classes.set( classes );
         }
         return this._classes.get() || '';
+    }
+
+    /**
+     * @summary Getter/Setter
+     * @param {String} classes the list of classes to be added to the '.modal-body'
+     * @returns {String} the current list of classes
+     */
+    classesBody( classes ){
+        if( classes !== undefined ){
+            this._classesbody.set( classes );
+        }
+        return this._classesbody.get() || '';
+    }
+
+    /**
+     * @summary Getter/Setter
+     * @param {String} classes the list of classes to be added to the '.modal-content'
+     * @returns {String} the current list of classes
+     */
+    classesContent( classes ){
+        if( classes !== undefined ){
+            this._classescontent.set( classes );
+        }
+        return this._classescontent.get() || '';
+    }
+
+    /**
+     * @summary Getter/Setter
+     * @param {String} classes the list of classes to be added to the '.modal-footer'
+     * @returns {String} the current list of classes
+     */
+    classesFooter( classes ){
+        if( classes !== undefined ){
+            this._classesfooter.set( classes );
+        }
+        return this._classesfooter.get() || '';
+    }
+
+    /**
+     * @summary Getter/Setter
+     * @param {String} classes the list of classes to be added to the '.modal-header'
+     * @returns {String} the current list of classes
+     */
+    classesHeader( classes ){
+        if( classes !== undefined ){
+            this._classesheader.set( classes );
+        }
+        return this._classesheader.get() || '';
     }
 
     /**

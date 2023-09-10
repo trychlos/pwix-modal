@@ -111,6 +111,18 @@ Modal.set = function( arg ){
     if( Object.keys( arg ).includes( 'classes' )){
         modal.classes( arg.classes );
     }
+    if( Object.keys( arg ).includes( 'classesBody' )){
+        modal.classesBody( arg.classesBody );
+    }
+    if( Object.keys( arg ).includes( 'classesContent' )){
+        modal.classesContent( arg.classesContent );
+    }
+    if( Object.keys( arg ).includes( 'classesFooter' )){
+        modal.classesFooter( arg.classesFooter );
+    }
+    if( Object.keys( arg ).includes( 'classesHeader' )){
+        modal.classesHeader( arg.classesHeader );
+    }
     if( Object.keys( arg ).includes( 'footer' )){
         modal.footer( arg.footer );
     }
