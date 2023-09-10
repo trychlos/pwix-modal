@@ -21,6 +21,7 @@
     - Be verbose when push into and pop from stack (todo #27)
     - Be verbose when resizing the modal (todo #17)
     - Let the dialog be displayed in full screen mode, an option which should be reserved to very special situation (todo #14)
+    - Remove verticalPosition parameter, as it should rather be managed by a class
 
 ### 1.6.0
 

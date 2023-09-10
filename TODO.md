@@ -10,10 +10,7 @@
 
 |   Id | Date       | Description and comment(s) |
 | ---: | :---       | :---                       |
-|    6 | 2023- 2-19 | have a mdWidth parameter + the corresponding setWidth() method |
-|    8 | 2023- 4-27 | when preparing 2.0, remove Modal.setTarget() obsolete method |
 |   10 | 2023- 5- 2 | would it be relevant to also allow to keep a position ? |
-|   23 | 2023- 7- 4 | when preparing 2.0, remove obsolete Modal.knownButtons() |
 |   28 | 2023- 9- 9 | Have an option to put a type on each provided button, and notably 'submit' on OK button |
 |   36 | 2023- 9-10 | review the buttons management |
 |   37 | 2023- 9-10 | closeByBackdrop, closeByHeader, closeByKeyboard mdModal methods should also be setters + set() should have corresponding code |
@@ -37,9 +34,13 @@
 |    5 | 2023- 2-19 | integrate pwix:modal-info into pwix:modal |
 |      | 2023- 5-29 | no: this is the principle of a package to add features to other packages |
 |      |            | instead, pwix:modal-info should rely on pwix:modal |
+|    6 | 2023- 2-19 | have a mdWidth parameter + the corresponding setWidth() method |
+|      | 2023- 9-10 | cancelled as should rather be managed by a class |
 |    7 | 2023- 2-19 | integrate pwix:bootbox into pwix:modal |
 |      | 2023- 5-29 | no: this is the principle of a package to add features to other packages |
 |      |            | instead, pwix:bootbox should rely on pwix:modal |
+|    8 | 2023- 4-27 | when preparing 2.0, remove Modal.setTarget() obsolete method |
+|      | 2023- 9-10 | will be done but no more a useful todo |
 |    9 | 2023- 5- 2 | when managing mdSizeKey, have only one data with both width and height instead of two datas (this is for rgpd reasons as these two datas cannot be individually refused) |
 |      | 2023- 5- 2 | done - see rationale in ChangeLog |
 |   11 | 2023- 5- 2 | even with a static backdrop, we keep the header 'cross' close button - and escape also close the dialog.. so is it useful ? |
@@ -67,6 +68,8 @@
 |      | 2023- 7- 4 | done |
 |   22 | 2023- 6-22 | md-foo div should be renamed md-hidden (and be hidden) |
 |      | 2023- 7- 4 | done |
+|   23 | 2023- 7- 4 | when preparing 2.0, remove obsolete Modal.knownButtons() |
+|      | 2023- 9-10 | will be done but no more a useful todo |
 |   24 | 2023- 7- 4 | should be more tolerant when the app set buttons (this is only text after all) |
 |      | 2023- 7- 5 | accept labels distincts from ids |
 |   25 | 2023- 7- 4 | the button which closes the modal (Cancel) should be a configuration option or a button option |

@@ -190,20 +190,6 @@ The globally exported object.
 
         No default.
 
-    - `mdVerticalPosition`
-
-        How to vertically position the modal.
-
-        Accepted values are either a standard position value as described in [MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/top), or one of constants:
-
-        - `Modal.C.Position.CENTER`
-
-            Vertically center the modal in the screen
-
-        Default is to position about 4rem of the top.
-
-        Note that this vertical position might be shifted if several modals are stacked at this time.
-
     This method returns a string which is the unique identifier of the new modal.
 
 - `Modal.beforeClose()`

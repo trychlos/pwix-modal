@@ -80,7 +80,6 @@ export class mdModal {
     _sizekey = new ReactiveVar( null );
     _target = new ReactiveVar( null );
     _title = new ReactiveVar( null );
-    _verticalposition = new ReactiveVar( null );
 
     // the rendered view
     _view = null;
@@ -163,9 +162,6 @@ export class mdModal {
         }
         if( parms.mdTitle ){
             this._title.set( parms.mdTitle );
-        }
-        if( parms.mdVerticalPosition ){
-            this._verticalposition.set( parms.mdVerticalPosition );
         }
 
         this._view = Blaze.renderWithData( Template.md_modal, { modal: this }, $( 'body' )[0] );
@@ -383,17 +379,5 @@ export class mdModal {
             this._title.set( title );
         }
         return this._title.get() || '';
-    }
-
-    /**
-     * @summary Getter/Setter
-     * @param {String} pos the vertical position to be set
-     * @returns {String} the currently set vertical position
-     */
-    verticalPosition( pos ){
-        if( pos !== undefined ){
-            this._verticalposition.set( pos );
-        }
-        return this._verticalposition.get() || Modal.C.Defaults.marginTop;
     }
 }

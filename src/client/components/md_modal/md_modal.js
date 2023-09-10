@@ -223,7 +223,7 @@ Template.md_modal.onRendered( function(){
             }
             self.$( '.modal-content' ).css({ top: top, height: maxHeight, minHeight: maxHeight });
         } else {
-            const position = Template.currentData().modal.verticalPosition();
+            const position = Modal.C.Defaults.marginTop;
             //console.debug( 'position', position );
             if( position ){
                 let top = position;
