@@ -2,9 +2,9 @@
 
 ## ChangeLog
 
-### 1.7.0-rc
+### 1.7.0
 
-    Release date: 
+    Release date: 2023- 9-10
 
     - Accept button labels and non-standard button identifiers (todo #24)
     - Accept a property object for each button (todo #25, #26)
@@ -136,4 +136,4 @@
 
 ---
 P. Wieser
-- Last updated on 2023, July 4th
+- Last updated on 2023, Sept. 10th

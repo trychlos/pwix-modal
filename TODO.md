@@ -14,7 +14,6 @@
 |   28 | 2023- 9- 9 | Have an option to put a type on each provided button, and notably 'submit' on OK button |
 |   36 | 2023- 9-10 | review the buttons management |
 |   38 |  |  |
-|   39 |  |  |
 
 ---
 ## Done
@@ -96,4 +95,4 @@
 
 ---
 P. Wieser
-- Last updated on 2023, July 4th
+- Last updated on 2023, Sept. 10th
