@@ -200,23 +200,13 @@ The globally exported object.
 
         This method is usually called from the rendered body template `onRendered()` function. At that time, not only the DOM is rendered for this element, but it is very probable that this is in this template that the triggered events will be useful.
 
-- `Modal.setTarget( target [, id ] )`
-
-    Obsoleted as of v 1.2.0, will be removed on 2.0, redirected to `Modal.target()` getter/setter.
-
-- `Modal.target({ target: <target> [, id: <id> ] })`
-
-    Obsoleted as of v 1.7.0, will be removed on 2.0, redirected to `Modal.set()` setter.
+    - `title`: when specified, the title of the modal
 
 #### Manage the header
 
 - `Modal.setClasses( classes [, id ] )`
 
     Set the supplementary '`.modal`' classes for the specified opened modal, defaulting to the topmost one.
-
-- `Modal.setTitle( title [, id ] )`
-
-    Set the title for the specified opened modal, defaulting to the topmost one.
 
 #### Manage the body
 
@@ -245,12 +235,6 @@ The globally exported object.
     Returns the specfied button as a jQuery object for the specified opened modal, defaulting to the topmost one.
 
     Not relevant when a particular footer has been specified.
-
-- `Modal.knownButtons()`
-
-    Returns an array which contains the buttons known by `Modal`.
-
-    This function is obsoleted as of v 1.6.0, will be removed on 2.0. It is enough to get `Object.keys( Modal.C.Button )` array.
 
 - `Modal.setButtons( buttons [, id ] )`
 

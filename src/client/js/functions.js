@@ -190,10 +190,12 @@ Modal.setTarget = function( target, id ){
  * @param {String} id the identifier of the targeted dialog, defaulting to the topmost
  */
 Modal.setTitle = function( title, id ){
-    const modal = Modal._stack.modal( id );
-    if( modal ){
-        modal.title( title );
+    console.warn( 'pwix:modal title() method is obsolete, redirected to set()' );
+    let o = { title: title };
+    if( id ){
+        o.id = id;
     }
+    Modal.set( o );
 };
 
 /**

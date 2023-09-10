@@ -13,6 +13,7 @@
     - Bump pwix:jquery-ui version requirement
     - Obsoletize Modal.target() replaced with Modal.set() (todo #31) bumping candidate version number
     - Obsoletize Modal.beforeClose() replaced with Modal.set() (todo #30)
+    - Obsoletize Modal.title() replaced with Modal.set() (todo #33)
 
 ### 1.6.0
 
