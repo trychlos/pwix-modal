@@ -18,6 +18,8 @@
     - Obsoletize Modal.setClasses() replaced with Modal.set() (todo #32)
     - Obsoletize Modal.setBody() replaced with Modal.set() (todo #34)
     - Define classesContent, classesBody, classesFooter and classesHeader to add classes to respective dialog parts (todo #29)
+    - Be verbose when push into and pop from stack (todo #27)
+    - Be verbose when resizing the modal (todo #17)
 
 ### 1.6.0
 

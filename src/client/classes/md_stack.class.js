@@ -105,7 +105,10 @@ export class mdStack {
      * @returns {mdModal} the removed dialog which was the topmost
      */
     pop(){
-        if( this._stack.length ){
+        if( this.count()){
+            if( Modal._conf.verbosity & Modal.C.Verbose.STACK ){
+                console.log( 'pwix:modal poping from stack (length='+this.count()+')' );
+            }
             //console.debug( 'before pop length', this.count());
             return this._stack.pop();
         }
@@ -120,6 +123,9 @@ export class mdStack {
     push( modal ){
         if( !modal || !( modal instanceof mdModal )){
             throw new Error( 'expecting mdModal instance, found', modal );
+        }
+        if( Modal._conf.verbosity & Modal.C.Verbose.STACK ){
+            console.log( 'pwix:modal pushing into stack (length='+this.count()+')' );
         }
         this._stack.push( modal );
         //console.debug( 'after push length', this.count());

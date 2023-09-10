@@ -18,6 +18,11 @@ Modal.C = {
         NO: 'NO'
     },
 
+    // some default values
+    Defaults: {
+        marginTop: '4rem'
+    },
+
     // (vertical) position
     Position: {
         CENTER: 'CENTER'
@@ -27,7 +32,9 @@ Modal.C = {
     Verbose: {
         NONE: 0,
         CONFIGURE: 0x01 <<  0,
-        NOMODAL:   0x01 <<  1
+        NOMODAL:   0x01 <<  1,
+        STACK:     0x01 <<  2,
+        RESIZING:  0x01 <<  3
     }
 };
 

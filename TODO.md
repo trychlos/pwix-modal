@@ -15,9 +15,7 @@
 |   10 | 2023- 5- 2 | would it be relevant to also allow to keep a position ? |
 |   14 | 2023- 6- 1 | have an option so that the modal covers all the device screen (useful in XS and SM displays) |
 |      | 2023- 6-11 | first try is not successful - see 'fullscreen' branch |
-|   17 | 2023- 6-10 | have a verbosity level to trace resizing |
 |   23 | 2023- 7- 4 | when preparing 2.0, remove obsolete Modal.knownButtons() |
-|   27 | 2023- 7- 5 | be verbose about stack push/pop |
 |   28 | 2023- 9- 9 | Have an option to put a type on each provided button, and notably 'submit' on OK button |
 |   36 | 2023- 9-10 | review the buttons management |
 |   37 |  |  |
@@ -54,6 +52,8 @@
 |      | 2023- 6-11 | done (mdVerticalPosition) |
 |   16 | 2023- 6-10 | have a verbosity level to trace 'trying to find a modal while none is opened' |
 |      | 2023- 6-11 | done |
+|   17 | 2023- 6-10 | have a verbosity level to trace resizing |
+|      | 2023- 9-10 | done |
 |   18 | 2023- 6-10 | dialogs are now positioned on top left, while they used to be on top center |
 |      | 2023- 6-11 | fixed |
 |   19 | 2023- 6-11 | responsivity is deficient when footer is large |
@@ -70,6 +70,8 @@
 |      | 2023- 7- 5 | accept a properties object for each button |
 |   26 | 2023- 7- 4 | added buttons (and ours) should have more options, at least an info to identify it |
 |      | 2023- 7- 5 | accept a properties object for each button |
+|   27 | 2023- 7- 5 | be verbose about stack push/pop |
+|      | 2023- 9-10 | done |
 |   29 | 2023- 9- 9 | provide additional classes for modal-content, modal-header, modal-body and modal-footer |
 |      | 2023- 9-10 | done |
 |   30 | 2023- 9-10 | obsolete Modal.beforeClose() method, replaced with a set() with option |

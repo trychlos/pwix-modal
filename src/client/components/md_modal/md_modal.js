@@ -138,7 +138,9 @@ Template.md_modal.onRendered( function(){
         });
         //console.log( 'resizable', res );
         self.$( '.modal-content' ).on( 'resize', ( event, ui ) => {
-            //console.log( 'resize', event, ui );
+            if( Modal._conf.verbosity & Modal.C.Verbose.RESIZING ){
+                console.log( 'resizing', event, ui );
+            }
             if( !self.MD.minWidth ){
                 const div = self.$( '.modal-content' )[0];
                 //console.log( 'width', 'client='+div.clientWidth, 'offset='+div.offsetWidth, 'scroll='+div.scrollWidth );
@@ -184,24 +186,33 @@ Template.md_modal.onRendered( function(){
     self.autorun(() => {
         const maxWidth = Layout.width();
         self.MD.computeContentWidth( maxWidth );
-        self.$( '.modal-content' ).width( self.MD.contentWidth.get());
+        const w = self.MD.contentWidth.get();
+        if( Modal._conf.verbosity & Modal.C.Verbose.RESIZING ){
+            console.log( 'set minimal width of the modal to', w );
+        }
+        self.$( '.modal-content' ).width( w );
     });
 
     // make sure the modal doesn't override the screen width
     self.autorun(() => {
         const margin = self.$( '.md-hidden' ).css( 'margin' );
-        //console.debug( 'margin', margin ); // '4px'
-        self.$( '.modal-content' ).css({ maxWidth: Layout.width()-2*parseInt( margin )});
+        const max = Layout.width()-2*parseInt( margin );
+        if( Modal._conf.verbosity & Modal.C.Verbose.RESIZING ){
+            console.log( 'set maximal width of the modal to', max, '(margin='+margin+')' );
+        }
+        self.$( '.modal-content' ).css({ maxWidth: max });
     });
 
     // horizontally center the modal
     //  this was automatic with standard bootstrap, but has disappeared somewhere
     self.autorun(() => {
         const contentWidth = parseInt( self.$( '.modal-content' ).css( 'width' ));
-        //console.debug( 'contentWidth', contentWidth );
         const viewWidth = parseInt( Layout.width());
-        //console.debug( 'viewWidth', viewWidth );
-        self.$( '.modal-content' ).css({ left: (( viewWidth-contentWidth ) / 2 )+'px' });
+        const left = (( viewWidth-contentWidth ) / 2 )+'px';
+        if( Modal._conf.verbosity & Modal.C.Verbose.RESIZING ){
+            console.log( 'horizontally center the modal: viewWidth', viewWidth, 'contentWidth', contentWidth, 'left', left );
+        }
+        self.$( '.modal-content' ).css({ left: left });
     });
 
     // vertically position the modal
@@ -214,6 +225,9 @@ Template.md_modal.onRendered( function(){
                 const viewHeight = parseInt( Layout.height());
                 const contentHeight = parseInt( self.$( '.modal-content' ).css( 'height' ));
                 top = (( viewHeight - contentHeight ) / 2 )+'px';
+            }
+            if( Modal._conf.verbosity & Modal.C.Verbose.RESIZING ){
+                console.log( 'vertically position', top );
             }
             self.$( '.modal-content' ).css({ top: top });
         }

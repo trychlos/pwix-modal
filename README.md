@@ -50,6 +50,14 @@ Known configuration options are:
 
         Trace the modal research when there is none
 
+    - `Modal.C.Verbose.RESIZING`
+
+        Trace resizing informations
+
+    - `Modal.C.Verbose.STACK`
+
+        Trace push into and pop from stack
+
     Defaults to `Modal.C.Verbose.NONE`.
 
 Remind too that Meteor packages are instanciated at application level. They are so only configurable once, or, in other words, only one instance has to be or can be configured. Addtionnal calls to `Modal.configure()` will just override the previous one. You have been warned: **only the application should configure a package**.
@@ -182,7 +190,7 @@ The globally exported object.
 
             Vertically center the modal in the screen
 
-        Default is to position about 2em of the top (depending of the size of the screen).
+        Default is to position about 4rem of the top (depending of the size of the screen).
 
         Note that this vertical position might be shifted if several modals are stacked at this time.
 

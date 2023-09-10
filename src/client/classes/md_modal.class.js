@@ -378,6 +378,6 @@ export class mdModal {
         if( pos !== undefined ){
             this._verticalposition.set( pos );
         }
-        return this._verticalposition.get() || '';
+        return this._verticalposition.get() || Modal.C.Defaults.marginTop;
     }
 }
