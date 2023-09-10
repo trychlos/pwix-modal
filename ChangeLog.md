@@ -2,9 +2,9 @@
 
 ## ChangeLog
 
-### 1.7.1-rc
+### 1.7.1
 
-    Release date: 
+    Release date: 2023- 9-11
 
     - Reset fullScreen default value, removing those used during the tests
 
@@ -142,4 +142,4 @@
 
 ---
 P. Wieser
-- Last updated on 2023, Sept. 10th
+- Last updated on 2023, Sept. 11th
