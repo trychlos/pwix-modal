@@ -10,6 +10,7 @@
     - Accept a property object for each button (todo #25, #26)
     - Fix race condition between stack management and modal life
     - Bump pwix:i18n version requirement
+    - Bump pwix:jquery-ui version requirement
 
 ### 1.6.0
 
