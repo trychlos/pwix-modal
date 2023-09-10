@@ -102,34 +102,38 @@ Modal.run = function( parms ){
  */
 Modal.set = function( arg ){
     const modal = Modal._stack.modal( arg.id );
-    if( arg.beforeClose ){
+    if( Object.keys( arg ).includes( 'beforeClose' )){
         modal.beforeClose( fn );
     }
-    if( arg.classes ){
+    if( Object.keys( arg ).includes( 'body' )){
+        modal.body( arg.body );
+    }
+    if( Object.keys( arg ).includes( 'classes' )){
         modal.classes( arg.classes );
     }
-    if( arg.footer ){
+    if( Object.keys( arg ).includes( 'footer' )){
         modal.footer( arg.footer );
     }
-    if( arg.target ){
+    if( Object.keys( arg ).includes( 'target' )){
         modal.target( arg.target );
     }
-    if( arg.title ){
+    if( Object.keys( arg ).includes( 'title' )){
         modal.title( arg.title );
     }
 };
 
 /**
  * @summary Set the template to be rendered as the modal body
- * @locus Client
- * @param {String} template the name of the template
- * @param {String} id the identifier of the targeted dialog, defaulting to the topmost
+ *  OBSOLETED
+ *  WILL BE REMOVED ON 2.0 VERSION
  */
 Modal.setBody = function( template, id ){
-    const modal = Modal._stack.modal( id );
-    if( modal ){
-        modal.body( template );
+    console.warn( 'pwix:modal setBody() method is obsolete, redirected to set()' );
+    let o = { body: template };
+    if( id ){
+        o.id = id;
     }
+    Modal.set( o );
 };
 
 /**

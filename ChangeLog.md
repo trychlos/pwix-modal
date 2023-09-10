@@ -16,6 +16,7 @@
     - Obsoletize Modal.title() replaced with Modal.set() (todo #33)
     - Obsoletize Modal.setFooter() replaced with Modal.set() (todo #35)
     - Obsoletize Modal.setClasses() replaced with Modal.set() (todo #32)
+    - Obsoletize Modal.setBody() replaced with Modal.set() (todo #34)
 
 ### 1.6.0
 
