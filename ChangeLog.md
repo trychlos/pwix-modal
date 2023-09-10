@@ -23,6 +23,7 @@
     - Let the dialog be displayed in full screen mode, an option which should be reserved to very special situation (todo #14)
     - Remove verticalPosition parameter, as it should rather be managed by a class
     - Bump Meteor version requirement
+    - closeByBackdrop, closeByHeader, closeByKeyboard have now corresponding setters and are useable via Modal.set() (todo #37)
 
 ### 1.6.0
 

@@ -284,27 +284,39 @@ export class mdModal {
     }
 
     /**
-     * @summary Getter
+     * @summary Getter/Setter
+     * @param {Boolean} b whether clicking outside of the dialog should close it
      * @returns {Boolean} whether clicking outside of the dialog should close it
      *  In other terms, should we have a static backdrop ?
      */
-    closeByBackdrop(){
+    closeByBackdrop( b ){
+        if( b === true || b === false ){
+            this._closebackdrop.set( b );
+        }
         return this._closebackdrop.get();
     }
 
     /**
-     * @summary Getter
+     * @summary Getter/Setter
+     * @param {Boolean} b whether the header has a close button which let the user close the modal ?
      * @returns {Boolean} whether the header has a close button which let the user close the modal ?
      */
-    closeByHeader(){
+    closeByHeader( b ){
+        if( b === true || b === false ){
+            this._closeheader.set( b );
+        }
         return this._closeheader.get();
     }
 
     /**
-     * @summary Getter
+     * @summary Getter/Setter
+     * @param {Boolean} b whether Escape key let the user close the modal ?
      * @returns {Boolean} whether Escape key let the user close the modal ?
      */
-    closeByKeyboard(){
+    closeByKeyboard( b ){
+        if( b === true || b === false ){
+            this._closekeyboard.set( b );
+        }
         return this._closekeyboard.get();
     }
 

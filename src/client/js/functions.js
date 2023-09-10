@@ -123,6 +123,15 @@ Modal.set = function( arg ){
     if( Object.keys( arg ).includes( 'classesHeader' )){
         modal.classesHeader( arg.classesHeader );
     }
+    if( Object.keys( arg ).includes( 'closeByBackdrop' )){
+        modal.closeByBackdrop( arg.closeByBackdrop );
+    }
+    if( Object.keys( arg ).includes( 'closeByHeader' )){
+        modal.closeByHeader( arg.closeByHeader );
+    }
+    if( Object.keys( arg ).includes( 'closeByKeyboard' )){
+        modal.closeByKeyboard( arg.closeByKeyboard );
+    }
     if( Object.keys( arg ).includes( 'footer' )){
         modal.footer( arg.footer );
     }

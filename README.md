@@ -224,7 +224,7 @@ The globally exported object.
 
         See the `mdBeforeClose` parameter to get a description of the function.
 
-    - `boddy`: when specified, the name of the Blaze template to be set as the modal body
+    - `body`: when specified, the name of the Blaze template to be set as the modal body
 
     - `classes`: when specified, classes to be added to the '`.modal`' element
 
@@ -235,6 +235,12 @@ The globally exported object.
     - `classesFooter`: when specified, classes to be added to the '`.modal-footer`' element
 
     - `classesHeader`: when specified, classes to be added to the '`.modal-header`' element
+
+    - `closeByBackdrop`: when specified, whether the dialog should be closed when clicking on the backdrop
+
+    - `closeByHeader`: when specified, whether the header exhibits a dismiss button
+
+    - `closeByKeyboard`: when specified, whether the dialog should be closed when hitting Escape
 
     - `footer`: when specified, the name of the Blaze template to be set as the modal footer
 
