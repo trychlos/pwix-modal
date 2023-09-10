@@ -14,6 +14,7 @@
     - Obsoletize Modal.target() replaced with Modal.set() (todo #31) bumping candidate version number
     - Obsoletize Modal.beforeClose() replaced with Modal.set() (todo #30)
     - Obsoletize Modal.title() replaced with Modal.set() (todo #33)
+    - Obsoletize Modal.setFooter() replaced with Modal.set() (todo #35)
 
 ### 1.6.0
 

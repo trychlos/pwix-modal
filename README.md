@@ -196,6 +196,14 @@ The globally exported object.
 
         See the `mdBeforeClose` parameter to get a description of the function.
 
+    - `footer`: when specified, the name of the Blaze template to be set as the modal footer
+
+        Just set to `null` to pass from a specific footer to the standard one.
+
+        Specifying a particular footer takes precedence over the standard one.
+        
+        When a particular footer is specified, then the button methods are no more operationnal, and you have to manage them yourself.
+
     - `target`: when specified, the JQuery object which must receive events for that modal
 
         This method is usually called from the rendered body template `onRendered()` function. At that time, not only the DOM is rendered for this element, but it is very probable that this is in this template that the triggered events will be useful.
@@ -214,15 +222,7 @@ The globally exported object.
 
     Set the name of the body template for the specified opened modal, defaulting to the topmost one.
 
-#### Manage the footer
-
-- `Modal.setFooter( template [, id ] )`
-
-    Set the name of the footer template for the specified opened modal, defaulting to the topmost one.
-
-    Just set to `null` to pass from a specific footer to the standard one.
-
-    Specifying a particular footer takes precedence over the standard one. When it is specified, then the button methods are no more operationnal.
+#### Manage the buttons
 
 - `Modal.buttonEnable( button_id, enable [, id ] )`
 

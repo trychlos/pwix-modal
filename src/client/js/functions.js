@@ -10,10 +10,8 @@ import { mdModal } from '../classes/md_modal.class.js';
 
 /**
  * @summary Get/set the function which allow the modal closing
- * @locus Client
- * @param {Function} fn the function to be set
- * @param {String} id the identifier of the targeted dialog, defaulting to the topmost
- * @returns {Function} the closing function
+ *  OBSOLETED
+ *  WILL BE REMOVED ON 2.0 VERSION
  */
 Modal.beforeClose = function( fn, id ){
     console.warn( 'pwix:modal beforeClose() method is obsolete, redirected to set()' );
@@ -78,7 +76,8 @@ Modal.count = function(){
 
 /**
  * @locus Client
- * @return {Array} known buttons
+ *  OBSOLETED
+ *  WILL BE REMOVED ON 2.0 VERSION
  */
 Modal.knownButtons = function(){
     console.warn( 'pwix:modal knownButtons() method is obsolete, use Object.keys( Modal.C.Button )' );
@@ -106,8 +105,14 @@ Modal.set = function( arg ){
     if( arg.beforeClose ){
         modal.beforeClose( fn );
     }
+    if( arg.footer ){
+        modal.footer( arg.footer );
+    }
     if( arg.target ){
         modal.target( arg.target );
+    }
+    if( arg.title ){
+        modal.title( arg.title );
     }
 };
 
@@ -158,15 +163,16 @@ Modal.setClasses = function( classes, id ){
 
 /**
  * @summary Set the template to be rendered as the modal footer
- * @locus Client
- * @param {String} template the name of the Blaze template
- * @param {String} id the identifier of the targeted dialog, defaulting to the topmost
+ *  OBSOLETED
+ *  WILL BE REMOVED ON 2.0 VERSION
  */
 Modal.setFooter = function( template, id ){
-    const modal = Modal._stack.modal( id );
-    if( modal ){
-        modal.footer( template );
+    console.warn( 'pwix:modal setFooter() method is obsolete, redirected to set()' );
+    let o = { footer: template };
+    if( id ){
+        o.id = id;
     }
+    Modal.set( o );
 };
 
 /**
@@ -185,9 +191,8 @@ Modal.setTarget = function( target, id ){
 
 /**
  * @summary Set the title of the dialog
- * @locus Client
- * @param {String} title the title to be set
- * @param {String} id the identifier of the targeted dialog, defaulting to the topmost
+ *  OBSOLETED
+ *  WILL BE REMOVED ON 2.0 VERSION
  */
 Modal.setTitle = function( title, id ){
     console.warn( 'pwix:modal title() method is obsolete, redirected to set()' );
@@ -200,11 +205,8 @@ Modal.setTitle = function( title, id ){
 
 /**
  * @summary Get or set the events target
- * @locus Client
- * @param {Object} o an optional object which contains needed parameters to act as a setter
- *  - target: a jQuery object which is to be set as the target of the modal
- *  - id: a string identifier which identifies the modal, defaulting to the topmost one
- * @returns {jQuery} the target of the modal, either explicitely identified or the topmost one, or null
+ *  OBSOLETED
+ *  WILL BE REMOVED ON 2.0 VERSION
  */
 Modal.target = function( o ){
     console.warn( 'pwix:modal target() method is obsolete, redirected to set()' );
