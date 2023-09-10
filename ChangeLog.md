@@ -6,7 +6,7 @@
 
     Release date: 
 
-    - 
+    - Reset fullScreen default value, removing those used during the tests
 
 ### 1.7.0
 

@@ -195,7 +195,6 @@ Template.md_modal.onRendered( function(){
         if( Modal._conf.verbosity & Modal.C.Verbose.RESIZING ){
             console.log( 'set minimal width of the modal to', w );
         }
-        console.log( 'set minimal width of the modal to', w );
         self.$( '.modal-content' ).css({ width: w, minWidth: w, maxWidth: maxWidth });
     });
 

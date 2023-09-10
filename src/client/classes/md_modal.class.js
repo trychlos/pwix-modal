@@ -152,7 +152,7 @@ export class mdModal {
             this._footer.set( parms.mdFooter );
         }
 
-        this._fullscreen.set( this._argBool( parms, 'mdFullScreen', true ));
+        this._fullscreen.set( this._argBool( parms, 'mdFullScreen', false ));
 
         if( parms.mdSizeKey ){
             this._sizekey.set( parms.mdSizeKey );
