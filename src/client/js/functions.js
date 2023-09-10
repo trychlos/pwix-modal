@@ -105,6 +105,9 @@ Modal.set = function( arg ){
     if( arg.beforeClose ){
         modal.beforeClose( fn );
     }
+    if( arg.classes ){
+        modal.classes( arg.classes );
+    }
     if( arg.footer ){
         modal.footer( arg.footer );
     }
@@ -150,15 +153,16 @@ Modal.setButtons = function( buttons, id ){
 
 /**
  * @summary Set the classes of the dialog
- * @locus Client
- * @param {String} classes the classes to be added to the '.modal' element
- * @param {String} id the identifier of the targeted dialog, defaulting to the topmost
+ *  OBSOLETED
+ *  WILL BE REMOVED ON 2.0 VERSION
  */
 Modal.setClasses = function( classes, id ){
-    const modal = Modal._stack.modal( id );
-    if( modal ){
-        modal.classes( classes );
+    console.warn( 'pwix:modal setClasses() method is obsolete, redirected to set()' );
+    let o = { classes: classes };
+    if( id ){
+        o.id = id;
     }
+    Modal.set( o );
 };
 
 /**

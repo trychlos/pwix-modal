@@ -196,6 +196,8 @@ The globally exported object.
 
         See the `mdBeforeClose` parameter to get a description of the function.
 
+    - `classes`: when specified, classes to be added to the '`.modal`' element
+
     - `footer`: when specified, the name of the Blaze template to be set as the modal footer
 
         Just set to `null` to pass from a specific footer to the standard one.
@@ -209,12 +211,6 @@ The globally exported object.
         This method is usually called from the rendered body template `onRendered()` function. At that time, not only the DOM is rendered for this element, but it is very probable that this is in this template that the triggered events will be useful.
 
     - `title`: when specified, the title of the modal
-
-#### Manage the header
-
-- `Modal.setClasses( classes [, id ] )`
-
-    Set the supplementary '`.modal`' classes for the specified opened modal, defaulting to the topmost one.
 
 #### Manage the body
 
