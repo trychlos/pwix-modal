@@ -20,7 +20,10 @@ Modal.C = {
 
     // some default values
     Defaults: {
-        marginTop: '4rem'
+        // vertical position of the standard dialog
+        marginTop: '4rem',
+        // the minimal margin around the dialog, in px unit
+        marginMin: 8
     },
 
     // (vertical) position

@@ -20,6 +20,7 @@
     - Define classesContent, classesBody, classesFooter and classesHeader to add classes to respective dialog parts (todo #29)
     - Be verbose when push into and pop from stack (todo #27)
     - Be verbose when resizing the modal (todo #17)
+    - Let the dialog be displayed in full screen mode, an option which should be reserved to very special situation (todo #14)
 
 ### 1.6.0
 

@@ -184,47 +184,53 @@ Template.md_modal.onRendered( function(){
     //  if we display a dynamic footer, then the dialog may have some issues to find the right width
     //  if we find here that the footer width is greater than the content, then we adjust the dialog width
     self.autorun(() => {
-        const maxWidth = Layout.width();
-        self.MD.computeContentWidth( maxWidth );
-        const w = self.MD.contentWidth.get();
+        const maxWidth = parseInt( Layout.width()) - 2*Modal.C.Defaults.marginMin;
+        let w;
+        if( Template.currentData().modal.fullScreen()){
+            w = maxWidth;
+        } else {
+            self.MD.computeContentWidth( maxWidth );
+            w = self.MD.contentWidth.get();
+        }
         if( Modal._conf.verbosity & Modal.C.Verbose.RESIZING ){
             console.log( 'set minimal width of the modal to', w );
         }
-        self.$( '.modal-content' ).width( w );
-    });
-
-    // make sure the modal doesn't override the screen width
-    self.autorun(() => {
-        const margin = self.$( '.md-hidden' ).css( 'margin' );
-        const max = Layout.width()-2*parseInt( margin );
-        if( Modal._conf.verbosity & Modal.C.Verbose.RESIZING ){
-            console.log( 'set maximal width of the modal to', max, '(margin='+margin+')' );
-        }
-        self.$( '.modal-content' ).css({ maxWidth: max });
+        console.log( 'set minimal width of the modal to', w );
+        self.$( '.modal-content' ).css({ width: w, minWidth: w, maxWidth: maxWidth });
     });
 
     // horizontally center the modal
     //  this was automatic with standard bootstrap, but has disappeared somewhere
     self.autorun(() => {
-        const contentWidth = parseInt( self.$( '.modal-content' ).css( 'width' ));
-        const viewWidth = parseInt( Layout.width());
-        const left = (( viewWidth-contentWidth ) / 2 )+'px';
-        if( Modal._conf.verbosity & Modal.C.Verbose.RESIZING ){
-            console.log( 'horizontally center the modal: viewWidth', viewWidth, 'contentWidth', contentWidth, 'left', left );
+        if( !Template.currentData().modal.fullScreen()){
+            const contentWidth = parseInt( self.$( '.modal-content' ).css( 'width' ));
+            const viewWidth = parseInt( Layout.width());
+            const left = (( viewWidth-contentWidth ) / 2 )+'px';
+            if( Modal._conf.verbosity & Modal.C.Verbose.RESIZING ){
+                console.log( 'horizontally center the modal: viewWidth', viewWidth, 'contentWidth', contentWidth, 'left', left );
+            }
+            self.$( '.modal-content' ).css({ left: left });
         }
-        self.$( '.modal-content' ).css({ left: left });
     });
 
     // vertically position the modal
     self.autorun(() => {
-        const position = Template.currentData().modal.verticalPosition();
-        //console.debug( 'position', position );
-        if( position ){
-            let top = position;
-            if( position === Modal.C.Position.CENTER ){
-                const viewHeight = parseInt( Layout.height());
-                const contentHeight = parseInt( self.$( '.modal-content' ).css( 'height' ));
-                top = (( viewHeight - contentHeight ) / 2 )+'px';
+        const maxHeight = parseInt( Layout.height()) - 2*Modal.C.Defaults.marginMin;
+        if( Template.currentData().modal.fullScreen()){
+            const top = Modal.C.Defaults.marginMin+'px';
+            if( Modal._conf.verbosity & Modal.C.Verbose.RESIZING ){
+                console.log( 'vertically position', top );
+            }
+            self.$( '.modal-content' ).css({ top: top, height: maxHeight, minHeight: maxHeight });
+        } else {
+            const position = Template.currentData().modal.verticalPosition();
+            //console.debug( 'position', position );
+            if( position ){
+                let top = position;
+                if( position === Modal.C.Position.CENTER ){
+                    const contentHeight = parseInt( self.$( '.modal-content' ).css( 'height' ));
+                    top = (( viewHeight - contentHeight ) / 2 )+'px';
+                }
             }
             if( Modal._conf.verbosity & Modal.C.Verbose.RESIZING ){
                 console.log( 'vertically position', top );

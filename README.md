@@ -156,6 +156,16 @@ The globally exported object.
 
         If both are specified, `mdFooter` takes precedence on `mdButtons`.
 
+    - `mdFullScreen`
+
+        Whether the modal should be displayed in full screen mode.
+
+        This is nonetheless a rather bad idea in XS and S devices where the pagination should rather be reviewed.
+
+        And also a bad idea on larger displays, as this lead to very too big dialogs.
+
+        Reserve this use to dedicated less-than-MD devices.
+
     - `mdSizeKey`
 
         The string name of the `localStorage` item which will record the last used width and height.
@@ -190,7 +200,7 @@ The globally exported object.
 
             Vertically center the modal in the screen
 
-        Default is to position about 4rem of the top (depending of the size of the screen).
+        Default is to position about 4rem of the top.
 
         Note that this vertical position might be shifted if several modals are stacked at this time.
 
@@ -247,6 +257,8 @@ The globally exported object.
         Specifying a particular footer takes precedence over the standard one.
         
         When a particular footer is specified, then the button methods are no more operationnal, and you have to manage them yourself.
+
+    - `fullscreen`: when specified, whether the dialog should be displayed in full screen mode
 
     - `target`: when specified, the JQuery object which must receive events for that modal
 

@@ -76,6 +76,7 @@ export class mdModal {
     _closeheader = new ReactiveVar( true );
     _closekeyboard = new ReactiveVar( true );
     _footer = new ReactiveVar( null );
+    _fullscreen = new ReactiveVar( null );
     _sizekey = new ReactiveVar( null );
     _target = new ReactiveVar( null );
     _title = new ReactiveVar( null );
@@ -151,6 +152,9 @@ export class mdModal {
         if( parms.mdFooter ){
             this._footer.set( parms.mdFooter );
         }
+
+        this._fullscreen.set( this._argBool( parms, 'mdFullScreen', true ));
+
         if( parms.mdSizeKey ){
             this._sizekey.set( parms.mdSizeKey );
         }
@@ -318,6 +322,18 @@ export class mdModal {
             this._footer.set( footer );
         }
         return this._footer.get() || '';
+    }
+
+    /**
+     * @summary Getter/Setter
+     * @param {Boolean} fullscreen whether the modal should be displayed in full screen mode
+     * @returns {Boolean} the current full screen mode
+     */
+    fullScreen( fullscreen ){
+        if( fullscreen === true || fullscreen === false ){
+            this._fullscreen.set( fullscreen );
+        }
+        return this._fullscreen.get();
     }
 
     /**
