@@ -18,7 +18,9 @@
 |   17 | 2023- 6-10 | have a verbosity level to trace resizing |
 |   23 | 2023- 7- 4 | when preparing 2.0, remove obsolete Modal.knownButtons() |
 |   27 | 2023- 7- 5 | be verbose about stack push/pop |
-|   28 |  |  |
+|   28 | 2023- 9- 9 | Have an option to put a type on each provided button, and notably 'submit' on OK button |
+|   29 | 2023- 9- 9 | provide additional classes for modal-content, modal-header, modal-body and modal-footer |
+|   30 |  |  |
 
 ---
 ## Done
