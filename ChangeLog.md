@@ -6,7 +6,7 @@
 
     Release date: 
 
-    - 
+    - Fix default vertical positioning
 
 ### 1.7.1
 

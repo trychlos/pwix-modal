@@ -7,13 +7,14 @@
 .md-modal {
 
     --md-modal-margin: 0.25em;
-    --md-modal-padding: 1rem;
-    --md-modal-top: 0.25em;
+    --md-modal-padding: 0.25em;
+    --md-modal-top: 2em;
     --md-modal-shift: 0.25em;
 
     @media screen and ( min-width: @ui-md-width ){
         --md-modal-margin: 0.5em;
-        --md-modal-top: 2em;
+        --md-modal-padding: 0.5em;
+        --md-modal-top: 4rem;
         --md-modal-shift: 1em;
     }
 
@@ -21,9 +22,14 @@
         margin: var( --md-modal-margin );
     }
 
+    .modal-content {
+        top: var( --md-modal-top );
+    }
+
     .modal-content.ui-resizable {
         overflow: hidden;
     }
+
     // added to have a vertical scrollbar in cookieManager
     .modal-body {
         overflow-y: auto;

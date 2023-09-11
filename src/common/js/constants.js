@@ -18,19 +18,6 @@ Modal.C = {
         NO: 'NO'
     },
 
-    // some default values
-    Defaults: {
-        // vertical position of the standard dialog
-        marginTop: '4rem',
-        // the minimal margin around the dialog, in px unit
-        marginMin: 8
-    },
-
-    // (vertical) position
-    Position: {
-        CENTER: 'CENTER'
-    },
-
     // verbosity levels
     Verbose: {
         NONE: 0,
