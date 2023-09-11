@@ -2,9 +2,9 @@
 
 ## ChangeLog
 
-### 1.7.2-rc
+### 1.7.2
 
-    Release date: 
+    Release date: 2023- 9-11
 
     - Fix default vertical positioning
 
