@@ -105,20 +105,6 @@ Template.md_modal.onCreated( function(){
             const maxWidth = parentWidth < childWidth ? childWidth + ( 2 * self.MD.cssPadding()) : parentWidth;
             //console.debug( 'maxWidth', maxWidth );
             return maxWidth;
-        },
-
-        // wait for the DOM be ready and send a 'md-ready' event
-        waitForDom(){
-            const intervalId = setInterval(() => {
-                const $div = self.$( '.md-modal' );
-                if( $div.length > 0 ){
-                    $div.trigger( 'md-ready', {
-                        id: Template.currentData().modal.id(),
-                        parms: Template.currentData().modal.parms()
-                    });
-                    clearInterval( intervalId );
-                }
-            }, 20 );
         }
     };
 
@@ -265,6 +251,13 @@ Template.md_modal.onRendered( function(){
             }
             return true;
         });
+    });
+
+    // send 'md-ready' when DOM is ready
+    const target = Template.currentData().modal.target() || self.$( '.md-modal' );
+    target.trigger( 'md-ready', {
+        id: Template.currentData().modal.id(),
+        parms: Template.currentData().modal.parms()
     });
 });
 
