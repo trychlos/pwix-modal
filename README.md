@@ -322,6 +322,7 @@ These are our known, standard, button identifiers. Their labels are localizable.
     - `modal`: the modal identifier
     - `button`: the button identifier
     - `btnObj`: the button properties as passed to `Modal.setButtons()` function or as `mdButtons` parameter
+    - `parms`: the parameters initialy passed to `Modal.run()`.
 
     If the button holds a truely `dismiss` property, or is the only button of the standard footer, then the dialog is closed. In other cases, it is the responsability of the event receiver to close the modal.
 
@@ -331,9 +332,19 @@ These are our known, standard, button identifiers. Their labels are localizable.
 
     The event holds a data object with:
 
-    - `id`: the modal identifier.
+    - `id`: the modal identifier
+    - `parms`: the parameters initialy passed to `Modal.run()`.
 
     Note that this event is only for information. It does not let the receiver to prevent the modal closing. In order to do that, see the `mdBeforeClose` parameter.
+
+- `md-ready`
+
+    The modal has been rendered, the DOM is ready.
+
+    The event holds a data object with:
+
+    - `id`: the modal identifier
+    - `parms`: the parameters initialy passed to `Modal.run()`.
 
 ## Example
 

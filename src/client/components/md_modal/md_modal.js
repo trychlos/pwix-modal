@@ -105,6 +105,20 @@ Template.md_modal.onCreated( function(){
             const maxWidth = parentWidth < childWidth ? childWidth + ( 2 * self.MD.cssPadding()) : parentWidth;
             //console.debug( 'maxWidth', maxWidth );
             return maxWidth;
+        },
+
+        // wait for the DOM be ready and send a 'md-ready' event
+        waitForDom(){
+            const intervalId = setInterval(() => {
+                const $div = self.$( '.md-modal' );
+                if( $div.length > 0 ){
+                    $div.trigger( 'md-ready', {
+                        id: Template.currentData().modal.id(),
+                        parms: Template.currentData().modal.parms()
+                    });
+                    clearInterval( intervalId );
+                }
+            }, 20 );
         }
     };
 
@@ -354,7 +368,12 @@ Template.md_modal.events({
         const btnObj = btnElement.data( BTNKEY );
         const target = modal.target() || btnElement;
         //console.debug( target );
-        target.trigger( 'md-click', { id: modal.id(), button: btnId, btnObj: btnObj });
+        target.trigger( 'md-click', {
+            id: modal.id(),
+            button: btnId,
+            btnObj: btnObj,
+            parms: modal.parms()
+        });
 
         // whether to dismiss the dialog ?
         const buttons = modal.buttons();
@@ -381,7 +400,10 @@ Template.md_modal.events({
         if( !fn || fn( modal.id())){
             const target = modal.target() || instance.$( event.currentTarget );
             instance.MD.lastSizeSet();
-            target.trigger( 'md-close', { id: modal.id() });
+            target.trigger( 'md-close', {
+                id: modal.id(),
+                parms: modal.parms()
+            });
         } else {
             event.preventDefault();
         }

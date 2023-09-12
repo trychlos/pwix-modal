@@ -2,11 +2,12 @@
 
 ## ChangeLog
 
-### 1.7.4-rc
+### 1.8.0-rc
 
     Release date: 
 
-    - 
+    - Define new 'md-ready' event (bumping candidate version number)
+    - All events now receive also the parameters initially passed to Modal.run()
 
 ### 1.7.3
 
