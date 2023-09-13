@@ -196,6 +196,12 @@ The globally exported object.
 
     This method returns a string which is the unique identifier of the new modal.
 
+- `Modal.buttonFind( button_id [, id ] )`
+
+    Returns the specfied button as a jQuery object for the specified opened modal, defaulting to the topmost one.
+
+    Because this method makes a search on the `data-md-btn-id` attribute, it may be irrelevant when a specific footer has been defined.
+
 - `Modal.close()`
 
     Close the current modal dialog from the caller.
@@ -226,7 +232,7 @@ The globally exported object.
 
     - `body`: when specified, the name of the Blaze template to be set as the modal body
 
-    - `button`: when specified, an object or an array of object, each object providing the properties to be set on a button, as:
+    - `buttons`: when specified, an object or an array of object, each object providing the properties to be set on a button, as:
 
         - `id`: mandatory
         - `label`
@@ -237,6 +243,8 @@ The globally exported object.
         - `html`
         - `cb`
         - `dismiss`
+
+        If a button has not been previously defined, then it is added at the end of the list.
 
     - `classes`: when specified, classes to be added to the '`.modal`' element
 
@@ -278,7 +286,7 @@ An accepted string must be one of the button identifiers as defined by the [cons
 
 An accepted object is a full object definition, with keys:
 
-- `id`: the button identifier, mandatory
+- `id`: the button identifier as a string, mandatory
 
     It may be one of our known button identifiers, or an identifier provided by the caller.
 
@@ -288,9 +296,12 @@ An accepted object is a full object definition, with keys:
 
     If the button identifier is provided by the caller, then label defaults to the identifier itself.
 
-- `classes`: the classes to be added to the button
+- `classes`: the classes to be set for the button
 
-    No default.
+    Defaults to:
+
+    - `btn-secondary` for all but the last buttons
+    - `btn-primary` for the last (the rightest) button.
 
 - `enabled`: whether the button defaults to be enabled.
 
@@ -298,7 +309,7 @@ An accepted object is a full object definition, with keys:
 
 - `name`: the name of the button
 
-    No default.
+    Defaults to button identifier.
 
 - `type`: the type of the button
 
@@ -322,31 +333,13 @@ An accepted object is a full object definition, with keys:
 
 - `dismiss`: a boolean value which says whether clicking on the button should dismiss the modal
 
-    - defaulting to `true` if there is one single button AND this button is one of our standard buttons
+    Defaults to `true` if there is one single button, to `false` else.
 
-    - defaulting to `false` if there are several buttons or at least one of these buttons has an identifier provided by the caller.
+All others parameters passed when creating the button are kept, and made available in `button.parms` data passed with `md-click` event.
 
-- `Modal.buttonEnable( button_id, enable [, id ] )`
+Each button, apart those generated directly via the `html` key, has a `date-md-btn-id` attribute set to the button identifier.
 
-    Enable (resp. disable) the specified button identifier for the specified opened modal, defaulting to the topmost one.
-
-    Not relevant when a particular footer has been specified.
-
-- `Modal.buttonFind( button_id [, id ] )`
-
-    Returns the specfied button as a jQuery object for the specified opened modal, defaulting to the topmost one.
-
-    Not relevant when a particular footer has been specified.
-
-- `Modal.setButtons( buttons [, id ] )`
-
-    Set the to-be-displayed buttons for the specified opened modal, defaulting to the topmost one.
-
-    `buttons` can be specified as a string, or an object, or as an array of strings of objects:
-
-    - strings are expected to be known, standard, button identifiers; in that case, the default behavior of the relevant button is provided
-
-    - objects fully describe a button. Following keys may be specified:
+Please note that all that buttons management is NOT relevant when using a specific footer.
 
 #### Translations
 
@@ -375,11 +368,16 @@ These are our known, standard, button identifiers. Their labels are localizable.
 
     The event holds a data object with:
 
-    - `modal`: the modal identifier
-    - `button`: the button properties with at least an identifier
+    - `id`: the modal identifier
+
+    - `button`: the button properties with:
+
+        - `id`: the button identifier (always set)
+        - `parms`: the parameters initially passed when creating the button
+
     - `parms`: the parameters initialy passed to `Modal.run()`.
 
-    If the button holds a truely `dismiss` property, or is the only button of the standard footer, then the dialog is closed. In other cases, it is the responsability of the event receiver to close the modal.
+    If the button holds a truthy `dismiss` property, or is the only button of the standard footer, then the dialog is closed. In other cases, it is the responsability of the event receiver to close the modal.
 
 - `md-close`
 

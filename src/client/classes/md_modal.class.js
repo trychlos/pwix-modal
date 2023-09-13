@@ -12,47 +12,12 @@ import '../../common/js/index.js';
 
 import '../components/md_modal/md_modal.js';
 
+import { mdButton } from './md_button.class.js';
+
 export class mdModal {
 
     // static methods
     //
-    // check the buttons parameters
-    //  either from mdButtons parameter passed to Modal.run() or from Modal.setButtons()
-    //  the last object has a last=true indicator
-    static CheckButtons( buttons ){
-        const _btns = Array.isArray( buttons ) ? buttons : [ buttons ];
-        let _installable = [];
-        let _index = 0;
-        _btns.every(( _def ) => {
-            let ok = true;
-            //console.debug( _def );
-            if( _.isString( _def )){
-                // a string must be a valid known standard button identifier
-                if( !Object.keys( Modal.C.Button ).includes( _def )){
-                    console.warn( 'pwix:modal unknown identifier', _def );
-                    ok = false;
-                }
-                if( ok ){
-                    _installable.push({ id: _def, index: _index++ });
-                }
-            } else if( _.isObject( _def )){
-                // a label is mandatory is we have a non-standard id
-                if( !_def.id ){
-                    console.warn( 'pwix:modal missing mandatory button identifier', _def );
-                    ok = false;
-                }
-                if( ok ){
-                    _installable.push({ ..._def, index: _index++ });
-                }
-            }
-            return true;
-        });
-        // flag the last object
-        if( _installable.length ){
-            _installable[_installable.length-1].last = true;
-        }
-        return _installable;
-    }
 
     // private data
     //
@@ -66,7 +31,7 @@ export class mdModal {
     // the last version of the parameters
     _beforeclose = new ReactiveVar( null );
     _body = new ReactiveVar( null );
-    _buttons = new ReactiveVar( null );
+    _buttons = new ReactiveVar( [] );
     _classes = new ReactiveVar( null );
     _classesbody = new ReactiveVar( null );
     _classescontent = new ReactiveVar( null );
@@ -123,9 +88,9 @@ export class mdModal {
             this._body.set( parms.mdBody );
         }
         if( parms.mdButtons ){
-            const _installable = mdModal.CheckButtons( parms.mdButtons );
-            if( _installable.length ){
-                this._buttons.set( _installable );
+            const _buttons = mdButton.define( parms.mdButtons );
+            if( _buttons.length ){
+                this._buttons.set( _buttons );
             }
         }
         if( parms.mdClasses ){
@@ -200,19 +165,36 @@ export class mdModal {
      * @returns {jQuery} the found button as a jQuery object, or null
      */
     buttonFind( button ){
-        return $( '.md-modal .modal-footer' ).find( '[data-pwix-btn='+button+']' );
+        return $( '.md-modal .modal-footer' ).find( '[data-md-btn-id='+button+']' );
+    }
+
+    /**
+     * @summary
+     * @param {String} id the searched button identifier
+     * @returns {mdButton} the button instance
+     */
+    buttonGet( id ){
+        let found = null;
+        this._buttons.get().every(( btn ) => {
+            if( btn.id === id ){
+                found = btn;
+            }
+            return found === null;
+        });
+        return found;
     }
 
     /**
      * @summary Getter/Setter
-     * @param {Array} buttons the list of buttons to be displayed in the standard footer
+     * @param {Object|Array} buttons the list of buttons to be displayed in the standard footer
+     *  May be an object or an array of objects
      * @returns {Array} the current list of buttons
      */
     buttons( buttons ){
         if( buttons !== undefined ){
-            this._buttons.set( buttons );
+            this._buttons.set( mdButton.update( this._buttons.get(), buttons ));
         }
-        return this._buttons.get() || [{ id: Modal.C.Button.OK, index: 0, last:true }];
+        return this._buttons.get(); // || [{ id: Modal.C.Button.OK, index: 0, last:true }];
     }
 
     /**

@@ -23,7 +23,7 @@ import './md_modal.less';
 
 Template.md_modal.onCreated( function(){
     const self = this;
-    //console.log( self );
+    //console.log( 'onCreated', self );
 
     self.MD = {
         // the class added to the body to identify *this* dialog backdrop
@@ -121,6 +121,7 @@ Template.md_modal.onCreated( function(){
 
 Template.md_modal.onRendered( function(){
     const self = this;
+    //console.log( 'onRendered', self );
 
     // make draggable if possible
     if( self.$( '.modal-dialog' ).draggable ){
@@ -265,85 +266,111 @@ Template.md_modal.helpers({
 
     // the template to be rendered in the dialog body
     body(){
-        return Template.currentData().modal.body();
+        return this.modal.body();
     },
 
     // the class to be added to the button
     //  the last is set as primary - all others secondary
-    btnClass( btn ){
-        return btn.last ? 'btn-primary' : 'btn-secondary';
+    btnClasses( btn ){
+        return btn.classes();
+    },
+
+    // whether the button is initially disabled
+    btnDisabled( btn ){
+        return btn.enabled() ? '' : 'disabled';
+    },
+
+    // whether the button is defined by its html
+    btnHasHtml( btn ){
+        return btn.html().length > 0;
+    },
+
+    // the html definition of the button
+    btnHtml( btn ){
+        return btn.html()
     },
 
     // the standard label or a provided one
     btnLabel( btn ){
-        //console.debug( btn );
-        return btn.label || ( Object.keys( Modal.C.Button ).includes( btn.id ) ? pwixI18n.label( I18N, btn.id ) : btn.id );
+        return btn.label();
+    },
+
+    // the name of the button
+    btnName( btn ){
+        return btn.name();
+    },
+
+    // the type of the button
+    btnType( btn ){
+        return btn.type()
     },
 
     // the list of buttons
     buttons(){
-        //console.debug( 'buttons', Template.currentData().modal.buttons());
-        return Template.currentData().modal.buttons();
+        const buttons = this.modal.buttons();
+        //console.debug( buttons );
+        return buttons;
     },
 
     // the classes to be added to the modal
     classes(){
-        return Template.currentData().modal.classes();
+        return this.modal.classes();
     },
 
     // the classes to be added to the modal body
     classesBody(){
-        return Template.currentData().modal.classesBody();
+        return this.modal.classesBody();
     },
 
     // the classes to be added to the modal content
     classesContent(){
-        return Template.currentData().modal.classesContent();
+        return this.modal.classesContent();
     },
 
     // the classes to be added to the modal footer
     classesFooter(){
-        return Template.currentData().modal.classesFooter();
+        return this.modal.classesFooter();
     },
 
     // the classes to be added to the modal header
     classesHeader(){
-        return Template.currentData().modal.classesHeader();
+        return this.modal.classesHeader();
     },
 
     // whether backdrop is static ?
     closeBackdrop(){
-        return Template.currentData().modal.closeByBackdrop() ? 'true' : 'static';
+        return this.modal.closeByBackdrop() ? 'true' : 'static';
     },
 
     // whether header has a close button ?
     closeHeader(){
-        return Template.currentData().modal.closeByHeader();
+        return this.modal.closeByHeader();
     },
 
     // whether Escape closes the modal
     closeKeyboard(){
-        return Template.currentData().modal.closeByKeyboard() ? 'true' : 'false';
+        return this.modal.closeByKeyboard() ? 'true' : 'false';
     },
 
     // the footer if any
     footer(){
-        return Template.currentData().modal.footer();
+        return this.modal.footer();
     },
 
     // the modal identifier
     id(){
-        return Template.currentData().modal.id();
+        return this.modal.id();
     },
 
     // the parms initially passed in by the caller to Modal.run()
+    //  they are passed here to body and footer templates (if any)
     parms(){
-        return Template.currentData().modal.parms();
+        return this.modal.parms();
     },
 
     // the modal title
     title(){
-        return Template.currentData().modal.title();
+        return this.modal.title();
     }
 });
 
@@ -354,29 +381,24 @@ Template.md_modal.events({
     //  - if only button
     //  - if button exhibits a 'dismiss' attribute
     'click .md-btn'( event, instance ){
-        const modal = Template.currentData().modal;
-        const btnElement = instance.$( event.currentTarget );
-        //console.debug( btnElement, btnElement.data());
-        const btnId = btnElement.attr( 'data-pwix-btn' );
-        const btnObj = btnElement.data( BTNKEY );
-        const target = modal.target() || btnElement;
+        //console.debug( event );
+        const modal = this.modal;
+        const $btn = instance.$( event.currentTarget );
+        //console.debug( $btn, $btn.data());
+        const btnId = $btn.attr( 'data-md-btn-id' );
+        const button = modal.buttonGet( btnId );
+        const target = modal.target() || $btn;
         //console.debug( target );
         target.trigger( 'md-click', {
             id: modal.id(),
-            button: btnId,
-            btnObj: btnObj,
+            button: modal.buttonGet( btnId ),
             parms: modal.parms()
         });
 
         // whether to dismiss the dialog ?
-        const buttons = modal.buttons();
-        let dismiss = false;
-        if( buttons.length === 1 ){
-            dismiss = true;
-        } else if( Object.keys( Modal.C.Button ).includes( btnId )){
-            dismiss = Modal._btnDefs[btnId].dismiss;
-        } else {
-            dismiss = btnObj && Object.keys( btnObj ).includes( 'dismiss' ) ? btnObj.dismiss : false;
+        let dismiss = button.dismiss();
+        if( dismiss === undefined ){
+            dismiss = modal.buttons().length === 1 || false;
         }
         //console.debug( 'dismiss', dismiss );
         if( dismiss ){
@@ -388,7 +410,7 @@ Template.md_modal.events({
 
     // about to close the modal
     'hide.bs.modal .modal'( event, instance ){
-        const modal = Template.currentData().modal;
+        const modal = this.modal;
         const fn = modal.beforeClose();
         if( !fn || fn( modal.id())){
             const target = modal.target() || instance.$( event.currentTarget );
@@ -410,10 +432,11 @@ Template.md_modal.events({
 
     // set the focus on first input field
     'shown.bs.modal .modal'( event, instance ){
-        instance.$( '.modal#'+Template.currentData().modal.id()+' .modal-body input' ).first().focus();
+        instance.$( '.modal#'+this.modal.id()+' .modal-body input' ).first().focus();
     }
 });
 
 Template.md_modal.onDestroyed( function(){
+    //console.debug( 'onDestroyed', this );
     Modal._stack.pop();
 });

@@ -24,19 +24,16 @@ Modal.beforeClose = function( fn, id ){
 
 /**
  * @summary Enable/disable a button
- *  Only if a specific footer has not been set via Modal.setFooter()
- * @locus Client
- * @param {String} button the button to enable/disable
- * @param {Boolean} enable whether the button should be enabled
- * @param {String} id the identifier of the targeted dialog, defaulting to the topmost
+ *  OBSOLETED
+ *  WILL BE REMOVED ON 2.0 VERSION
  */
 Modal.buttonEnable = function( button, enable, id ){
-    const btn = Modal.buttonFind( button, id );
-    if( btn ){
-        btn.prop( 'disabled', !enable );
-    } else {
-        console.error( 'button not found', button, id );
+    console.warn( 'pwix:modal buttonEnable() method is obsolete, redirected to set()' );
+    let o = { button: { id: button, enabled: enable }};
+    if( id ){
+        o.id = id;
     }
+    Modal.set( o );
 };
 
 /**
@@ -109,6 +106,9 @@ Modal.set = function( arg ){
     if( Object.keys( arg ).includes( 'body' )){
         modal.body( arg.body );
     }
+    if( Object.keys( arg ).includes( 'buttons' )){
+        modal.buttons( arg.buttons );
+    }
     if( Object.keys( arg ).includes( 'classes' )){
         modal.classes( arg.classes );
     }
@@ -163,21 +163,16 @@ Modal.setBody = function( template, id ){
 
 /**
  * @summary Set the buttons of the currently opened dialog
- *  Only if a specific footer has not been set via Modal.setFooter()
- * @locus Client
- * @param {Array|String|Object} buttons the buttons to be set
- * @param {String} id the identifier of the targeted dialog, defaulting to the topmost
- * @returns {Integer} the count of valid buttons installed
+ *  OBSOLETED
+ *  WILL BE REMOVED ON 2.0 VERSION
  */
 Modal.setButtons = function( buttons, id ){
-    const installable = mdModal.CheckButtons( buttons );
-    if( installable.length > 0 ){
-        const modal = Modal._stack.modal( id );
-        if( modal ){
-            modal.buttons( installable );
-        }
+    console.warn( 'pwix:modal setBody() method is obsolete, redirected to set()' );
+    let o = { buttons: buttons };
+    if( id ){
+        o.id = id;
     }
-    return installable.length;
+    Modal.set( o );
 };
 
 /**

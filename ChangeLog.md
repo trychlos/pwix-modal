@@ -8,6 +8,9 @@
 
     - Define new 'md-ready' event (bumping candidate version number)
     - All events now receive also the parameters initially passed to Modal.run()
+    - Obsolete Modal.buttonEnable() and Modal.setButtons()
+    - Review and improve button management, notably changing the 'md-click' event data (todo #28, todo #36)
+    - Use 'this' instead of Temmplate.currentData() inside of helpers and events
 
 ### 1.7.3
 

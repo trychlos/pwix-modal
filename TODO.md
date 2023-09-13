@@ -11,7 +11,6 @@
 |   Id | Date       | Description and comment(s) |
 | ---: | :---       | :---                       |
 |   10 | 2023- 5- 2 | would it be relevant to also allow to keep a position ? |
-|   28 | 2023- 9- 9 | Have an option to put a type on each provided button, and notably 'submit' on OK button |
 |   38 |  |  |
 
 ---
@@ -75,6 +74,8 @@
 |      | 2023- 7- 5 | accept a properties object for each button |
 |   27 | 2023- 7- 5 | be verbose about stack push/pop |
 |      | 2023- 9-10 | done |
+|   28 | 2023- 9- 9 | Have an option to put a type on each provided button, and notably 'submit' on OK button |
+|      | 2023- 9-13 | done |
 |   29 | 2023- 9- 9 | provide additional classes for modal-content, modal-header, modal-body and modal-footer |
 |      | 2023- 9-10 | done |
 |   30 | 2023- 9-10 | obsolete Modal.beforeClose() method, replaced with a set() with option |
@@ -90,7 +91,7 @@
 |   35 | 2023- 9-10 | obsolete Modal.setFooter() method, replaced with a set() with option |
 |      | 2023- 9-10 | done |
 |   36 | 2023- 9-10 | review the buttons management |
-|      | 2023- 9-12 | buttons management is clarified |
+|      | 2023- 9-13 | buttons management is clarified |
 |   37 | 2023- 9-10 | closeByBackdrop, closeByHeader, closeByKeyboard mdModal methods should also be setters + set() should have corresponding code |
 |      | 2023- 9-10 | done |
 
