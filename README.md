@@ -278,6 +278,10 @@ The globally exported object.
 
     - `title`: when specified, the title of the modal
 
+- `Modal.target()`
+
+    Returns the current modal events target.
+
 #### Buttons management
 
 When using the standard footer, buttons can be specified either as a string, an array of string, an object or an array of objects.

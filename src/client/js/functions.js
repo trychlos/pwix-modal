@@ -232,11 +232,9 @@ Modal.setTitle = function( title, id ){
 };
 
 /**
- * @summary Get or set the events target
- *  OBSOLETED
- *  WILL BE REMOVED ON 2.0 VERSION
+ * @returns {Object} the current events target for the topmost modal
  */
-Modal.target = function( o ){
-    console.warn( 'pwix:modal target() method is obsolete, redirected to set()' );
-    Modal.set( o );
+Modal.target = function(){
+    const modal = Modal._stack.modal();
+    return modal.target();
 };
