@@ -386,14 +386,12 @@ Template.md_modal.helpers({
 Template.md_modal.events({
     // intercept Enter
     //  this only works in an inputable field has the focus
-    /*
     'keydown .modal-content'( event, instance ){
         //console.log( event );
         if( event.keyCode === 13 ){
-            //console.log( 'pressing Enter' );
+            console.log( 'pressing Enter' );
         }
     },
-    */
 
     // click on a button
     // note that the Blaze templating system doesn't let us add the 'data-bs-dismiss="modal"' to the button
