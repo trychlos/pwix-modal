@@ -4,34 +4,36 @@
         <div class="modal" id="{{ id }}" data-bs-backdrop="{{ closeBackdrop }}" data-bs-keyboard="{{ closeKeyboard }}" tabindex="-1">
             <div class="modal-dialog {{ classes }}">
                 <div class="modal-content {{classesContent }}">
+                    <form>
 
-                    <div class="modal-header {{ classesHeader }}">
-                        <h5 class="modal-title">{{ title }}</h5>
-                        {{#if closeHeader }}
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        {{/if}}
-                    </div>
+                        <div class="modal-header {{ classesHeader }}">
+                            <h5 class="modal-title">{{ title }}</h5>
+                            {{#if closeHeader }}
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            {{/if}}
+                        </div>
 
-                    <div class="modal-body {{ classesBody }}">
-                        {{> Template.dynamic template=(body) data=(parms) }}
-                    </div>
+                        <div class="modal-body {{ classesBody }}">
+                            {{> Template.dynamic template=(body) data=(parms) }}
+                        </div>
 
-                    <div class="modal-footer {{ classesFooter }}">
-                        {{#if footer }}
-                            {{> Template.dynamic template=(footer) data=(parms) }}
-                        {{else}}
-                            {{#each btn in buttons }}
-                                {{#if btnHasHtml btn }}
-                                    {{{ btnHtml btn }}}
-                                {{else}}
-                                    <button type="{{ btnType btn }}" class="btn {{ btnClasses btn }} md-btn" data-md-btn-id="{{ btn.id }}" {{ btnDisabled btn }} name="{{ btnName btn }}">
-                                        {{ btnLabel btn }}
-                                    </button>
-                                {{/if}}
-                            {{/each}}
-                        {{/if}}
-                    </div>
+                        <div class="modal-footer {{ classesFooter }}">
+                            {{#if footer }}
+                                {{> Template.dynamic template=(footer) data=(parms) }}
+                            {{else}}
+                                {{#each btn in buttons }}
+                                    {{#if btnHasHtml btn }}
+                                        {{{ btnHtml btn }}}
+                                    {{else}}
+                                        <button type="{{ btnType btn }}" class="btn {{ btnClasses btn }} md-btn" data-md-btn-id="{{ btn.id }}" {{ btnDisabled btn }} name="{{ btnName btn }}">
+                                            {{ btnLabel btn }}
+                                        </button>
+                                    {{/if}}
+                                {{/each}}
+                            {{/if}}
+                        </div>
 
+                    </form>
                 </div>
             </div>
             <div class="md-hidden"></div>
