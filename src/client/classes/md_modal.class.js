@@ -364,7 +364,9 @@ export class mdModal {
                 $found = $( '.modal#'+this._id ).find( '.modal-footer button.btn-primary' ).first();
             }
             if( $found && $found.length ){
-                console.log( 'set focus on', $found );
+                if( Modal._conf.verbosity & Modal.C.Verbose.FOCUS ){
+                    console.log( 'pwix:modal focus() on', $found );
+                }
                 $found.trigger( 'focus' );
             }
         }

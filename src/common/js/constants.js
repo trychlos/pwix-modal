@@ -24,7 +24,8 @@ Modal.C = {
         CONFIGURE: 0x01 <<  0,
         NOMODAL:   0x01 <<  1,
         STACK:     0x01 <<  2,
-        RESIZING:  0x01 <<  3
+        RESIZING:  0x01 <<  3,
+        FOCUS:     0x01 <<  4
     }
 };
 

@@ -46,6 +46,10 @@ Known configuration options are:
 
         Trace configuration operations
 
+    - `Modal.C.Verbose.FOCUS`
+
+        Trace the focus() function
+
     - `Modal.C.Verbose.NOMODAL`
 
         Trace the modal research when there is none
