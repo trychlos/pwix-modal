@@ -51,7 +51,8 @@ Template.md_modal.onCreated( function(){
             let bodyWidth = self.MD.maxWidth( '.modal-body' );
             //console.debug( 'modal-footer' );
             let footerWidth = self.MD.maxWidth( '.modal-footer' );
-            let width = bodyWidth > footerWidth ? bodyWidth : footerWidth;
+            let width = ( bodyWidth > footerWidth ? bodyWidth : footerWidth ) + self.MD.cssPadding();
+            //console.debug( 'computeContentWidth: body', bodyWidth, 'footer', footerWidth, 'width', width );
             self.MD.contentWidth.set( width > maxWidth ? maxWidth : width );
         },
 
