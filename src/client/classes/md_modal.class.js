@@ -338,22 +338,25 @@ export class mdModal {
         if( arg.field ){
             arg.field.trigger( 'focus' );
         } else {
+            const inputable = [ 'INPUT', 'TEXTAREA', 'SELECT' ];
             const _firstStart = function( selector ){
+                //console.debug( 'selector', selector );
                 let found = null;
                 const _firstRec = function( $o ){
-                    $o.each(( index, element ) => {
-                        if( !found ){
-                            const $elt = $( this );
-                            if( $elt.nodeName in [ 'INPUT', 'TEXTAREA', 'SELECT' ] ){
-                                found = $elt;
-                            } else {
-                                found = _firstRec( $elt.children());
-                            }
+                    //console.debug( '$o', $o );
+                    $o.each( function( index, element ){
+                        const $elt = $( this );
+                        //console.debug( '$elt', $elt );
+                        if( inputable.includes( $elt[0].nodeName )){
+                            found = $elt;
+                        } else {
+                            _firstRec( $elt.children());
                         }
+                        return found === null;
                     });
                 };
                 const $start = $( selector );
-                found = _firstRec( $start );
+                _firstRec( $start );
                 return found;
             };
             let $found = _firstStart( '.modal#'+this._id+' .modal-body' );
