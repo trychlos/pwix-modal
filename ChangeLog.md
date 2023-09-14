@@ -12,7 +12,7 @@
     - Review and improve button management, notably changing the 'md-click' event data (todo #28, todo #36)
     - Use 'this' instead of Temmplate.currentData() inside of helpers and events
     - Restore Modal.target() as a pure getter
-    - Set the focus on first 'inputable' field or first button
+    - Define Modal.focus() method and mdAutoFocus/autoFocus parameters
 
 ### 1.7.3
 

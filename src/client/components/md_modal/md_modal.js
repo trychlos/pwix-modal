@@ -7,9 +7,8 @@
  * - modal: the mdModal instance
  */
 
-import { ReactiveVar } from 'meteor/reactive-var';
 import { Layout } from 'meteor/pwix:layout';
-import { pwixI18n } from 'meteor/pwix:i18n';
+import { ReactiveVar } from 'meteor/reactive-var';
 
 //  provides 'draggable()' and 'resizable()' methods
 import 'jquery-ui/dist/jquery-ui.min.js';
@@ -28,6 +27,9 @@ Template.md_modal.onCreated( function(){
     self.MD = {
         // the class added to the body to identify *this* dialog backdrop
         myClass: new ReactiveVar( '' ),
+
+        // the mdModal instance
+        modal: new ReactiveVar( null ),
 
         // css values read from .md-hidden div
         cssHidden: {
@@ -64,47 +66,32 @@ Template.md_modal.onCreated( function(){
             return padding;
         },
 
-        // try to find the first inputable field (input, textarea, and so on) from the selector
-        firstInputable( selector ){
-            let found = null;
-            const _first = function( $o ){
-                //console.debug( '$o start', $o, 'end' );
-                $o.each(( index ) => {
-                    if( !found ){
-                        const $elt = $( this );
-                        if( $elt.nodeName in [ 'INPUT', 'TEXTAREA', 'SELECT' ] ){
-                            found = $elt;
-                        } else {
-                            found = _first( $elt.children());
-                        }
-                    }
-                });
-            };
-            const $start = self.$( selector );
-            found = _first( $start );
-            return found;
-        },
-
         // if a localStorage key has been provided, get it
         lastSizeGet(){
-            const key = Template.currentData().modal.sizeKey();
-            if( key ){
-                const str = localStorage.getItem( key );
-                if( str ){
-                    const words = str.split( ',' );
-                    self.$( '.modal-content' ).css({
-                        width: words[0],
-                        height: words[1]
-                    });
+            const modal = self.MD.modal.get();
+            if( modal ){
+                const key = modal.sizeKey();
+                if( key ){
+                    const str = localStorage.getItem( key );
+                    if( str ){
+                        const words = str.split( ',' );
+                        self.$( '.modal-content' ).css({
+                            width: words[0],
+                            height: words[1]
+                        });
+                    }
                 }
             }
         },
 
         // if a localStorage key has been provided, set it
         lastSizeSet(){
-            const key = Template.currentData().modal.sizeKey();
-            if( key ){
-                localStorage.setItem( key, self.$( '.modal-content' ).css( 'width' ) + ',' + self.$( '.modal-content' ).css( 'height' ));
+            const modal = self.MD.modal.get();
+            if( modal ){
+                const key = modal.sizeKey();
+                if( key ){
+                    localStorage.setItem( key, self.$( '.modal-content' ).css( 'width' ) + ',' + self.$( '.modal-content' ).css( 'height' ));
+                }
             }
         },
 
@@ -129,14 +116,16 @@ Template.md_modal.onCreated( function(){
         }
     };
 
+    // get the modal instance
     // compute our body class name
-    self.autorun(() => {
-        self.MD.myClass.set( 'pwix-modal-class-'+Template.currentData().modal.id());
-    });
-
     // push this modal in the stack
     self.autorun(() => {
-        Modal._stack.push( Template.currentData().modal );
+        const modal = Template.currentData().modal;
+        if( modal ){
+            self.MD.modal.set( modal );
+            self.MD.myClass.set( 'pwix-modal-class-'+modal.id());
+            Modal._stack.push( modal );
+        }
     });
 });
 
@@ -200,7 +189,7 @@ Template.md_modal.onRendered( function(){
     // set the z-index of the modal
     self.autorun(() => {
         //console.debug( 'modal onRendered', Modal._stack.count());
-        $( 'body .modal#'+Template.currentData().modal.id()).css({
+        $( 'body .modal#'+self.MD.modal.get().id()).css({
             'z-index': Modal._stack.lastZindex()
         });
     });
@@ -213,7 +202,7 @@ Template.md_modal.onRendered( function(){
     self.autorun(() => {
         const maxWidth = parseInt( Layout.width()) - 2*self.MD.margin;
         let w;
-        if( Template.currentData().modal.fullScreen()){
+        if( self.MD.modal.get().fullScreen()){
             w = maxWidth;
         } else {
             self.MD.computeContentWidth( maxWidth );
@@ -228,7 +217,7 @@ Template.md_modal.onRendered( function(){
     // horizontally center the modal
     //  this was automatic with standard bootstrap, but has disappeared somewhere
     self.autorun(() => {
-        if( !Template.currentData().modal.fullScreen()){
+        if( !self.MD.modal.get().fullScreen()){
             const contentWidth = parseInt( self.$( '.modal-content' ).css( 'width' ));
             const viewWidth = parseInt( Layout.width());
             const left = (( viewWidth-contentWidth ) / 2 )+'px';
@@ -242,7 +231,7 @@ Template.md_modal.onRendered( function(){
     // vertically position the modal
     self.autorun(() => {
         const maxHeight = parseInt( Layout.height()) - 2*self.MD.margin;
-        if( Template.currentData().modal.fullScreen()){
+        if( self.MD.modal.get().fullScreen()){
             const top = self.MD.margin+'px';
             if( Modal._conf.verbosity & Modal.C.Verbose.RESIZING ){
                 console.log( 'vertically position', top );
@@ -265,22 +254,21 @@ Template.md_modal.onRendered( function(){
     });
 
     // send 'md-ready' when DOM is ready
-    const target = Template.currentData().modal.target() || self.$( '.md-modal' );
-    target.trigger( 'md-ready', {
-        id: Template.currentData().modal.id(),
-        parms: Template.currentData().modal.parms()
+    self.autorun(() => {
+        const target = self.MD.modal.get().target() || self.$( '.md-modal' );
+        target.trigger( 'md-ready', {
+            id: self.MD.modal.get().id(),
+            parms: self.MD.modal.get().parms()
+        });
     });
 
-    // try to set the focus on first input element of the body or button.submit of the footer
-    let $found = self.MD.firstInputable( '.modal-body' );
-    //console.debug( $found );
-    if( !$found ){
-        $found = self.$( '.modal-footer button' ).first();
-    }
-    if( $found ){
-        const res = $found.trigger( 'focus' );
-        //console.debug( 'set focus', $found, res );
-    }
+    // set the focus if asked for
+    self.autorun(() => {
+        const modal = self.MD.modal.get();
+        if( modal.autoFocus()){
+            modal.focus();
+        }
+    });
 });
 
 Template.md_modal.helpers({

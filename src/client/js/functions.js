@@ -72,6 +72,15 @@ Modal.count = function(){
 };
 
 /**
+ * @summary Set the focus on the first inputable field or the submit button
+ * @locus Client
+ */
+Modal.focus = function( arg ){
+    const modal = Modal._stack.modal( arg.id );
+    modal.focus( arg );
+};
+
+/**
  * @locus Client
  *  OBSOLETED
  *  WILL BE REMOVED ON 2.0 VERSION
@@ -100,8 +109,11 @@ Modal.run = function( parms ){
 Modal.set = function( arg ){
     //console.debug( arg );
     const modal = Modal._stack.modal( arg.id );
+    if( Object.keys( arg ).includes( 'autoFocus' )){
+        modal.autoFocus( arg.autoFocus );
+    }
     if( Object.keys( arg ).includes( 'beforeClose' )){
-        modal.beforeClose( fn );
+        modal.beforeClose( arg.beforeClose );
     }
     if( Object.keys( arg ).includes( 'body' )){
         modal.body( arg.body );

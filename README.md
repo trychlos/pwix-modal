@@ -76,6 +76,16 @@ The globally exported object.
 
     Creates and shows a modal dialog with `parms` parameters object. Known parameters are:
 
+    - `mdAutoFocus`
+
+        Whether we should try to initialize the focus ourselves,or let the application manage it.
+
+        When `true`, we try to set the focus on the first inputable field of the body, or the first submit button of the footer.
+
+        Though this is the default to make the package easier to use, the application should be conscious that this default prevent it to put the focus itself.
+
+        Defaults to `true`.
+
     - `mdBeforeClose`
 
         A function to be called when the user asks for close the modal, by clicking on the backdrop, or the close button of the header, or a close button in the footer. This function let the application allows or forbid the close:
@@ -218,6 +228,20 @@ The globally exported object.
 
     Returns the count of opened modals.
 
+- `Modal.focus( arg )`
+
+    Set the focus on a field.
+
+    `arg` is a parameter object which may contain:
+
+    - `id`: the modal identifier, defaulting to the topmost one
+
+    - `field`: the targeted field as a jQuery object, defaulting to the first inputable or the submit button.
+
+    The application may have its own opinion about which is the first inputable field, or, in other words, which field should be the default when the user presses a key. It will most probably to set the focus from its own `onRendered()` function. But this later is triggered before ours. So, because we are executed last, we cannot provide any suitable default.
+
+    As a consequence, each client application shoud call this function itself if it wants the user has any suitable default.
+
 - `Modal.set( arg )`
 
     A generic method to configure a running modal.
@@ -225,6 +249,10 @@ The globally exported object.
     `arg` must be a Javascript object with following keys:
 
     - `id`: the identifier of the to-be-configured modal, defaulting to the current topmost
+
+    - `autoFocus`: when specified, whether the focus is automatically managed by the modal itself.
+
+        See the `mdAutoFocus` parameter to get a full description.
 
     - `beforeClose`: when specified, the function to be called by the modal to get an authorization to close.
 

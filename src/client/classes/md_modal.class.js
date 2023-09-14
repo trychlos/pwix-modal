@@ -4,9 +4,9 @@
  * This is the class which manages the modal dialogs.
  */
 
-import { Random } from 'meteor/random';
-
 import _ from 'lodash';
+
+import { Random } from 'meteor/random';
 
 import '../../common/js/index.js';
 
@@ -29,6 +29,7 @@ export class mdModal {
     _parms = null;
 
     // the last version of the parameters
+    _autofocus = new ReactiveVar( null );
     _beforeclose = new ReactiveVar( null );
     _body = new ReactiveVar( null );
     _buttons = new ReactiveVar( [] );
@@ -80,6 +81,8 @@ export class mdModal {
 
         this._id = Random.id();
         this._parms = parms;
+
+        this._autofocus.set( this._argBool( parms, 'mdAutoFocus', true ));
 
         if( parms.mdBeforeClose ){
             this._beforeclose.set( parms.mdBeforeClose );
@@ -133,6 +136,18 @@ export class mdModal {
         //console.debug( this._view );
 
         return this;
+    }
+
+    /**
+     * @summary Getter/Setter
+     * @param {Boolean} b whether the dialog should manage itself the focus
+     * @returns {Boolean} the autofocus value
+     */
+    autoFocus( b ){
+        if( b !== undefined && _.isBoolean( b )){
+            this._autofocus.set( b );
+        }
+        return this._autofocus.get();
     }
 
     /**
