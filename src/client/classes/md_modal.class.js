@@ -330,9 +330,9 @@ export class mdModal {
     }
 
     /**
-     * @summary Set the focus on the first inputable field or the first button
+     * @summary Set the focus on the first inputable field or the last button
      * @param {Object} arg the parameters:
-     *  - field: the target field, defaulting to the first inputable field of the body, or the submit button
+     *  - field: the target field, defaulting to the first inputable field of the body, or the last button
      */
     focus( arg={} ){
         if( arg.field ){
@@ -358,10 +358,11 @@ export class mdModal {
             };
             let $found = _firstStart( '.modal#'+this._id+' .modal-body' );
             if( !$found || !$found.length ){
+                // 'submit' type buttons should be avoided in a SPA-like app
                 $found = $( '.modal#'+this._id ).find( '.modal-footer button[type="submit"]' ).first();
             }
             if( !$found || !$found.length ){
-                $found = $( '.modal#'+this._id ).find( '.modal-footer button.btn-primary' ).first();
+                $found = $( '.modal#'+this._id ).find( '.modal-footer button.btn-primary' ).last();
             }
             if( $found && $found.length ){
                 if( Modal._conf.verbosity & Modal.C.Verbose.FOCUS ){
@@ -370,9 +371,6 @@ export class mdModal {
                 $found.trigger( 'focus' );
             }
         }
-
-    // try to set the focus on first input element of the body or button.submit of the footer
-    //console.debug( $found );
     }
 
     /**

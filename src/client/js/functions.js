@@ -72,7 +72,7 @@ Modal.count = function(){
 };
 
 /**
- * @summary Set the focus on the first inputable field or the submit button
+ * @summary Set the focus on the first inputable field or the last button
  * @locus Client
  */
 Modal.focus = function( arg ){

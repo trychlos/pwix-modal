@@ -84,9 +84,9 @@ The globally exported object.
 
         Whether we should try to initialize the focus ourselves,or let the application manage it.
 
-        When `true`, we try to set the focus on the first inputable field of the body, or the first submit button of the footer.
+        When `true`, we try to set the focus on the first inputable field of the body, or the last button of the footer.
 
-        Though this is the default to make the package easier to use, the application should be conscious that this default prevent it to put the focus itself.
+        Though this default aims to make the package easier to use, the application should be conscious that it also prevents the application to put the focus itself.
 
         Defaults to `true`.
 
@@ -240,7 +240,7 @@ The globally exported object.
 
     - `id`: the modal identifier, defaulting to the topmost one
 
-    - `field`: the targeted field as a jQuery object, defaulting to the first inputable or the submit button.
+    - `field`: the targeted field as a jQuery object, defaulting to the first inputable or the last button.
 
     The application may have its own opinion about which is the first inputable field, or, in other words, which field should be the default when the user presses a key. It will most probably to set the focus from its own `onRendered()` function. But this later is triggered before ours. So, because we are executed last, we cannot provide any suitable default.
 
@@ -356,6 +356,8 @@ An accepted object is a full object definition, with keys:
     - `button`
 
     Defaults to `button`.
+
+    Please also note that a `type="submit"` button will reload the page when activated. This is probably not what you want in a Meteor application.
 
 - `html`: the full button definition `<button>...</button>` as a HTML string
 
