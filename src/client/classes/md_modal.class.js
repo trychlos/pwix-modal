@@ -315,6 +315,50 @@ export class mdModal {
     }
 
     /**
+     * @summary Set the focus on the first inputable field or the first button
+     * @param {Object} arg the parameters:
+     *  - field: the target field, defaulting to the first inputable field of the body, or the submit button
+     */
+    focus( arg={} ){
+        if( arg.field ){
+            arg.field.trigger( 'focus' );
+        } else {
+            const _firstStart = function( selector ){
+                let found = null;
+                const _firstRec = function( $o ){
+                    $o.each(( index, element ) => {
+                        if( !found ){
+                            const $elt = $( this );
+                            if( $elt.nodeName in [ 'INPUT', 'TEXTAREA', 'SELECT' ] ){
+                                found = $elt;
+                            } else {
+                                found = _firstRec( $elt.children());
+                            }
+                        }
+                    });
+                };
+                const $start = $( selector );
+                found = _firstRec( $start );
+                return found;
+            };
+            let $found = _firstStart( '.modal#'+this._id+' .modal-body' );
+            if( !$found || !$found.length ){
+                $found = $( '.modal#'+this._id ).find( '.modal-footer button[type="submit"]' ).first();
+            }
+            if( !$found || !$found.length ){
+                $found = $( '.modal#'+this._id ).find( '.modal-footer button.btn-primary' ).first();
+            }
+            if( $found && $found.length ){
+                console.log( 'set focus on', $found );
+                $found.trigger( 'focus' );
+            }
+        }
+
+    // try to set the focus on first input element of the body or button.submit of the footer
+    //console.debug( $found );
+    }
+
+    /**
      * @summary Getter/Setter
      * @param {Boolean} fullscreen whether the modal should be displayed in full screen mode
      * @returns {Boolean} the current full screen mode

@@ -64,6 +64,27 @@ Template.md_modal.onCreated( function(){
             return padding;
         },
 
+        // try to find the first inputable field (input, textarea, and so on) from the selector
+        firstInputable( selector ){
+            let found = null;
+            const _first = function( $o ){
+                //console.debug( '$o start', $o, 'end' );
+                $o.each(( index ) => {
+                    if( !found ){
+                        const $elt = $( this );
+                        if( $elt.nodeName in [ 'INPUT', 'TEXTAREA', 'SELECT' ] ){
+                            found = $elt;
+                        } else {
+                            found = _first( $elt.children());
+                        }
+                    }
+                });
+            };
+            const $start = self.$( selector );
+            found = _first( $start );
+            return found;
+        },
+
         // if a localStorage key has been provided, get it
         lastSizeGet(){
             const key = Template.currentData().modal.sizeKey();
@@ -243,23 +264,23 @@ Template.md_modal.onRendered( function(){
         }
     });
 
-    // attach data to the buttons
-    self.autorun(() => {
-        Template.currentData().modal.buttons().every(( btn ) => {
-            const element = $( '.modal-footer' ).find( '[data-pwix-btn='+btn.id+']' );
-            if( element.length ){
-                element.data( BTNKEY, btn );
-            }
-            return true;
-        });
-    });
-
     // send 'md-ready' when DOM is ready
     const target = Template.currentData().modal.target() || self.$( '.md-modal' );
     target.trigger( 'md-ready', {
         id: Template.currentData().modal.id(),
         parms: Template.currentData().modal.parms()
     });
+
+    // try to set the focus on first input element of the body or button.submit of the footer
+    let $found = self.MD.firstInputable( '.modal-body' );
+    //console.debug( $found );
+    if( !$found ){
+        $found = self.$( '.modal-footer button' ).first();
+    }
+    if( $found ){
+        const res = $found.trigger( 'focus' );
+        //console.debug( 'set focus', $found, res );
+    }
 });
 
 Template.md_modal.helpers({
@@ -375,6 +396,17 @@ Template.md_modal.helpers({
 });
 
 Template.md_modal.events({
+    // intercept Enter
+    //  this only works in an inputable field has the focus
+    /*
+    'keydown .modal-content'( event, instance ){
+        //console.log( event );
+        if( event.keyCode === 13 ){
+            //console.log( 'pressing Enter' );
+        }
+    },
+    */
+
     // click on a button
     // note that the Blaze templating system doesn't let us add the 'data-bs-dismiss="modal"' to the button
     // so all events come here, and we have to dismiss the dialog ourselves:
@@ -402,7 +434,7 @@ Template.md_modal.events({
         }
         //console.debug( 'dismiss', dismiss );
         if( dismiss ){
-            self.$( '.modal#'+modal.id()).modal( 'hide' );
+            instance.$( '.modal#'+modal.id()).modal( 'hide' );
         }
 
         // and let bubble up
