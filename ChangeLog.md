@@ -2,9 +2,9 @@
 
 ## ChangeLog
 
-### 1.8.0-rc
+### 1.8.0
 
-    Release date: 
+    Release date: 2023- 9-18
 
     - Define new 'md-ready' event (bumping candidate version number)
     - All events now receive also the parameters initially passed to Modal.run()
@@ -167,4 +167,4 @@
 
 ---
 P. Wieser
-- Last updated on 2023, Sept. 12th
+- Last updated on 2023, Sep. 18th
