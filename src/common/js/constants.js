@@ -15,7 +15,12 @@ Modal.C = {
         CLOSE: 'CLOSE',
         SAVE: 'SAVE',
         YES: 'YES',
-        NO: 'NO'
+        NO: 'NO',
+    },
+
+    // a special 'reset all' button identifier
+    ButtonExt: {
+        RESET: 'MD_BUTTON_RESET'
     },
 
     // verbosity levels

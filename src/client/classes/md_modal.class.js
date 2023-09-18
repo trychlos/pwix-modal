@@ -7,6 +7,8 @@
 import _ from 'lodash';
 
 import { Random } from 'meteor/random';
+import { ReactiveVar } from 'meteor/reactive-var';
+import { Tracker } from 'meteor/tracker';
 
 import '../../common/js/index.js';
 
@@ -32,7 +34,10 @@ export class mdModal {
     _autofocus = new ReactiveVar( null );
     _beforeclose = new ReactiveVar( null );
     _body = new ReactiveVar( null );
-    _buttons = new ReactiveVar( [] );
+    _buttons = {
+        value: [],  // an array of mdButton's
+        dep: new Tracker.Dependency()
+    };
     _classes = new ReactiveVar( null );
     _classesbody = new ReactiveVar( null );
     _classescontent = new ReactiveVar( null );
@@ -91,10 +96,8 @@ export class mdModal {
             this._body.set( parms.mdBody );
         }
         if( parms.mdButtons ){
-            const _buttons = mdButton.define( parms.mdButtons );
-            if( _buttons.length ){
-                this._buttons.set( _buttons );
-            }
+            this._buttons.value = mdButton.define( parms.mdButtons );
+            this._buttons.dep.changed();
         }
         if( parms.mdClasses ){
             this._classes.set( parms.mdClasses );
@@ -175,6 +178,20 @@ export class mdModal {
     }
 
     /**
+     * @summary Add a new button to the end of the current array
+     * @param {mdButton} button the button to be added
+     */
+    buttonAdd( button ){
+        if( this._buttons.value.length ){
+            const btn = this._buttons.value[this._buttons.value.length-1];
+            btn.last = false;
+        }
+        button.last = true;
+        this._buttons.value.push( button );
+        this._buttons.dep.changed();
+    }
+
+    /**
      * @summary
      * @param {String} button the searched button
      * @returns {jQuery} the found button as a jQuery object, or null
@@ -190,12 +207,13 @@ export class mdModal {
      */
     buttonGet( id ){
         let found = null;
-        this._buttons.get().every(( btn ) => {
+        this._buttons.value.every(( btn ) => {
             if( btn.id === id ){
                 found = btn;
             }
             return found === null;
         });
+        this._buttons.dep.depend();
         return found;
     }
 
@@ -203,13 +221,24 @@ export class mdModal {
      * @summary Getter/Setter
      * @param {Object|Array} buttons the list of buttons to be displayed in the standard footer
      *  May be an object or an array of objects
-     * @returns {Array} the current list of buttons
+     * @returns {Array} the current list of mdButton buttons
+     *  A reactive data source which depends of the population of the array (which buttons are there) and NOT of their respective content
+     *  See mdButton for that
      */
     buttons( buttons ){
         if( buttons !== undefined ){
-            this._buttons.set( mdButton.update( this._buttons.get(), buttons ));
+            mdButton.update( this, buttons );
         }
-        return this._buttons.get(); // || [{ id: Modal.C.Button.OK, index: 0, last:true }];
+        this._buttons.dep.depend();
+        return this._buttons.value; // array of mdButton's
+    }
+
+    /**
+     * @summary Reset the list of buttons
+     */
+    buttonsReset(){
+        this._buttons.value = [];
+        this._buttons.dep.changed();
     }
 
     /**

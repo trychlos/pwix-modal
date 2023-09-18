@@ -282,7 +282,7 @@ Template.md_modal.helpers({
     // the class to be added to the button
     //  the last is set as primary - all others secondary
     btnClasses( btn ){
-        return btn.classes();
+        return btn.classes() + ( btn.last ? ' md-last' : '' );
     },
 
     // whether the button is initially disabled
@@ -385,6 +385,19 @@ Template.md_modal.helpers({
 });
 
 Template.md_modal.events({
+
+    // intercept Enter key to not reoad the page on submit
+    'keydown .modal-content'( event, instance ){
+        if( event.keyCode === 13 ){
+            // when we have an Enter key pressed, we want submit the current form (if any)
+            // if we have our standard footer
+            const $btn = instance.$( event.currentTarget ).find( '.modal-footer button.md-btn.md-last' );
+            if( $btn ){
+                $btn.trigger( 'click' );
+                return false;
+            }
+        }
+    },
 
     // click on a button
     // note that the Blaze templating system doesn't let us add the 'data-bs-dismiss="modal"' to the button

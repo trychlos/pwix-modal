@@ -278,6 +278,8 @@ The globally exported object.
 
         If a button has not been previously defined, then it is added at the end of the list.
 
+        When _setting_ buttons, the special `md-btn-reset` identifier let the application remove all previously defined buttons.
+
     - `classes`: when specified, classes to be added to the '`.modal`' element
 
     - `classesBody`: when specified, classes to be added to the '`.modal-body`' element
@@ -395,6 +397,10 @@ Please note that all that buttons management is NOT relevant when using a specif
 - `Modal.C.Button.SAVE`
 - `Modal.C.Button.YES`
 - `Modal.C.Button.NO`
+
+#### Special identifiers
+
+- `Modal.C.ButtonExt.RESET`
 
 These are our known, standard, button identifiers. Their labels are localizable.
 

@@ -97,6 +97,7 @@ Modal.knownButtons = function(){
  * @returns {String} the identifier of this new modal
  */
 Modal.run = function( parms ){
+    //console.log( 'Modal.run()' );
     const modal = new mdModal( parms );
     return modal.id();
 };

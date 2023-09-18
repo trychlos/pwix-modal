@@ -2,11 +2,13 @@
 
 ## ChangeLog
 
-### 1.8.1-rc
+### 1.9.0-rc
 
     Release date: 
 
     - Fix buttonEnable() obsolete function (which should work anyway)
+    - Fix buttons reactivity
+    - Define Modal.C.ButtonExt.RESET special button identifier (bumping candidate version number)
 
 ### 1.8.0
 
