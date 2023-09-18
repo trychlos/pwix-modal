@@ -29,7 +29,7 @@ Modal.beforeClose = function( fn, id ){
  */
 Modal.buttonEnable = function( button, enable, id ){
     console.warn( 'pwix:modal buttonEnable() method is obsolete, redirected to set()' );
-    let o = { button: { id: button, enabled: enable }};
+    let o = { buttons: { id: button, enabled: enable }};
     if( id ){
         o.id = id;
     }

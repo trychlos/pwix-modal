@@ -6,7 +6,7 @@
 
     Release date: 
 
-    - 
+    - Fix buttonEnable() obsolete function (which should work anyway)
 
 ### 1.8.0
 
