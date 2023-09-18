@@ -13,6 +13,7 @@
     - Use 'this' instead of Temmplate.currentData() inside of helpers and events
     - Restore Modal.target() as a pure getter
     - Define Modal.focus() method and mdAutoFocus/autoFocus parameters
+    - Let the application add additional classes to main components of the modal
 
 ### 1.7.3
 
