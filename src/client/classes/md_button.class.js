@@ -118,12 +118,14 @@ export class mdButton {
         if( Object.keys( def ).includes( 'type' )){
             this._type.set( def.type );
         }
+        this.parms = def;
     }
 
     // public data
     //
 
     id = null;
+    parms = null;
 
     /**
      * Constructor
