@@ -17,86 +17,55 @@ export class mdButton {
     //
 
     /**
-     * @summary Define the initial set of buttons of a modal
-     *  set 'last=true' on the last button
-     * @param {String|Object|Array} defs the definition of the buttons
-     * @returns {Array} the list of defined buttons, each one as an independant reactive var which contains a mdButton
-     */
-    static define( defs ){
-        //console.debug( 'define input', defs );
-        let buttons = [];
-        let ids = {};
-        const adefs = _.isArray( defs ) ? defs : [ defs ];
-        adefs.every(( def ) => {
-            const btn = mdButton.new( def );
-            if( btn ){
-                // make sure the identifier is unique
-                if( Object.keys( ids ).includes( btn.id )){
-                    console.error( 'already defined button identifier:', btn.id );
-                } else {
-                    ids[btn.id] = btn;
-                    buttons.push( btn );
-                }
-            }
-            return true;
-        });
-        // flag the last object (will be displayed on rightest side)
-        if( buttons.length ){
-            const btn = buttons[buttons.length-1];
-            btn.last = true;
-        }
-        return buttons;
-    }
-
-    /**
-     * @summary Define a new button
-     * @param {String|Object} def the definition of a button
-     * @returns {mdButton} a new button or null
-     */
-    static new( def ){
-        let btn = null;
-        // identifier is mandatory
-        let o = {};
-        if( _.isString( def )){
-            o.id = def;
-        } else if( !def.id || !_.isString( def.id )){
-            console.error( 'identifier is mandatory, not found' );
-        } else {
-            o = { ...def };
-        }
-        if( o.id ){
-            btn = new mdButton( o );
-        }
-        return btn;
-    }
-
-    /**
      * @summary Update one or several existing button(s)
      * @param {mdModal} modal the calling mdModal
      * @param {String|Object|Array} defs the definition of one or more buttons
      *  Contrarily to the initial definition, this update MUST have an id in each provided object
-     * @returns {Array} the updated defined list
+     * @returns {Boolean} whether we have changed (reset and/or added) the buttons population
      */
-    static update( modal, defs ){
+    static setup( modal, defs ){
         let adefs = _.isArray( defs ) ? defs : [ defs ];
+        //console.debug( 'adefs', adefs );
+        let changed = false;
         adefs.every(( def ) => {
-            if( !def.id ){
-                console.error( 'identifier is mandatory, not found' );
-            } else if( def.id === Modal.C.ButtonExt.RESET ){
-                modal.buttonsReset();
-            } else {
-                let found = modal.buttonGet( def.id );
-                if( found ){
-                    found._setDef( def );
+            if( def ){
+                //console.debug( 'examining', def );
+                let o = {};
+                if( _.isString( def )){
+                    o.id = def;
+                } else if( !def.id || !_.isString( def.id )){
+                    console.error( 'identifier is mandatory, not found' );
                 } else {
-                    const btn = mdButton.new( def );
-                    if( btn ){
-                        modal.buttonAdd( btn );
+                    o = { ...def };
+                }
+                //console.debug( 'built', o );
+                if( o.id && _.isString( o.id )){
+                    if( o.id === Modal.C.ButtonExt.RESET ){
+                        if( modal.buttonsReset()){
+                            changed = true;
+                        }
+                    } else {
+                        const ifExist = ( o.ifExist === true || o.ifExist === false ) ? o.ifExist : false;
+                        //console.debug( 'ifExist', ifExist );
+                        let found = modal.buttonGet( o.id );
+                        if( found ){
+                            //console.debug( 'found', found );
+                            found._setDef( o );
+                        } else if( !ifExist ){
+                            if( modal.buttonAdd( new mdButton( o ))){
+                                changed = true;
+                            }
+                        } else {
+                            console.log( 'pwix:modal not applying definition as button doesn\'t exist' );
+                        }
                     }
+                } else {
+                    console.error( 'o is invalid', o );
                 }
             }
             return true;
         });
+        return changed;
     }
 
     // private data
@@ -158,16 +127,13 @@ export class mdButton {
 
     /**
      * Constructor
-     * @param {String|Object} def the button definition
+     * @param {Object} def the button definition
      * @return {mdButton}
      */
     constructor( def ){
         this.id = def.id;
 
         this._setDef( def );
-        if( !this._name.get()){
-            this._name.set( this.id );
-        }
 
         //console.debug( this );
         return this;

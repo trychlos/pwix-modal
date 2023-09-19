@@ -96,8 +96,8 @@ export class mdModal {
             this._body.set( parms.mdBody );
         }
         if( parms.mdButtons ){
-            this._buttons.value = mdButton.define( parms.mdButtons );
-            this._buttons.dep.changed();
+            // no dep change at construction time
+            mdButton.setup( this, parms.mdButtons );
         }
         if( parms.mdClasses ){
             this._classes.set( parms.mdClasses );
@@ -180,6 +180,7 @@ export class mdModal {
     /**
      * @summary Add a new button to the end of the current array
      * @param {mdButton} button the button to be added
+     * @returns {Boolean} true as the buttons population has changed
      */
     buttonAdd( button ){
         if( this._buttons.value.length ){
@@ -188,7 +189,8 @@ export class mdModal {
         }
         button.last = true;
         this._buttons.value.push( button );
-        this._buttons.dep.changed();
+        //console.debug( 'buttonAdd()', button );
+        return true;
     }
 
     /**
@@ -213,32 +215,35 @@ export class mdModal {
             }
             return found === null;
         });
-        this._buttons.dep.depend();
+        //this._buttons.dep.depend();
         return found;
     }
 
     /**
      * @summary Getter/Setter
-     * @param {Object|Array} buttons the list of buttons to be displayed in the standard footer
-     *  May be an object or an array of objects
+     * @param {String|Object|Array} buttons a list of buttons definitions to be displayed in the standard footer
      * @returns {Array} the current list of mdButton buttons
      *  A reactive data source which depends of the population of the array (which buttons are there) and NOT of their respective content
      *  See mdButton for that
      */
     buttons( buttons ){
-        if( buttons !== undefined ){
-            mdButton.update( this, buttons );
+        if( buttons ){
+            mdButton.setup( this, buttons ) && this._buttons.dep.changed();
+        } else {
+            this._buttons.dep.depend();
         }
-        this._buttons.dep.depend();
         return this._buttons.value; // array of mdButton's
     }
 
     /**
      * @summary Reset the list of buttons
+     * @returns {Boolean} whether the list of buttons has changed after this reset
      */
     buttonsReset(){
+        const count = this._buttons.value.length;
+        //console.debug( 'buttonsReset()', count );
         this._buttons.value = [];
-        this._buttons.dep.changed();
+        return count > 0;
     }
 
     /**

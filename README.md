@@ -108,13 +108,13 @@ The globally exported object.
 
     - `mdButtons`
 
-        The buttons to be displayed in the standard footer, as a string, an object or an array of strings or objects.
+        The buttons to be displayed in the standard footer, as a string, an array of strings, an object or an array of objects.
 
         Only considered if a specific footer is not asked (see `mdFooter` parm).
 
         Default is to have one `OK` button.
 
-        When provided as an array, the buttons are displayed from left to right.
+        When provided as an array, the buttons are displayed from left (the first element of the array) to right (the last element).
 
         See also [Buttons management](#buttons-management) for the syntax of this data.
 
@@ -264,9 +264,9 @@ The globally exported object.
 
     - `body`: when specified, the name of the Blaze template to be set as the modal body
 
-    - `buttons`: when specified, an object or an array of object, each object providing the properties to be set on a button, as:
+    - `buttons`: when specified, a string, an array of strigs, an object or an array of object, each one providing the properties to be set on a button, as:
 
-        - `id`: mandatory
+        - `id`: mandatory, defaulting to the string itself if only a string is provided
         - `label`
         - `classes`
         - `enabled`
@@ -275,10 +275,11 @@ The globally exported object.
         - `html`
         - `cb`
         - `dismiss`
+        - `ifExist`: only apply if the button already exists, defaulting to false; this means that, if you do not specify this attribute, you may create a new button!
 
         If a button has not been previously defined, then it is added at the end of the list.
 
-        When _setting_ buttons, the special `md-btn-reset` identifier let the application remove all previously defined buttons.
+        This is also the case when the buttons are only specified as strings, not objects. In that case, we consider that this is a request to add a new button, which must not exist yet.
 
     - `classes`: when specified, classes to be added to the '`.modal`' element
 
@@ -318,15 +319,15 @@ The globally exported object.
 
 #### Buttons management
 
-When using the standard footer, buttons can be specified either as a string, an array of string, an object or an array of objects.
-
-An accepted string must be one of the button identifiers as defined by the [constants](#buttons).
+When using the standard footer, buttons can be specified either as an object or an array of objects.
 
 An accepted object is a full object definition, with keys:
 
 - `id`: the button identifier as a string, mandatory
 
-    It may be one of our known button identifiers, or an identifier provided by the caller.
+    It may be one of our known button identifiers as defined by the [constants](#buttons), or an identifier provided by the caller.
+
+    The special `Modal.C.ButtonExt.RESET` identifier let the application remove all previously defined buttons.
 
 - `label`: the label of the button
 

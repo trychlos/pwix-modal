@@ -318,7 +318,7 @@ Template.md_modal.helpers({
     // the list of buttons
     buttons(){
         const buttons = this.modal.buttons();
-        //console.debug( buttons );
+        //console.debug( 'Modal helper', buttons );
         return buttons;
     },
 
@@ -386,13 +386,14 @@ Template.md_modal.helpers({
 
 Template.md_modal.events({
 
-    // intercept Enter key to not reoad the page on submit
+    // intercept Enter key to not reload the page on submit
     'keydown .modal-content'( event, instance ){
         if( event.keyCode === 13 ){
             // when we have an Enter key pressed, we want submit the current form (if any)
             // if we have our standard footer
             const $btn = instance.$( event.currentTarget ).find( '.modal-footer button.md-btn.md-last' );
             if( $btn ){
+                //alert( 'cicking on', $btn );
                 $btn.trigger( 'click' );
                 return false;
             }
@@ -413,6 +414,7 @@ Template.md_modal.events({
         const button = modal.buttonGet( btnId );
         const target = modal.target() || $btn;
         //console.debug( target );
+        //alert( 'sending md-click to '+target.toString());
         target.trigger( 'md-click', {
             id: modal.id(),
             button: modal.buttonGet( btnId ),
@@ -425,6 +427,7 @@ Template.md_modal.events({
             dismiss = modal.buttons().length === 1 || false;
         }
         //console.debug( 'dismiss', dismiss );
+        //alert( 'dismiss='+dismiss );
         if( dismiss ){
             instance.$( '.modal#'+modal.id()).modal( 'hide' );
         }

@@ -9,6 +9,8 @@
     - Fix buttonEnable() obsolete function (which should work anyway)
     - Fix buttons reactivity
     - Define Modal.C.ButtonExt.RESET special button identifier (bumping candidate version number)
+    - Modal.set({ buttons: ... }) now also accepts new buttons as strings
+    - Fix and improve buttons definition and reactivity
 
 ### 1.8.0
 
