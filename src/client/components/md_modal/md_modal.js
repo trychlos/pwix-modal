@@ -386,17 +386,11 @@ Template.md_modal.helpers({
 
 Template.md_modal.events({
 
-    // intercept Enter key to not reload the page on submit
-    'keydown .modal-content'( event, instance ){
-        if( event.keyCode === 13 ){
-            // when we have an Enter key pressed, we want submit the current form (if any)
-            // if we have our standard footer
-            const $btn = instance.$( event.currentTarget ).find( '.modal-footer button.md-btn.md-last' );
-            if( $btn ){
-                //alert( 'cicking on', $btn );
-                $btn.trigger( 'click' );
-                return false;
-            }
+    'submit .modal-content'( event, instance ){
+        const $btn = instance.$( event.currentTarget ).find( '.modal-footer button.md-btn.md-last' );
+        if( $btn ){
+            $btn.trigger( 'click' );
+            return false;
         }
     },
 
