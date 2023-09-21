@@ -388,6 +388,7 @@ Template.md_modal.events({
 
     'submit .modal-content'( event, instance ){
         const $btn = instance.$( event.currentTarget ).find( '.modal-footer button.md-btn.md-last' );
+        //console.debug( event, $btn );
         if( $btn ){
             $btn.trigger( 'click' );
             return false;
