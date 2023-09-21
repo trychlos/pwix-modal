@@ -24,7 +24,8 @@ Modal.configure = function( o ){
         _.merge( Modal._conf, Modal._defaults, o );
         // be verbose if asked for
         if( Modal._conf.verbosity & Modal.C.Verbose.CONFIGURE ){
-            console.log( 'pwix:modal configure() with', o, 'building', Modal._conf );
+            //console.log( 'pwix:modal configure() with', o, 'building', Modal._conf );
+            console.log( 'pwix:modal configure() with', o );
         }
     }
     // also acts as a getter

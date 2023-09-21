@@ -374,7 +374,7 @@ An accepted object is a full object definition, with keys:
 
 - `dismiss`: a boolean value which says whether clicking on the button should dismiss the modal
 
-    Defaults to `true` if there is one single button, to `false` else.
+    Defaults to `true` if there is one single button, or if they are `CANCEL` or `CLOSE` buttons. Default to `false` in every other case.
 
 All others parameters passed when creating the button are kept, and made available in `button.parms` data passed with `md-click` event.
 

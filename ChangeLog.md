@@ -11,6 +11,7 @@
     - Define Modal.C.ButtonExt.RESET special button identifier (bumping candidate version number)
     - Modal.set({ buttons: ... }) now also accepts new buttons as strings
     - Fix and improve buttons definition and reactivity
+    - CANCEL and CLOSE buttons default to dismiss=true
 
 ### 1.8.0
 

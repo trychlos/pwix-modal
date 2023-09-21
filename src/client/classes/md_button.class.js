@@ -102,6 +102,8 @@ export class mdButton {
         }
         if( Object.keys( def ).includes( 'dismiss' ) && ( def.dismiss === true || def.dismiss === false )){
             this._dismiss.set( def.dismiss );
+        } else if( def.id === Modal.C.Button.CANCEL || def.id === Modal.C.Button.CLOSE ){
+            this._dismiss.set( true );
         }
         if( Object.keys( def ).includes( 'enabled' ) && ( def.enabled === true || def.enabled === false )){
             this._enabled.set( def.enabled );
@@ -160,7 +162,7 @@ export class mdButton {
      */
     dismiss(){
         const dismiss = this._dismiss.get();
-        return dismiss === true || dismiss === false ? dismiss : undefined;
+        return ( dismiss === true || dismiss === false ) ? dismiss : undefined;
     }
 
     /**
