@@ -405,7 +405,9 @@ export class mdModal {
                 if( Modal._conf.verbosity & Modal.C.Verbose.FOCUS ){
                     console.log( 'pwix:modal focus() on', $found );
                 }
-                $found.trigger( 'focus' );
+                //$found.trigger( 'focus' );
+                $found.focus();
+                $found.select();
             }
         }
     }
