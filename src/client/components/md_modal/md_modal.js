@@ -386,6 +386,14 @@ Template.md_modal.helpers({
 
 Template.md_modal.events({
 
+    // trigger a submit event on Enter
+    //  we have made sure that this doesn't submit the form when the submit button is disabled
+    'keydown .modal-content'( event, instance ){
+        if( event.keyCode === 13 ){
+            instance.$( event.currentTarget ).trigger( 'submit' );
+        }
+    },
+
     'submit .modal-content'( event, instance ){
         const $btn = instance.$( event.currentTarget ).find( '.modal-footer button.md-btn.md-last' );
         //console.debug( event, $btn );
