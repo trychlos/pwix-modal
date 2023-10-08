@@ -388,9 +388,18 @@ Template.md_modal.events({
 
     // trigger a submit event on Enter
     //  we have made sure that this doesn't submit the form when the submit button is disabled
+    //  a previous handler may have set a 'pwix:modal.submitable' key to false to prevent a form to be submitted
+    //  see for example pwix:editor which doesn't want a form to be submitted when Enter key is hitten in the edition text area
     'keydown .modal-content'( event, instance ){
+        //console.debug( event );
         if( event.keyCode === 13 ){
-            instance.$( event.currentTarget ).trigger( 'submit' );
+            if( event.target.nodeName !== "TEXTAREA" &&
+                ( !Object.keys( event.originalEvent ).includes( 'pwix:modal' ) ||
+                  !Object.keys( event.originalEvent['pwix:modal'] ).includes( 'submitable' ) ||
+                  event.originalEvent['pwix:modal'].submitable === false )){
+
+                    instance.$( event.currentTarget ).trigger( 'submit' );
+            }
         }
     },
 
@@ -405,6 +414,7 @@ Template.md_modal.events({
 
     // click on a button
     // note that the Blaze templating system doesn't let us add the 'data-bs-dismiss="modal"' to the button
+    //  (though this could have been made via jQuery)
     // so all events come here, and we have to dismiss the dialog ourselves:
     //  - if only button
     //  - if button exhibits a 'dismiss' attribute

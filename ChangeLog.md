@@ -12,7 +12,7 @@
     - Modal.set({ buttons: ... }) now also accepts new buttons as strings
     - Fix and improve buttons definition and reactivity
     - CANCEL and CLOSE buttons default to dismiss=true
-    - Submit the modal on Enter
+    - Submit the modal on Enter, unless the event is said to not do
 
 ### 1.8.0
 
