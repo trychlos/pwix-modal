@@ -2,9 +2,9 @@
 
 ## ChangeLog
 
-### 1.9.0-rc
+### 1.9.0
 
-    Release date: 
+    Release date: 2023-10-11
 
     - Fix buttonEnable() obsolete function (which should work anyway)
     - Fix buttons reactivity
@@ -179,4 +179,4 @@
 
 ---
 P. Wieser
-- Last updated on 2023, Sep. 18th
+- Last updated on 2023, Oct. 11th
