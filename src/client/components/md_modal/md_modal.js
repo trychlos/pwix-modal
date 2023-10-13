@@ -419,10 +419,9 @@ Template.md_modal.events({
     //  - if only button
     //  - if button exhibits a 'dismiss' attribute
     'click .md-btn'( event, instance ){
-        //console.debug( event );
         const modal = this.modal;
         const $btn = instance.$( event.currentTarget );
-        //console.debug( $btn, $btn.data());
+        //console.debug( event, this, $btn, $btn.data());
         const btnId = $btn.attr( 'data-md-btn-id' );
         const button = modal.buttonGet( btnId );
         const target = modal.target() || $btn;
