@@ -264,6 +264,10 @@ The globally exported object.
 
     - `body`: when specified, the name of the Blaze template to be set as the modal body
 
+    - `bodyHeight`: when specified, set a minimal new body height
+
+        Body height may be specified with a `'+'` or `'-'` prefix to respectively increase or decrease the current body height.
+
     - `buttons`: when specified, a string, an array of strigs, an object or an array of object, each one providing the properties to be set on a button, as:
 
         - `id`: mandatory, defaulting to the string itself if only a string is provided

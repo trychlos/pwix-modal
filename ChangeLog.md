@@ -6,7 +6,7 @@
 
     Release date: 
 
-    - 
+    - Define 'bodyHeight' set() parameter to handle dynamic height contents
 
 ### 1.9.0
 

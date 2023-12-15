@@ -34,6 +34,7 @@ export class mdModal {
     _autofocus = new ReactiveVar( null );
     _beforeclose = new ReactiveVar( null );
     _body = new ReactiveVar( null );
+    _bodyheight = new ReactiveVar( null );
     _buttons = {
         value: [],  // an array of mdButton's
         dep: new Tracker.Dependency()
@@ -175,6 +176,31 @@ export class mdModal {
             this._body.set( body );
         }
         return this._body.get() || '';
+    }
+
+    /**
+     * @summary Getter/Setter
+     * @param {String} height the new (minimal) body height
+     * @returns {String} the current body height
+     *  For now, body
+     */
+    bodyHeight( height ){
+        if( height !== undefined ){
+            const $body = $( '.modal#'+this._id ).find( '.modal-body' );
+            if( $body ){
+                let h = parseInt( $body.height());
+                if( height.startsWith( '+' )){
+                    h += parseInt( height.substring( 1 ));
+                } else if( height.startsWith( '-' )){
+                    h -= parseInt( height.substring( 1 ));
+                } else {
+                    h = parseInt( height );
+                }
+                $body.height( h );
+            }
+            this._bodyheight.set( height );
+        }
+        return this._bodyheight.get() || '';
     }
 
     /**

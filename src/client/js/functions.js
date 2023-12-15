@@ -119,6 +119,9 @@ Modal.set = function( arg ){
     if( Object.keys( arg ).includes( 'body' )){
         modal.body( arg.body );
     }
+    if( Object.keys( arg ).includes( 'bodyHeight' )){
+        modal.bodyHeight( arg.bodyHeight );
+    }
     if( Object.keys( arg ).includes( 'buttons' )){
         modal.buttons( arg.buttons );
     }
