@@ -16,6 +16,7 @@ Modal.C = {
         SAVE: 'SAVE',
         YES: 'YES',
         NO: 'NO',
+        NEW: 'NEW'
     },
 
     // a special 'reset all' button identifier

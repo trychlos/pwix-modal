@@ -11,7 +11,8 @@ Modal.i18n = {
         CLOSE: 'Close',
         SAVE: 'Save',
         YES: 'Yes',
-        NO: 'No'
+        NO: 'No',
+        NEW: 'New...'
     },
     fr_FR: {
         OK: 'OK',
@@ -19,7 +20,8 @@ Modal.i18n = {
         CLOSE: 'Fermer',
         SAVE: 'Enregistrer',
         YES: 'Oui',
-        NO: 'Non'
+        NO: 'Non',
+        NEW: 'Nouveau...'
     }
 };
 
