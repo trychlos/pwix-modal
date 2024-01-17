@@ -2,12 +2,14 @@
 
 ## ChangeLog
 
-### 1.9.1-rc
+### 1.10.0-rc
 
     Release date: 
 
     - Define 'bodyHeight' set() parameter to handle dynamic height contents
     - Add NEW button
+    - mdBeforeClose() function now must return a Promise (bumping candidate version nunber)
+    - New askClose() method to close the modal
 
 ### 1.9.0
 

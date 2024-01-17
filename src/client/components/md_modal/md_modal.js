@@ -385,6 +385,12 @@ Template.md_modal.helpers({
 });
 
 Template.md_modal.events({
+    // handle the close click on the header
+    'click button.btn-close'( event, instance ){
+        const modal = this.modal;
+        modal.askClose();
+        return false;
+    },
 
     // trigger a submit event on Enter
     //  we have made sure that this doesn't submit the form when the submit button is disabled
@@ -401,6 +407,15 @@ Template.md_modal.events({
                     instance.$( event.currentTarget ).trigger( 'submit' );
             }
         }
+        // this doesn't work
+        /*
+        console.debug( event.keyCode );
+        if( event.keyCode === 27 ){
+            const modal = this.modal;
+            modal.askClose();
+            return false;
+        }
+        */
     },
 
     'submit .modal-content'( event, instance ){
@@ -441,26 +456,22 @@ Template.md_modal.events({
         //console.debug( 'dismiss', dismiss );
         //alert( 'dismiss='+dismiss );
         if( dismiss ){
-            instance.$( '.modal#'+modal.id()).modal( 'hide' );
+            modal.askClose();
+            return false;
         }
 
-        // and let bubble up
+        // else let bubble up
     },
 
     // about to close the modal
     'hide.bs.modal .modal'( event, instance ){
         const modal = this.modal;
-        const fn = modal.beforeClose();
-        if( !fn || fn( modal.id())){
-            const target = modal.target() || instance.$( event.currentTarget );
-            instance.MD.lastSizeSet();
-            target.trigger( 'md-close', {
-                id: modal.id(),
-                parms: modal.parms()
-            });
-        } else {
-            event.preventDefault();
-        }
+        const target = modal.target() || instance.$( event.currentTarget );
+        instance.MD.lastSizeSet();
+        target.trigger( 'md-close', {
+            id: modal.id(),
+            parms: modal.parms()
+        });
     },
 
     // remove the Blaze element from the DOM

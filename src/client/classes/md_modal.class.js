@@ -143,6 +143,26 @@ export class mdModal {
     }
 
     /**
+     * @summary let the application a chance to prevent the close of the modal
+     *  If a 'beforeClose() function has been configured, it is expected to return a Promise which must resolve to:
+     *  - true to let the modal be closed
+     *  - false to prevent the close.
+     */
+    askClose(){
+        //console.debug( 'askToClose()', this );
+        const fn = this.beforeClose();
+        if( fn && _.isFunction( fn )){
+            fn( this.id()).then(( res ) => {
+                if( res ){
+                    this.close();
+                }
+            });
+        } else {
+            this.close();
+        }
+    }
+
+    /**
      * @summary Getter/Setter
      * @param {Boolean} b whether the dialog should manage itself the focus
      * @returns {Boolean} the autofocus value

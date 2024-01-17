@@ -95,8 +95,9 @@ The globally exported object.
         A function to be called when the user asks for close the modal, by clicking on the backdrop, or the close button of the header, or a close button in the footer. This function let the application allows or forbid the close:
 
         - the function takes a unique argument, which is the modal identifier
-        - if the function returns `true`, the modal will be closed
-        - if the function returns `false`, the modal will not.
+        - it is expected that the function returns a Promise which must resolve to:
+            - `true` to let the modal be closed
+            - `false` to prevent the modal to be closed.
 
         The default is to leave the modal be closed when the user asks for that.
 
@@ -216,9 +217,19 @@ The globally exported object.
 
     Because this method makes a search on the `data-md-btn-id` attribute, it may be irrelevant when a specific footer has been defined.
 
+- `Modal.askClose()`
+
+    Close the current modal dialog from the caller, taking care of the eventual `mdBeforeClose` configured function.
+
+    If the function has been provided, it is ran and its result is executed.
+
+    Else, the odal is closed (which is the default if the function is not configured).
+
 - `Modal.close()`
 
-    Close the current modal dialog from the caller.
+    Unconditionally close the current modal dialog from the caller.
+
+    Unconditionlly here means that this method doesn't take care of the optional `mdBeforeClose` configured function which ask for a user confirmation. Closing means.. closing!
 
     Of course, and if this has not been prevented in the modal configuration, it is still possible to close the modal dialog via the usual ways:
 

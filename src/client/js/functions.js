@@ -9,6 +9,19 @@ import _ from 'lodash';
 import { mdModal } from '../classes/md_modal.class.js';
 
 /**
+ * @summary Close the topmost opened dialog if the mdBeforeClose() (if exists) returns a Promise which eventually resolves to true.
+ *  If the mdBeforeClose(), the function closes the modal.
+ * @locus Client
+ */
+Modal.askClose = function(){
+    //console.error( 'a console error to trace the call stack' );
+    const modal = Modal._stack.modal();
+    if( modal ){
+        modal.askClose();
+    }
+};
+
+/**
  * @summary Get/set the function which allow the modal closing
  *  OBSOLETED
  *  WILL BE REMOVED ON 2.0 VERSION
@@ -52,7 +65,7 @@ Modal.buttonFind = function( button, id ){
 };
 
 /**
- * @summary Close the topmost opened dialog
+ * @summary Uncondionally close the topmost opened dialog
  * @locus Client
  */
 Modal.close = function(){

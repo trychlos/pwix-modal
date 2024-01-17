@@ -11,7 +11,8 @@
 |   Id | Date       | Description and comment(s) |
 | ---: | :---       | :---                       |
 |   10 | 2023- 5- 2 | would it be relevant to also allow to keep a position ? |
-|   38 |  |  |
+|   38 | 2024- 1-17 | intercept Escape key to honor confirmOnClose |
+|   39 |  |  |
 
 ---
 ## Done
