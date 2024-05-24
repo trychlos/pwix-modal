@@ -2,9 +2,9 @@
 
 ## ChangeLog
 
-### 1.10.0-rc
+### 1.10.0
 
-    Release date: 
+    Release date: 2024- 5-24
 
     - Define 'bodyHeight' set() parameter to handle dynamic height contents
     - Add NEW button
@@ -189,4 +189,4 @@
 
 ---
 P. Wieser
-- Last updated on 2023, Oct. 11th
+- Last updated on 2024, May. 24th
