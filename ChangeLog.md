@@ -10,6 +10,7 @@
     - Add NEW button
     - mdBeforeClose() function now must return a Promise (bumping candidate version nunber)
     - New askClose() method to close the modal
+    - Meteor 3.0 ready
 
 ### 1.9.0
 
