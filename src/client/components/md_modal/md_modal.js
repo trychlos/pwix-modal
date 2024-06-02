@@ -229,7 +229,7 @@ Template.md_modal.onRendered( function(){
         }
     });
 
-    // vertically position the modal
+    // does the modal must be displayed full screen ?
     self.autorun(() => {
         const maxHeight = parseInt( Layout.height()) - 2*self.MD.margin;
         if( self.MD.modal.get().fullScreen()){
@@ -238,6 +238,17 @@ Template.md_modal.onRendered( function(){
                 console.log( 'vertically position', top );
             }
             self.$( '.modal-content' ).css({ top: top, height: maxHeight, minHeight: maxHeight });
+        }
+    });
+
+    // vertical move
+    self.autorun(() => {
+        const move = self.MD.modal.get().moveTop();
+        if( move ){
+            const shift = parseInt( self.$( '.md-hidden' ).css( 'top' ));
+            self.$( '.modal-content' ).css({
+                top: '+=' + move + 'px'
+            });
         }
     });
 

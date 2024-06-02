@@ -2,11 +2,11 @@
 
 ## ChangeLog
 
-### 1.10.1-rc
+### 1.11.0-rc
 
     Release date: 
 
-    - 
+    - Define 'mdMoveTop' run parm and 'moveTop' set parm to ket the caller move the modal vertically only (bumping the candidate release number)
 
 ### 1.10.0
 

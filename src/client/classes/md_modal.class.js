@@ -49,6 +49,7 @@ export class mdModal {
     _closekeyboard = new ReactiveVar( true );
     _footer = new ReactiveVar( null );
     _fullscreen = new ReactiveVar( null );
+    _movetop = new ReactiveVar( 0 );
     _sizekey = new ReactiveVar( null );
     _target = new ReactiveVar( null );
     _title = new ReactiveVar( null );
@@ -126,6 +127,9 @@ export class mdModal {
 
         this._fullscreen.set( this._argBool( parms, 'mdFullScreen', false ));
 
+        if( parms.mdMoveTop ){
+            this._movetop.set( parms.mdMoveTop );
+        }
         if( parms.mdSizeKey ){
             this._sizekey.set( parms.mdSizeKey );
         }
@@ -476,6 +480,18 @@ export class mdModal {
      */
     id(){
         return this._id;
+    }
+
+    /**
+     * @summary Getter/Setter
+     * @param {Integer} move whether the modal should be vertically moved
+     * @returns {Integer} the desired move in pixel units
+     */
+    moveTop( move ){
+        if( typeof move !== 'undefined' ){
+            this._movetop.set( move );
+        }
+        return this._movetop.get();
     }
 
     /**

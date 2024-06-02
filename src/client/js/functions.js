@@ -168,6 +168,9 @@ Modal.set = function( arg ){
     if( Object.keys( arg ).includes( 'fullscreen' )){
         modal.fullScreen( arg.fullscreen );
     }
+    if( Object.keys( arg ).includes( 'moveTop' )){
+        modal.moveTop( arg.moveTop );
+    }
     if( Object.keys( arg ).includes( 'target' )){
         modal.target( arg.target );
     }

@@ -185,6 +185,12 @@ The globally exported object.
 
         Reserve this use to dedicated less-than-MD devices.
 
+    - `mdMoveTop`
+
+        Whether the modal should be moved vertically.
+
+        The value must be specified in pixel units, and can be negative (up-move to up) or positive (down-move).
+
     - `mdSizeKey`
 
         The string name of the `localStorage` item which will record the last used width and height.
@@ -321,6 +327,8 @@ The globally exported object.
         When a particular footer is specified, then the button methods are no more operationnal, and you have to manage them yourself.
 
     - `fullscreen`: when specified, whether the dialog should be displayed in full screen mode
+
+    - `moveTop`: when specified, whether the modal should be moved vertically.
 
     - `target`: when specified, the JQuery object which must receive events for that modal
 
