@@ -6,7 +6,7 @@
 
     Release date: 
 
-    - 
+    - Fix the breakpoints constants inclusion in stylesheet
 
 ### 2.0.0
 
