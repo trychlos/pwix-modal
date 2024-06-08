@@ -7,7 +7,7 @@
  * - modal: the mdModal instance
  */
 
-import { Layout } from 'meteor/pwix:layout';
+import { UILayout } from 'meteor/pwix:ui-layout';
 import { ReactiveVar } from 'meteor/reactive-var';
 
 //  provides 'draggable()' and 'resizable()' methods
@@ -201,7 +201,7 @@ Template.md_modal.onRendered( function(){
     //  if we display a dynamic footer, then the dialog may have some issues to find the right width
     //  if we find here that the footer width is greater than the content, then we adjust the dialog width
     self.autorun(() => {
-        const maxWidth = parseInt( Layout.width()) - 2*self.MD.margin;
+        const maxWidth = parseInt( UILayout.width()) - 2*self.MD.margin;
         let w;
         if( self.MD.modal.get().fullScreen()){
             w = maxWidth;
@@ -220,7 +220,7 @@ Template.md_modal.onRendered( function(){
     self.autorun(() => {
         if( !self.MD.modal.get().fullScreen()){
             const contentWidth = parseInt( self.$( '.modal-content' ).css( 'width' ));
-            const viewWidth = parseInt( Layout.width());
+            const viewWidth = parseInt( UILayout.width());
             const left = (( viewWidth-contentWidth ) / 2 )+'px';
             if( Modal._conf.verbosity & Modal.C.Verbose.RESIZING ){
                 console.log( 'horizontally center the modal: viewWidth', viewWidth, 'contentWidth', contentWidth, 'left', left );
@@ -231,7 +231,7 @@ Template.md_modal.onRendered( function(){
 
     // does the modal must be displayed full screen ?
     self.autorun(() => {
-        const maxHeight = parseInt( Layout.height()) - 2*self.MD.margin;
+        const maxHeight = parseInt( UILayout.height()) - 2*self.MD.margin;
         if( self.MD.modal.get().fullScreen()){
             const top = self.MD.margin+'px';
             if( Modal._conf.verbosity & Modal.C.Verbose.RESIZING ){

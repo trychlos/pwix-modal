@@ -2,11 +2,12 @@
 
 ## ChangeLog
 
-### 1.11.0-rc
+### 2.0.0-rc
 
     Release date: 
 
     - Define 'mdMoveTop' run parm and 'moveTop' set parm to ket the caller move the modal vertically only (bumping the candidate release number)
+    - Replace obsolete pwix:layout v1 dependency with pwix:ui-layout v2, bummpring major candidate version number
 
 ### 1.10.0
 
