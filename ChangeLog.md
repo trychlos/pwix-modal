@@ -2,9 +2,9 @@
 
 ## ChangeLog
 
-### 2.1.0-rc
+### 2.1.0
 
-    Release date: 
+    Release date: 2024- 7-10
 
     - Have a closeByBackdrop configure option, bumping minor candidate version number
     - configure() is now a reactive data source
@@ -209,4 +209,4 @@
 
 ---
 P. Wieser
-- Last updated on 2024, Jun. 8th
+- Last updated on 2024, Jul. 10th
