@@ -7,6 +7,7 @@
     Release date: 
 
     - Have a closeByBackdrop configure option, bumping minor candidate version number
+    - configure() is now a reactive data source
 
 ### 2.0.1
 

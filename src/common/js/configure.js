@@ -4,14 +4,14 @@
 
 import _ from 'lodash';
 
-Modal._conf = {};
+import { ReactiveVar } from 'meteor/reactive-var';
 
-Modal._defaults = {
+let _conf = {};
+
+const _defaults = {
     closeByBackdrop: true,
     verbosity: Modal.C.Verbose.CONFIGURE
 };
-
-_.merge( Modal._conf, Modal._defaults );
 
 /**
  * @summary Package configuration
@@ -22,7 +22,8 @@ _.merge( Modal._conf, Modal._defaults );
  */
 Modal.configure = function( o ){
     if( o && _.isObject( o )){
-        _.merge( Modal._conf, Modal._defaults, o );
+        _.merge( _conf, _defaults, o );
+        Modal._conf.set( _conf );
         // be verbose if asked for
         if( Modal._conf.verbosity & Modal.C.Verbose.CONFIGURE ){
             //console.log( 'pwix:modal configure() with', o, 'building', Modal._conf );
@@ -30,5 +31,8 @@ Modal.configure = function( o ){
         }
     }
     // also acts as a getter
-    return Modal._conf;
+    return Modal._conf.get();
 };
+
+_.merge( _conf, Modal._defaults );
+Modal._conf = new ReactiveVar( _conf );
