@@ -7,7 +7,8 @@ import _ from 'lodash';
 Modal._conf = {};
 
 Modal._defaults = {
-    verbosity: Modal.C.Verbose.NONE
+    closeByBackdrop: true,
+    verbosity: Modal.C.Verbose.CONFIGURE
 };
 
 _.merge( Modal._conf, Modal._defaults );

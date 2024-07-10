@@ -117,7 +117,7 @@ export class mdModal {
             this._classesheader.set( parms.mdClassesHeader );
         }
 
-        this._closebackdrop.set( this._argBool( parms, 'mdCloseByBackdrop', true ));
+        this._closebackdrop.set( this._argBool( parms, 'mdCloseByBackdrop', Modal.configure().closeByBackdrop ));
         this._closeheader.set( this._argBool( parms, 'mdCloseByHeader', true ));
         this._closekeyboard.set( this._argBool( parms, 'mdCloseByKeyboard', true ));
 

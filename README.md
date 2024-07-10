@@ -34,10 +34,16 @@ The package's behavior can be configured through a call to the `Modal.configure(
 
 Known configuration options are:
 
+- `closeByBackdrop`
+
+    Whether the dialog should be closed when clicking on the backdrop.
+
+    Default to `true`.
+
 - `verbosity`
 
     The verbosity level as:
-    
+
     - `Modal.C.Verbose.NONE`
     
     or an OR-ed value of integer constants:
@@ -153,7 +159,7 @@ The globally exported object.
 
         Whether clicking outside of the dialog should close it.
 
-        Defaults to `true`.
+        Defaults to configured value.
 
     - `mdCloseByHeader`
 
