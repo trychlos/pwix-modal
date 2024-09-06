@@ -2,11 +2,11 @@
 
 ## ChangeLog
 
-### 2.1.1-rc
+### 2.2.0-rc
 
     Release date: 
 
-    - 
+    - Define XXL modal size on screens to be used on screens with very high resolution, thus bumping minor candidate version number
 
 ### 2.1.0
 

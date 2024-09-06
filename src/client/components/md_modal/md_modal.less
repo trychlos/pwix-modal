@@ -44,4 +44,36 @@
         //
         padding: var( --md-modal-padding );
     }
+
+    // define a special xxl size for wide screens
+    @media screen and ( min-width: @ui-xs-width ){
+        .modal .modal-dialog.modal-xxl {
+            --bs-modal-width: 280px;
+        }
+    }
+    @media screen and ( min-width: @ui-sm-width ){
+        .modal .modal-dialog.modal-xxl {
+            --bs-modal-width: 330px;
+        }
+    }
+    @media screen and ( min-width: @ui-md-width ){
+        .modal .modal-dialog.modal-xxl {
+            --bs-modal-width: 700px;
+        }
+    }
+    @media screen and ( min-width: @ui-lg-width ){
+        .modal .modal-dialog.modal-xxl {
+            --bs-modal-width: 920px;
+        }
+    }
+    @media screen and ( min-width: 1500px ){
+        .modal .modal-dialog.modal-xxl {
+            --bs-modal-width: 1350px;
+        }
+    }
+    @media screen and ( min-width: @ui-xl-width ){
+        .modal .modal-dialog.modal-xxl {
+            --bs-modal-width: 1750px;
+        }
+    }
 }
