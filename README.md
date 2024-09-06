@@ -531,7 +531,7 @@ Starting with v 1.0.0, and in accordance with advices from [the Meteor Guide](ht
 
 Instead we check npm versions of installed packages at runtime, on server startup, in development environment.
 
-Dependencies as of v 2.1.0:
+Dependencies as of v 2.2.0:
 ```
     '@popperjs/core': '^2.11.6',
     'bootstrap': '^5.2.1',
@@ -555,4 +555,4 @@ Because this is dynamically done on a per dialog basis, and only on the caller r
 
 ---
 P. Wieser
-- Last updated on 2024, Jul. 10th
+- Last updated on 2024, Sep. 6th
