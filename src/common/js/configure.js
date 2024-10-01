@@ -22,7 +22,7 @@ const _defaults = {
  */
 Modal.configure = function( o ){
     if( o && _.isObject( o )){
-        _.merge( _conf, _defaults, o );
+        _conf = _.merge( _defaults, _conf, o );
         Modal._conf.set( _conf );
         // be verbose if asked for
         if( Modal._conf.verbosity & Modal.C.Verbose.CONFIGURE ){
@@ -34,5 +34,5 @@ Modal.configure = function( o ){
     return Modal._conf.get();
 };
 
-_.merge( _conf, Modal._defaults );
+_conf = _.merge( {}, Modal._defaults );
 Modal._conf = new ReactiveVar( _conf );

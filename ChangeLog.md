@@ -6,7 +6,7 @@
 
     Release date: 
 
-    - 
+    - Fix configuration overrides
 
 ### 2.2.0
 
