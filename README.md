@@ -551,7 +551,7 @@ New and updated translations are willingly accepted, and more than welcome. Just
 
 `pwix:modal` may use `localStorage` to record the size of a dialog through the `mdSizeKey` argument of the `Modal.run()` method.
 
-Because this is dynamically done on a per dialog basis, and only on the caller request, the package cannot advertize of this use, relying on the caller own declaration.
+Because this is dynamically done on a per dialog basis, and only on the caller request, the package cannot advertise of this use, relying on the caller own declaration.
 
 ---
 P. Wieser
