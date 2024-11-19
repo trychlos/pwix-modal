@@ -2,9 +2,9 @@
 
 ## ChangeLog
 
-### 2.3.0-rc
+### 2.3.0
 
-    Release date: 
+    Release date: 2024-11-19
 
     - Minor spelling fix
     - Set modal max height
@@ -229,4 +229,4 @@
 
 ---
 P. Wieser
-- Last updated on 2024, Oct. 4th
+- Last updated on 2024, Nov. 19th
