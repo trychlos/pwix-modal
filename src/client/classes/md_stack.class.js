@@ -2,7 +2,7 @@
  * pwix:modal/src/client/classes/md_stack.class.js
  *
  * This is the class which manages the stack of opened dialogs.
- * Because there is only one stack, this is a singleton.
+ * Because there is only one stack, this is a _singleton.
  */
 
 import '../../common/js/index.js';
@@ -13,21 +13,13 @@ export class mdStack {
 
     // static data
     //
-    static Singleton = null;
+    static _singleton = null;
 
     // the starting z-index level
     static zIndexStart = 1000;
 
     // the computing tick
     static zIndexTick = 10;
-
-    /**
-     * @summary Make sure each modal in on top of the previous ones
-     * @returns {Integer} the first z-index level (display of the backdrops)
-     */
-    static firstZindex(){
-        return mdStack.zIndexStart;
-    }
 
     // private data
     //
@@ -39,13 +31,31 @@ export class mdStack {
      * @return {mdStack}
      */
     constructor(){
-        if( mdStack.Singleton ){
-            console.log( 'returning already instanciated mdStack.Singleton' );
-            return mdStack.Singleton;
+        if( mdStack._singleton ){
+            console.log( 'returning already instanciated mdStack._singleton' );
+            return mdStack._singleton;
         }
 
-        mdStack.Singleton = this;
+        mdStack._singleton = this;
         return this;
+    }
+
+    /**
+     * @summary Given the configured contentClassesArray first, and the place of this modal in the stack, returns the corresponding n'th item of the array
+     * @param {String} the modal identifier
+     * @returns {String} the n-th item of the configured array
+     */
+    contentClassesArray( modalId ){
+        const classes = Modal.configure().contentClassesArray;
+        let res = '';
+        if( classes && Array.isArray( classes ) && classes.length ){
+            const found = this.index( modalId );
+            if( found >= 0 ){
+                const nth = found % classes.length;
+                res = classes[nth];
+            }
+        }
+        return res;
     }
 
     /**
@@ -53,6 +63,47 @@ export class mdStack {
      */
     count(){
         return this._stack.length;
+    }
+
+    /**
+     * @summary Make sure each modal in on top of the previous ones
+     * @returns {Integer} the first z-index level (display of the backdrops)
+     */
+    firstZindex(){
+        return mdStack.zIndexStart;
+    }
+
+    /**
+     * @summary Find the searched for modal
+     * @param {String} id the identifier of the searched modal, may be undefined
+     * @returns {Integer} the found modal, or -1
+     * @throws {Error} if the modal is not found
+     */
+    index( id ){
+        let found = -1;
+        if( this._stack.length ){
+            if( id ){
+                for( let i=0 ; i<this._stack.length ; ++i ){
+                    const m = this._stack[i];
+                    if( m.id() === id ){
+                        found = i;
+                        break;
+                    }
+                }
+                if( found === -1 ){
+                    throw new Error( 'modal not found', id );
+                }
+            } else {
+                found = this._stack.length - 1;
+            }
+        } else if( Modal._conf.verbosity & Modal.C.Verbose.NOMODAL ){
+            if( id ){
+                console.warn( 'pwix:modal trying to find a modal while none is opened', id );
+            } else {
+                console.warn( 'pwix:modal trying to find an undefined modal' );
+            }
+        }
+        return found;
     }
 
     /**
@@ -75,27 +126,9 @@ export class mdStack {
      */
     modal( id ){
         let modal = null;
-        if( this._stack.length ){
-            if( id ){
-                this._stack.every(( m ) => {
-                    if( m.id() === id ){
-                        modal = m;
-                        return false;
-                    }
-                    return true;
-                });
-                if( !modal ){
-                    throw new Error( 'modal not found', id );
-                }
-            } else {
-                modal = this._stack[this._stack.length-1];
-            }
-        } else if( Modal._conf.verbosity & Modal.C.Verbose.NOMODAL ){
-            if( id ){
-                console.log( 'pwix:modal trying to find a modal while none is opened', id );
-            } else {
-                console.log( 'pwix:modal trying to find an undefined modal' );
-            }
+        const found = this.index( id );
+        if( found >= 0 ){
+            modal = this._stack[found];
         }
         return modal;
     }

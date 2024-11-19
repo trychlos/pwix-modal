@@ -2,12 +2,13 @@
 
 ## ChangeLog
 
-### 2.2.2-rc
+### 2.3.0-rc
 
     Release date: 
 
     - Minor spelling fix
     - Set modal max height
+    - Define new contentClassesArray configuration parameter, thus bumping minor candidate version number
 
 ### 2.2.1
 

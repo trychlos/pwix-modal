@@ -15,7 +15,7 @@ import { mdModal } from '../classes/md_modal.class.js';
  */
 Modal.askClose = function(){
     //console.error( 'a console error to trace the call stack' );
-    const modal = Modal._stack.modal();
+    const modal = Modal.stack.modal();
     if( modal ){
         modal.askClose();
     }
@@ -58,7 +58,7 @@ Modal.buttonEnable = function( button, enable, id ){
  * @eturns {Object} the found button as a jQuery object, or null
  */
 Modal.buttonFind = function( button, id ){
-    const modal = Modal._stack.modal( id );
+    const modal = Modal.stack.modal( id );
     if( modal ){
         return modal.buttonFind( button );
     }
@@ -70,7 +70,7 @@ Modal.buttonFind = function( button, id ){
  */
 Modal.close = function(){
     //console.error( 'a console error to trace the call stack' );
-    const modal = Modal._stack.modal();
+    const modal = Modal.stack.modal();
     if( modal ){
         modal.close();
     }
@@ -81,7 +81,7 @@ Modal.close = function(){
  * @returns {Integer} the count of opened modals
  */
 Modal.count = function(){
-    return Modal._stack.count();
+    return Modal.stack.count();
 };
 
 /**
@@ -89,7 +89,7 @@ Modal.count = function(){
  * @locus Client
  */
 Modal.focus = function( arg ){
-    const modal = Modal._stack.modal( arg.id );
+    const modal = Modal.stack.modal( arg.id );
     modal.focus( arg );
 };
 
@@ -122,7 +122,7 @@ Modal.run = function( parms ){
  */
 Modal.set = function( arg ){
     //console.debug( arg );
-    const modal = Modal._stack.modal( arg.id );
+    const modal = Modal.stack.modal( arg.id );
     if( Object.keys( arg ).includes( 'autoFocus' )){
         modal.autoFocus( arg.autoFocus );
     }
@@ -267,6 +267,6 @@ Modal.setTitle = function( title, id ){
  * @returns {Object} the current events target for the topmost modal
  */
 Modal.target = function(){
-    const modal = Modal._stack.modal();
+    const modal = Modal.stack.modal();
     return modal.target();
 };

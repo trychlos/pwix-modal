@@ -125,7 +125,7 @@ Template.md_modal.onCreated( function(){
         if( modal ){
             self.MD.modal.set( modal );
             self.MD.myClass.set( 'pwix-modal-class-'+modal.id());
-            Modal._stack.push( modal );
+            Modal.stack.push( modal );
         }
     });
 });
@@ -183,15 +183,15 @@ Template.md_modal.onRendered( function(){
     self.autorun(() => {
         $( 'body.'+self.MD.myClass.get()+' div.modal-backdrop.show' ).css({
             display: 'none',
-            'z-index': mdStack.firstZindex()
+            'z-index': Modal.stack.firstZindex()
         });
     });
 
     // set the z-index of the modal
     self.autorun(() => {
-        //console.debug( 'modal onRendered', Modal._stack.count());
+        //console.debug( 'modal onRendered', Modal.stack.count());
         $( 'body .modal#'+self.MD.modal.get().id()).css({
-            'z-index': Modal._stack.lastZindex()
+            'z-index': Modal.stack.lastZindex()
         });
     });
 
@@ -373,6 +373,11 @@ Template.md_modal.helpers({
         return this.modal.closeByKeyboard() ? 'true' : 'false';
     },
 
+    // the classes to be added by contentClassesArray configuration
+    contentClassesArray(){
+        return Modal.stack.contentClassesArray( this.modal.id());
+    },
+
     // the footer if any
     footer(){
         return this.modal.footer();
@@ -499,5 +504,5 @@ Template.md_modal.events({
 
 Template.md_modal.onDestroyed( function(){
     //console.debug( 'onDestroyed', this );
-    Modal._stack.pop();
+    Modal.stack.pop();
 });

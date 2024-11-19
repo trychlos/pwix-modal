@@ -10,6 +10,7 @@ let _conf = {};
 
 const _defaults = {
     closeByBackdrop: true,
+    contentClassesArray: null,
     verbosity: Modal.C.Verbose.CONFIGURE
 };
 

@@ -4,4 +4,4 @@
 
 import { mdStack } from '../classes/md_stack.class.js';
 
-Modal._stack = new mdStack();
+Modal.stack = new mdStack();

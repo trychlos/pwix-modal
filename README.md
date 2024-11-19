@@ -36,9 +36,15 @@ Known configuration options are:
 
 - `closeByBackdrop`
 
-    Whether the dialog should be closed when clicking on the backdrop.
+    Whether the dialogs can be closed when clicking on the backdrop.
 
     Default to `true`.
+
+- `contentClassesArray`
+
+    An optional array of classes to be added to the '.modal-content' component. Modal will successively apply each item of the array as modal dialogs stack.
+
+    Default to none.
 
 - `verbosity`
 
