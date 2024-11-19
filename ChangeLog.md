@@ -7,6 +7,7 @@
     Release date: 
 
     - Minor spelling fix
+    - Set modal max height
 
 ### 2.2.1
 
