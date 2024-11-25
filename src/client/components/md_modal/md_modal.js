@@ -243,27 +243,56 @@ Template.md_modal.onRendered( function(){
         }
     });
 
-    // vertical move
+    // make sure the modal is not higher than the viewport
     self.autorun(() => {
-        const move = self.MD.modal.get().moveTop();
-        if( move ){
-            const shift = parseInt( self.$( '.md-hidden' ).css( 'top' ));
-            self.$( '.modal-content' ).css({
-                top: '+=' + move + 'px'
-            });
+        if( !self.MD.modal.get().fullScreen()){
+            const em = parseInt( self.$( '.md-hidden' ).css( 'font-size' ));
+            const available = parseInt( UILayout.height());
+            let height = parseInt( self.$( '.modal-content' ).css( 'height' ));
+            let top = parseInt( self.$( '.modal-content' ).css( 'top' ));
+            if( top+height >= available-em ){
+                if( height >= available-em ){
+                    height = ( available-em )+'px';
+                    top = '1px'
+                } else {
+                    top = ( available-em-height-1 )+'px';
+                }
+                self.$( '.modal-content' ).css({ top: top, height: height, minHeight: height, maxHeight: height });
+            }
         }
     });
 
-    // shift the stacked modals
+    // vertical move
+    //  only apply if possible (not higher than the viewport)
+    self.autorun(() => {
+        if( !self.MD.modal.get().fullScreen()){
+            const move = self.MD.modal.get().moveTop();
+            const available = parseInt( UILayout.height());
+            const height = parseInt( self.$( '.modal-content' ).css( 'height' ));
+            const top = parseInt( self.$( '.modal-content' ).css( 'top' ));
+            if( top+move+height < available ){
+                self.$( '.modal-content' ).css({
+                    top: '+=' + move + 'px'
+                });
+            }
+        }
+    });
+
+    // vertically shift the stacked modals (because horizontal position defaults to be centered - see above)
+    // if possible given the available width and height
     self.autorun(() => {
         const count = Modal.count();
-        //console.debug( 'count', count );
         if( count > 1 ){
             const shift = parseInt( self.$( '.md-hidden' ).css( 'left' ));
-            self.$( '.modal-content' ).css({
-                top: '+=' + (( count - 1 ) * shift ) + 'px',
-                left: '+=' + (( count - 1 ) * shift ) + 'px'
-            });
+            const em = parseInt( self.$( '.md-hidden' ).css( 'font-size' ));
+            const available = parseInt( UILayout.height());
+            const height = parseInt( self.$( '.modal-content' ).css( 'height' ));
+            const top = parseInt( self.$( '.modal-content' ).css( 'top' ));
+            let newtop = ( count - 1 ) * shift;
+            if( newtop+height > available-em ){
+                newtop = 1;
+            }
+            self.$( '.modal-content' ).css({ top: newtop+'px' });
         }
     });
 

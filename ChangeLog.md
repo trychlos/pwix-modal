@@ -7,6 +7,8 @@
     Release date: 
 
     - Fix fullScreen sizing and positioning
+    - Make sure the modal is not higher than the viewport
+    - Fix shifting of stacked modals
 
 ### 2.3.0
 
