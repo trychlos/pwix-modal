@@ -2,9 +2,9 @@
 
 ## ChangeLog
 
-### 2.3.1-rc
+### 2.3.1
 
-    Release date: 
+    Release date: 2024-11-25
 
     - Fix fullScreen sizing and positioning
     - Make sure the modal is not higher than the viewport
@@ -237,4 +237,4 @@
 
 ---
 P. Wieser
-- Last updated on 2024, Nov. 19th
+- Last updated on 2024, Nov. 25th
