@@ -231,13 +231,15 @@ Template.md_modal.onRendered( function(){
 
     // does the modal must be displayed full screen ?
     self.autorun(() => {
-        const maxHeight = parseInt( UILayout.height()) - 2*self.MD.margin;
         if( self.MD.modal.get().fullScreen()){
-            const top = self.MD.margin+'px';
+            const pos = '1px';
+            const em = parseInt( self.$( '.md-hidden' ).css( 'font-size' ));
+            const width = ( parseInt( UILayout.width()) - em )+'px';
+            const height = ( parseInt( UILayout.height()) - em )+'px';
             if( Modal._conf.verbosity & Modal.C.Verbose.RESIZING ){
-                console.log( 'vertically position', top );
+                console.log( 'set fullscreen', pos, width, height );
             }
-            self.$( '.modal-content' ).css({ top: top, height: maxHeight, minHeight: maxHeight });
+            self.$( '.modal-content' ).css({ top: pos, left: pos, height: height, minHeight: height, maxHeight: height, width: width, minWidth: width, maxWidth: width });
         }
     });
 

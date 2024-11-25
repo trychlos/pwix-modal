@@ -6,7 +6,7 @@
 
     Release date: 
 
-    - 
+    - Fix fullScreen sizing and positioning
 
 ### 2.3.0
 
