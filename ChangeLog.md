@@ -2,6 +2,12 @@
 
 ## ChangeLog
 
+### 2.3.2-rc
+
+    Release date: 
+
+    - 
+
 ### 2.3.1
 
     Release date: 2024-11-25
