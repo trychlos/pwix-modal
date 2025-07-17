@@ -6,7 +6,7 @@
 
     Release date: 
 
-    - 
+    - Fix configuration accesses
 
 ### 2.3.1
 

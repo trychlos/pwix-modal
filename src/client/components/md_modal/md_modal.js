@@ -153,7 +153,7 @@ Template.md_modal.onRendered( function(){
         });
         //console.log( 'resizable', res );
         self.$( '.modal-content' ).on( 'resize', ( event, ui ) => {
-            if( Modal._conf.verbosity & Modal.C.Verbose.RESIZING ){
+            if( Modal.configure().verbosity & Modal.C.Verbose.RESIZING ){
                 console.log( 'resizing', event, ui );
             }
             if( !self.MD.minWidth ){
@@ -209,7 +209,7 @@ Template.md_modal.onRendered( function(){
             self.MD.computeContentWidth( maxWidth );
             w = self.MD.contentWidth.get();
         }
-        if( Modal._conf.verbosity & Modal.C.Verbose.RESIZING ){
+        if( Modal.configure().verbosity & Modal.C.Verbose.RESIZING ){
             console.log( 'set minimal width of the modal to', w );
         }
         self.$( '.modal-content' ).css({ width: w, minWidth: w, maxWidth: maxWidth });
@@ -222,7 +222,7 @@ Template.md_modal.onRendered( function(){
             const contentWidth = parseInt( self.$( '.modal-content' ).css( 'width' ));
             const viewWidth = parseInt( UILayout.width());
             const left = (( viewWidth-contentWidth ) / 2 )+'px';
-            if( Modal._conf.verbosity & Modal.C.Verbose.RESIZING ){
+            if( Modal.configure().verbosity & Modal.C.Verbose.RESIZING ){
                 console.log( 'horizontally center the modal: viewWidth', viewWidth, 'contentWidth', contentWidth, 'left', left );
             }
             self.$( '.modal-content' ).css({ left: left });
@@ -236,7 +236,7 @@ Template.md_modal.onRendered( function(){
             const em = parseInt( self.$( '.md-hidden' ).css( 'font-size' ));
             const width = ( parseInt( UILayout.width()) - em )+'px';
             const height = ( parseInt( UILayout.height()) - em )+'px';
-            if( Modal._conf.verbosity & Modal.C.Verbose.RESIZING ){
+            if( Modal.configure().verbosity & Modal.C.Verbose.RESIZING ){
                 console.log( 'set fullscreen', pos, width, height );
             }
             self.$( '.modal-content' ).css({ top: pos, left: pos, height: height, minHeight: height, maxHeight: height, width: width, minWidth: width, maxWidth: width });

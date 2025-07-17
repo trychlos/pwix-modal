@@ -96,7 +96,7 @@ export class mdStack {
             } else {
                 found = this._stack.length - 1;
             }
-        } else if( Modal._conf.verbosity & Modal.C.Verbose.NOMODAL ){
+        } else if( Modal.configure().verbosity & Modal.C.Verbose.NOMODAL ){
             if( id ){
                 console.warn( 'pwix:modal trying to find a modal while none is opened', id );
             } else {
@@ -139,7 +139,7 @@ export class mdStack {
      */
     pop(){
         if( this.count()){
-            if( Modal._conf.verbosity & Modal.C.Verbose.STACK ){
+            if( Modal.configure().verbosity & Modal.C.Verbose.STACK ){
                 console.log( 'pwix:modal poping from stack (length='+this.count()+')' );
             }
             //console.debug( 'before pop length', this.count());
@@ -157,7 +157,7 @@ export class mdStack {
         if( !modal || !( modal instanceof mdModal )){
             throw new Error( 'expecting mdModal instance, found', modal );
         }
-        if( Modal._conf.verbosity & Modal.C.Verbose.STACK ){
+        if( Modal.configure().verbosity & Modal.C.Verbose.STACK ){
             console.log( 'pwix:modal pushing into stack (length='+this.count()+')' );
         }
         this._stack.push( modal );
