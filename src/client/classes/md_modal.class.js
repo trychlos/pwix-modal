@@ -9,6 +9,7 @@ import _ from 'lodash';
 import { Random } from 'meteor/random';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Tracker } from 'meteor/tracker';
+import { UIUtils } from 'meteor/pwix:ui-utils';
 
 import '../../common/js/index.js';
 
@@ -447,6 +448,7 @@ export class mdModal {
                 _firstRec( $start );
                 return found;
             };
+            let selector = '.modal#'+this._id+' .modal-body';
             let $found = _firstStart( '.modal#'+this._id+' .modal-body' );
             if( !$found || !$found.length ){
                 // 'submit' type buttons should be avoided in a SPA-like app
@@ -459,9 +461,10 @@ export class mdModal {
                 if( Modal.configure().verbosity & Modal.C.Verbose.FOCUS ){
                     console.log( 'pwix:modal focus() on', $found );
                 }
-                //$found.trigger( 'focus' );
-                $found.focus();
-                $found.select();
+                UIUtils.DOM.waitFor( UIUtils.DOM.selector( $found )).then(() => {
+                    $found.focus();
+                    $found.select();
+                });
             }
         }
     }

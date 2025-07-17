@@ -2,11 +2,12 @@
 
 ## ChangeLog
 
-### 2.3.2-rc
+### 2.4.0-rc
 
     Release date: 
 
     - Fix configuration accesses
+    - Fix the focus setup making sure the element is available, adding a dependency on pwix:ui-utils, thus bumping minor candidate version number
 
 ### 2.3.1
 
