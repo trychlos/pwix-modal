@@ -8,6 +8,7 @@
 
     - Fix configuration accesses
     - Fix the focus setup making sure the element is available, adding a dependency on pwix:ui-utils, thus bumping minor candidate version number
+    - Reset the focus to the new topmost modal after a modal has been closed
 
 ### 2.3.1
 

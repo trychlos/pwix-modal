@@ -143,7 +143,13 @@ export class mdStack {
                 console.log( 'pwix:modal poping from stack (length='+this.count()+')' );
             }
             //console.debug( 'before pop length', this.count());
-            return this._stack.pop();
+            const modal = this._stack.pop();
+            // set the focus on the new topmost modal
+            const topmost = this.topmost();
+            if( topmost ){
+                topmost.focus();
+            }
+            return modal;
         }
         console.error( 'trying to pop a modal while none is opened' );
         return null;
@@ -162,5 +168,17 @@ export class mdStack {
         }
         this._stack.push( modal );
         //console.debug( 'after push length', this.count());
+    }
+
+    /**
+     * @returns {mdModal} the topmost modal or null
+     */
+    topmost(){
+        let topmost = null;
+        const count = this.count();
+        if( count > 0 ){
+            topmost = this._stack[count-1];
+        }
+        return topmost;
     }
 }
