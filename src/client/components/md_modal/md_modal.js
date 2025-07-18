@@ -442,7 +442,7 @@ Template.md_modal.events({
     // trigger a submit event on Enter
     //  we have made sure that this doesn't submit the form when the submit button is disabled
     //  a previous handler may have set a 'pwix:modal.submitable' key to false to prevent a form to be submitted
-    //  see for example pwix:editor which doesn't want a form to be submitted when Enter key is hitten in the edition text area
+    //  see for example pwix:editor which doesn't want a form to be submitted when Enter key is hit in the edition text area
     'keydown .modal-content'( event, instance ){
         //console.debug( event );
         if( event.keyCode === 13 ){
@@ -506,7 +506,6 @@ Template.md_modal.events({
             modal.askClose();
             return false;
         }
-
         // else let bubble up
     },
 
