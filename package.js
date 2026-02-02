@@ -29,7 +29,7 @@ function configure( api ){
     api.use( 'less@4.0.0', 'client' );
     api.use( 'pwix:i18n@1.5.7' );
     api.use( 'pwix:jquery-ui@1.0.3' );
-    api.use( 'pwix:ui-layout@2.0.0' );
+    api.use( 'pwix:ui-layout@2.1.0' );
     api.use( 'pwix:ui-utils@1.4.0' );
     api.use( 'random', 'client' );
     api.use( 'reactive-var', 'client' );
