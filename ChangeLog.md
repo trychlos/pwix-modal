@@ -8,6 +8,7 @@
 
     - Adapt to new pwix-ui-layout
     - Replace bootstrap and @popperjs/core npm dependencies with pwix:ui-boostrap5
+    - configure() now warns for unmanaged keys
 
 ### 2.4.0
 
