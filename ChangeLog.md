@@ -2,13 +2,14 @@
 
 ## ChangeLog
 
-### 2.4.1-rc.0
+### 2.5.0-rc.0
 
     Release date: 
 
     - Adapt to new pwix-ui-layout
     - Replace bootstrap and @popperjs/core npm dependencies with pwix:ui-boostrap5
     - configure() now warns for unmanaged keys
+    - Use pwix:logger universal logger, thus bumping minor candidate version number
 
 ### 2.4.0
 

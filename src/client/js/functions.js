@@ -6,7 +6,11 @@
 
 import _ from 'lodash';
 
+import { Logger } from 'meteor/pwix:logger';
+
 import { mdModal } from '../classes/md_modal.class.js';
+
+const logger = Logger.get();
 
 /**
  * @summary Close the topmost opened dialog if the mdBeforeClose() (if exists) returns a Promise which eventually resolves to true.
@@ -14,7 +18,7 @@ import { mdModal } from '../classes/md_modal.class.js';
  * @locus Client
  */
 Modal.askClose = function(){
-    //console.error( 'a console error to trace the call stack' );
+    //logger.error( 'a console error to trace the call stack' );
     const modal = Modal.stack.modal();
     if( modal ){
         modal.askClose();
@@ -27,7 +31,7 @@ Modal.askClose = function(){
  *  WILL BE REMOVED ON 2.0 VERSION
  */
 Modal.beforeClose = function( fn, id ){
-    console.warn( 'pwix:modal beforeClose() method is obsolete, redirected to set()' );
+    logger.warn( 'Modal.beforeClose() method is obsolete, redirected to set()' );
     let o = { beforeClose: fn };
     if( id ){
         o.id = id;
@@ -41,7 +45,7 @@ Modal.beforeClose = function( fn, id ){
  *  WILL BE REMOVED ON 2.0 VERSION
  */
 Modal.buttonEnable = function( button, enable, id ){
-    console.warn( 'pwix:modal buttonEnable() method is obsolete, redirected to set()' );
+    logger.warn( 'Modal.buttonEnable() method is obsolete, redirected to set()' );
     let o = { buttons: { id: button, enabled: enable }};
     if( id ){
         o.id = id;
@@ -69,7 +73,7 @@ Modal.buttonFind = function( button, id ){
  * @locus Client
  */
 Modal.close = function(){
-    //console.error( 'a console error to trace the call stack' );
+    //logger.error( 'a console error to trace the call stack' );
     const modal = Modal.stack.modal();
     if( modal ){
         modal.close();
@@ -99,7 +103,7 @@ Modal.focus = function( arg ){
  *  WILL BE REMOVED ON 2.0 VERSION
  */
 Modal.knownButtons = function(){
-    console.warn( 'pwix:modal knownButtons() method is obsolete, use Object.keys( Modal.C.Button )' );
+    logger.warn( 'Modal.knownButtons() method is obsolete, use Object.keys( Modal.C.Button )' );
     return Object.keys( Modal.C.Button );
 };
 
@@ -110,7 +114,7 @@ Modal.knownButtons = function(){
  * @returns {String} the identifier of this new modal
  */
 Modal.run = function( parms ){
-    //console.log( 'Modal.run()' );
+    //logger.debug( 'Modal.run()' );
     const modal = new mdModal( parms );
     return modal.id();
 };
@@ -121,7 +125,7 @@ Modal.run = function( parms ){
  * @param {Object} arg the argument object
  */
 Modal.set = function( arg ){
-    //console.debug( arg );
+    //logger.debug( arg );
     const modal = Modal.stack.modal( arg.id );
     if( Object.keys( arg ).includes( 'autoFocus' )){
         modal.autoFocus( arg.autoFocus );
@@ -185,7 +189,7 @@ Modal.set = function( arg ){
  *  WILL BE REMOVED ON 2.0 VERSION
  */
 Modal.setBody = function( template, id ){
-    console.warn( 'pwix:modal setBody() method is obsolete, redirected to set()' );
+    logger.warn( 'Modal.setBody() method is obsolete, redirected to set()' );
     let o = { body: template };
     if( id ){
         o.id = id;
@@ -199,7 +203,7 @@ Modal.setBody = function( template, id ){
  *  WILL BE REMOVED ON 2.0 VERSION
  */
 Modal.setButtons = function( buttons, id ){
-    console.warn( 'pwix:modal setBody() method is obsolete, redirected to set()' );
+    logger.warn( 'Modal.setBody() method is obsolete, redirected to set()' );
     let o = { buttons: buttons };
     if( id ){
         o.id = id;
@@ -213,7 +217,7 @@ Modal.setButtons = function( buttons, id ){
  *  WILL BE REMOVED ON 2.0 VERSION
  */
 Modal.setClasses = function( classes, id ){
-    console.warn( 'pwix:modal setClasses() method is obsolete, redirected to set()' );
+    logger.warn( 'Modal.setClasses() method is obsolete, redirected to set()' );
     let o = { classes: classes };
     if( id ){
         o.id = id;
@@ -227,7 +231,7 @@ Modal.setClasses = function( classes, id ){
  *  WILL BE REMOVED ON 2.0 VERSION
  */
 Modal.setFooter = function( template, id ){
-    console.warn( 'pwix:modal setFooter() method is obsolete, redirected to set()' );
+    logger.warn( 'Modal.setFooter() method is obsolete, redirected to set()' );
     let o = { footer: template };
     if( id ){
         o.id = id;
@@ -241,7 +245,7 @@ Modal.setFooter = function( template, id ){
  *  WILL BE REMOVED ON 2.0 VERSION
  */
 Modal.setTarget = function( target, id ){
-    console.warn( 'pwix:modal setTarget() method is obsolete, redirected to set()' );
+    logger.warn( 'Modal.setTarget() method is obsolete, redirected to set()' );
     let o = { target: target };
     if( id ){
         o.id = id;
@@ -255,7 +259,7 @@ Modal.setTarget = function( target, id ){
  *  WILL BE REMOVED ON 2.0 VERSION
  */
 Modal.setTitle = function( title, id ){
-    console.warn( 'pwix:modal title() method is obsolete, redirected to set()' );
+    logger.warn( 'Modal.title() method is obsolete, redirected to set()' );
     let o = { title: title };
     if( id ){
         o.id = id;

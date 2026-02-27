@@ -7,22 +7,23 @@
  * - modal: the mdModal instance
  */
 
+import { Logger } from 'meteor/pwix:logger';
 import { UILayout } from 'meteor/pwix:ui-layout';
 import { ReactiveVar } from 'meteor/reactive-var';
 
 //  provides 'draggable()' and 'resizable()' methods
 import 'jquery-ui/dist/jquery-ui.min.js';
 
-import { mdStack } from '../../classes/md_stack.class.js';
-
 import '../../../common/js/index.js';
 
 import './md_modal.html';
 import './md_modal.less';
 
+const logger = Logger.get();
+
 Template.md_modal.onCreated( function(){
     const self = this;
-    //console.log( 'onCreated', self );
+    //logger.log( 'onCreated', self );
 
     self.MD = {
         // the class added to the body to identify *this* dialog backdrop
@@ -47,12 +48,12 @@ Template.md_modal.onCreated( function(){
         //  which depends of the respective width of the body (and its children), of the footer (and its children)
         //  and of the available width in the screen
         computeContentWidth( maxWidth ){
-            //console.debug( 'modal-body' );
+            //logger.debug( 'modal-body' );
             let bodyWidth = self.MD.maxWidth( '.modal-body' );
-            //console.debug( 'modal-footer' );
+            //logger.debug( 'modal-footer' );
             let footerWidth = self.MD.maxWidth( '.modal-footer' );
             let width = ( bodyWidth > footerWidth ? bodyWidth : footerWidth ) + self.MD.cssPadding();
-            //console.debug( 'computeContentWidth: body', bodyWidth, 'footer', footerWidth, 'width', width );
+            //logger.debug( 'computeContentWidth: body', bodyWidth, 'footer', footerWidth, 'width', width );
             self.MD.contentWidth.set( width > maxWidth ? maxWidth : width );
         },
 
@@ -63,7 +64,7 @@ Template.md_modal.onCreated( function(){
                 padding = parseInt( self.$( '.md-hidden ').css( 'padding' ));
                 self.MD.cssHidden.padding.set( padding );
             }
-            //console.debug( 'padding', padding );
+            //logger.debug( 'padding', padding );
             return padding;
         },
 
@@ -104,15 +105,15 @@ Template.md_modal.onCreated( function(){
             let childWidth = 0;
             if( div && div.length ){
                 parentWidth = div[0].clientWidth;
-                //console.debug( 'parentWidth', parentWidth );
+                //logger.debug( 'parentWidth', parentWidth );
             }
             div = div.children().first();
             if( div && div.length ){
                 childWidth = div[0].clientWidth;
-                //console.debug( 'childWidth', childWidth );
+                //logger.debug( 'childWidth', childWidth );
             }
             const maxWidth = parentWidth < childWidth ? childWidth + ( 2 * self.MD.cssPadding()) : parentWidth;
-            //console.debug( 'maxWidth', maxWidth );
+            //logger.debug( 'maxWidth', maxWidth );
             return maxWidth;
         }
     };
@@ -132,7 +133,7 @@ Template.md_modal.onCreated( function(){
 
 Template.md_modal.onRendered( function(){
     const self = this;
-    //console.log( 'onRendered', self );
+    //logger.log( 'onRendered', self );
 
     // make draggable if possible
     if( self.$( '.modal-dialog' ).draggable ){
@@ -151,17 +152,15 @@ Template.md_modal.onRendered( function(){
         self.$( '.modal-content' ).resizable({
             handles: 'all'
         });
-        //console.log( 'resizable', res );
+        //logger.log( 'resizable', res );
         self.$( '.modal-content' ).on( 'resize', ( event, ui ) => {
-            if( Modal.configure().verbosity & Modal.C.Verbose.RESIZING ){
-                console.log( 'resizing', event, ui );
-            }
+            logger.verbose({ verbosity: Modal.configure().verbosity, against: Modal.C.Verbose.RESIZING }, 'resizing', event, ui );
             if( !self.MD.minWidth ){
                 const div = self.$( '.modal-content' )[0];
-                //console.log( 'width', 'client='+div.clientWidth, 'offset='+div.offsetWidth, 'scroll='+div.scrollWidth );
+                //logger.log( 'width', 'client='+div.clientWidth, 'offset='+div.offsetWidth, 'scroll='+div.scrollWidth );
                 if( div.scrollWidth - div.clientWidth > 5 ){
                     self.MD.minWidth = div.scrollWidth + 18;
-                    console.log( 'overflow detected, setting minWidth to', self.MD.minWidth );
+                    logger.warn( 'overflow detected, setting minWidth to', self.MD.minWidth );
                     self.$( '.modal-content' ).resizable({
                         minWidth: self.MD.minWidth
                     });
@@ -189,7 +188,7 @@ Template.md_modal.onRendered( function(){
 
     // set the z-index of the modal
     self.autorun(() => {
-        //console.debug( 'modal onRendered', Modal.stack.count());
+        //logger.debug( 'modal onRendered', Modal.stack.count());
         $( 'body .modal#'+self.MD.modal.get().id()).css({
             'z-index': Modal.stack.lastZindex()
         });
@@ -209,9 +208,7 @@ Template.md_modal.onRendered( function(){
             self.MD.computeContentWidth( maxWidth );
             w = self.MD.contentWidth.get();
         }
-        if( Modal.configure().verbosity & Modal.C.Verbose.RESIZING ){
-            console.log( 'set minimal width of the modal to', w );
-        }
+        logger.verbose({ verbosity: Modal.configure().verbosity, against: Modal.C.Verbose.RESIZING }, 'set minimal width of the modal to', w );
         self.$( '.modal-content' ).css({ width: w, minWidth: w, maxWidth: maxWidth });
     });
 
@@ -222,9 +219,7 @@ Template.md_modal.onRendered( function(){
             const contentWidth = parseInt( self.$( '.modal-content' ).css( 'width' ));
             const viewWidth = parseInt( UILayout.width());
             const left = (( viewWidth-contentWidth ) / 2 )+'px';
-            if( Modal.configure().verbosity & Modal.C.Verbose.RESIZING ){
-                console.log( 'horizontally center the modal: viewWidth', viewWidth, 'contentWidth', contentWidth, 'left', left );
-            }
+            logger.verbose({ verbosity: Modal.configure().verbosity, against: Modal.C.Verbose.RESIZING }, 'horizontally center the modal: viewWidth', viewWidth, 'contentWidth', contentWidth, 'left', left );
             self.$( '.modal-content' ).css({ left: left });
         }
     });
@@ -236,9 +231,7 @@ Template.md_modal.onRendered( function(){
             const em = parseInt( self.$( '.md-hidden' ).css( 'font-size' ));
             const width = ( parseInt( UILayout.width()) - em )+'px';
             const height = ( parseInt( UILayout.height()) - em )+'px';
-            if( Modal.configure().verbosity & Modal.C.Verbose.RESIZING ){
-                console.log( 'set fullscreen', pos, width, height );
-            }
+            logger.verbose({ verbosity: Modal.configure().verbosity, against: Modal.C.Verbose.RESIZING }, 'set fullscreen', pos, width, height );
             self.$( '.modal-content' ).css({ top: pos, left: pos, height: height, minHeight: height, maxHeight: height, width: width, minWidth: width, maxWidth: width });
         }
     });
@@ -360,7 +353,7 @@ Template.md_modal.helpers({
     // the list of buttons
     buttons(){
         const buttons = this.modal.buttons();
-        //console.debug( 'Modal helper', buttons );
+        //logger.debug( 'buttons', buttons );
         return buttons;
     },
 
@@ -444,7 +437,7 @@ Template.md_modal.events({
     //  a previous handler may have set a 'pwix:modal.submitable' key to false to prevent a form to be submitted
     //  see for example pwix:editor which doesn't want a form to be submitted when Enter key is hit in the edition text area
     'keydown .modal-content'( event, instance ){
-        //console.debug( event );
+        //logger.debug( event );
         if( event.keyCode === 13 ){
             if( event.target.nodeName !== "TEXTAREA" &&
                 ( !Object.keys( event.originalEvent ).includes( 'pwix:modal' ) ||
@@ -456,7 +449,7 @@ Template.md_modal.events({
         }
         // this doesn't work
         /*
-        console.debug( event.keyCode );
+        logger.debug( event.keyCode );
         if( event.keyCode === 27 ){
             const modal = this.modal;
             modal.askClose();
@@ -467,7 +460,7 @@ Template.md_modal.events({
 
     'submit .modal-content'( event, instance ){
         const $btn = instance.$( event.currentTarget ).find( '.modal-footer button.md-btn.md-last' );
-        //console.debug( event, $btn );
+        //logger.debug( event, $btn );
         if( $btn ){
             $btn.trigger( 'click' );
             return false;
@@ -483,11 +476,11 @@ Template.md_modal.events({
     'click .md-btn'( event, instance ){
         const modal = this.modal;
         const $btn = instance.$( event.currentTarget );
-        //console.debug( event, this, $btn, $btn.data());
+        //logger.debug( event, this, $btn, $btn.data());
         const btnId = $btn.attr( 'data-md-btn-id' );
         const button = modal.buttonGet( btnId );
         const target = modal.target() || $btn;
-        //console.debug( target );
+        //logger.debug( target );
         //alert( 'sending md-click to '+target.toString());
         target.trigger( 'md-click', {
             id: modal.id(),
@@ -500,7 +493,7 @@ Template.md_modal.events({
         if( dismiss === undefined ){
             dismiss = modal.buttons().length === 1 || false;
         }
-        //console.debug( 'dismiss', dismiss );
+        //logger.debug( 'dismiss', dismiss );
         //alert( 'dismiss='+dismiss );
         if( dismiss ){
             modal.askClose();
@@ -533,6 +526,6 @@ Template.md_modal.events({
 });
 
 Template.md_modal.onDestroyed( function(){
-    //console.debug( 'onDestroyed', this );
+    //logger.debug( 'onDestroyed', this );
     Modal.stack.pop();
 });

@@ -6,6 +6,7 @@
 
 import _ from 'lodash';
 
+import { Logger } from 'meteor/pwix:logger';
 import { Random } from 'meteor/random';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { Tracker } from 'meteor/tracker';
@@ -16,6 +17,8 @@ import '../../common/js/index.js';
 import '../components/md_modal/md_modal.js';
 
 import { mdButton } from './md_button.class.js';
+
+const logger = Logger.get();
 
 export class mdModal {
 
@@ -68,10 +71,10 @@ export class mdModal {
             if( b === true || b === false ){
                 _res = b;
             } else if( b === 'true' || b === 'false' ){
-                console.warn( 'pwix:modal expects \''+arg+'\' to be a boolean, found', b, 'string' );
+                logger.warn( 'mdModal._argBool() expects \''+arg+'\' to be a boolean, found', b, 'string' );
                 _res = ( b === 'true' );
             } else {
-                console.warn( 'pwix:modal expects \''+arg+'\' to be a boolean, found', b );
+                logger.warn( 'mdModal._argBool() expects \''+arg+'\' to be a boolean, found', b );
             }
         }
         return _res;
@@ -146,7 +149,7 @@ export class mdModal {
         }
 
         this._view = Blaze.renderWithData( Template.md_modal, { modal: this }, $( 'body' )[0] );
-        //console.debug( this._view );
+        //logger.debug( this._view );
 
         return this;
     }
@@ -158,7 +161,7 @@ export class mdModal {
      *  - false to prevent the close.
      */
     askClose(){
-        //console.debug( 'askToClose()', this );
+        //logger.debug( 'askToClose()', this );
         const fn = this.beforeClose();
         if( fn && _.isFunction( fn )){
             fn( this.id()).then(( res ) => {
@@ -244,7 +247,7 @@ export class mdModal {
         }
         button.last = true;
         this._buttons.value.push( button );
-        //console.debug( 'buttonAdd()', button );
+        //logger.debug( 'buttonAdd()', button );
         return true;
     }
 
@@ -296,7 +299,7 @@ export class mdModal {
      */
     buttonsReset(){
         const count = this._buttons.value.length;
-        //console.debug( 'buttonsReset()', count );
+        //logger.debug( 'buttonsReset()', count );
         this._buttons.value = [];
         return count > 0;
     }
@@ -365,7 +368,7 @@ export class mdModal {
      * @summary Close the modal
      */
     close(){
-        //console.debug( 'closing', '.md-modal .modal#'+this.id());
+        //logger.debug( 'closing', '.md-modal .modal#'+this.id());
         $( '.md-modal .modal#'+this.id()).modal( 'hide' );
     }
 
@@ -429,13 +432,13 @@ export class mdModal {
         } else {
             const inputable = [ 'INPUT', 'TEXTAREA', 'SELECT' ];
             const _firstStart = function( selector ){
-                //console.debug( 'selector', selector );
+                //logger.debug( 'selector', selector );
                 let found = null;
                 const _firstRec = function( $o ){
-                    //console.debug( '$o', $o );
+                    //logger.debug( '$o', $o );
                     $o.each( function( index, element ){
                         const $elt = $( this );
-                        //console.debug( '$elt', $elt );
+                        //logger.debug( '$elt', $elt );
                         if( inputable.includes( $elt[0].nodeName )){
                             found = $elt;
                         } else {
@@ -458,9 +461,7 @@ export class mdModal {
                 $found = $( '.modal#'+this._id ).find( '.modal-footer button.btn-primary' ).last();
             }
             if( $found && $found.length ){
-                if( Modal.configure().verbosity & Modal.C.Verbose.FOCUS ){
-                    console.log( 'pwix:modal focus() on', $found );
-                }
+                logger.verbose({ verbosity: Modal.configure().verbosity, against: Modal.C.Verbose.FOCUS }, 'mdModal.focus() on', $found );
                 UIUtils.DOM.waitFor( UIUtils.DOM.selector( $found )).then(() => {
                     $found.focus();
                     $found.select();

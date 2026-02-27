@@ -5,9 +5,13 @@
  * Because there is only one stack, this is a _singleton.
  */
 
+import { Logger } from 'meteor/pwix:logger';
+
 import '../../common/js/index.js';
 
 import { mdModal } from './md_modal.class.js';
+
+const logger = Logger.get();
 
 export class mdStack {
 
@@ -32,7 +36,7 @@ export class mdStack {
      */
     constructor(){
         if( mdStack._singleton ){
-            console.log( 'returning already instanciated mdStack._singleton' );
+            logger.info( 'mdStack.mdStack() returning already instanciated mdStack._singleton' );
             return mdStack._singleton;
         }
 
@@ -98,9 +102,9 @@ export class mdStack {
             }
         } else if( Modal.configure().verbosity & Modal.C.Verbose.NOMODAL ){
             if( id ){
-                console.warn( 'pwix:modal trying to find a modal while none is opened', id );
+                logger.warn( 'mdStack.index() trying to find a modal while none is opened', id );
             } else {
-                console.warn( 'pwix:modal trying to find an undefined modal' );
+                logger.warn( 'mdStack.index() trying to find an undefined modal' );
             }
         }
         return found;
@@ -139,10 +143,8 @@ export class mdStack {
      */
     pop(){
         if( this.count()){
-            if( Modal.configure().verbosity & Modal.C.Verbose.STACK ){
-                console.log( 'pwix:modal poping from stack (length='+this.count()+')' );
-            }
-            //console.debug( 'before pop length', this.count());
+            logger.verbose({ verbosity: Modal.configure().verbosity, against: Modal.C.Verbose.STACK }, 'mdModal.pop() from stack (length='+this.count()+')' );
+            //logger.debug( 'before pop length', this.count());
             const modal = this._stack.pop();
             // set the focus on the new topmost modal
             const topmost = this.topmost();
@@ -151,7 +153,7 @@ export class mdStack {
             }
             return modal;
         }
-        console.error( 'trying to pop a modal while none is opened' );
+        logger.error( 'mdModal.pop() trying to pop a modal while none is opened' );
         return null;
     }
 
@@ -163,11 +165,9 @@ export class mdStack {
         if( !modal || !( modal instanceof mdModal )){
             throw new Error( 'expecting mdModal instance, found', modal );
         }
-        if( Modal.configure().verbosity & Modal.C.Verbose.STACK ){
-            console.log( 'pwix:modal pushing into stack (length='+this.count()+')' );
-        }
+        logger.verbose({ verbosity: Modal.configure().verbosity, against: Modal.C.Verbose.STACK }, 'mdStack.push() into stack (length='+this.count()+')' );
         this._stack.push( modal );
-        //console.debug( 'after push length', this.count());
+        //logger.debug( 'after push length', this.count());
     }
 
     /**

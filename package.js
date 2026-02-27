@@ -1,6 +1,6 @@
 Package.describe({
     name: 'pwix:modal',
-    version: '2.4.1-rc.0',
+    version: '2.5.0-rc.0',
     summary: 'A Bootstrap-based package which provides draggable and resizable modal dialogs to Meteor',
     git: 'https://github.com/trychlos/pwix-modal',
     documentation: 'README.md'
@@ -29,6 +29,7 @@ function configure( api ){
     api.use( 'less@4.0.0', 'client' );
     api.use( 'pwix:i18n@1.5.7' );
     api.use( 'pwix:jquery-ui@1.0.3' );
+    api.use( 'pwix:logger@1.0.0-rc' );
     api.use( 'pwix:ui-bootstrap5@2.0.0' );
     api.use( 'pwix:ui-layout@2.1.0' );
     api.use( 'pwix:ui-utils@1.4.0' );

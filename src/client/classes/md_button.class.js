@@ -4,9 +4,12 @@
 
 import _ from 'lodash';
 
+import { Logger } from 'meteor/pwix:logger';
 import { ReactiveVar } from 'meteor/reactive-var';
 
 import '../../common/js/index.js';
+
+const logger = Logger.get();
 
 export class mdButton {
 
@@ -25,20 +28,20 @@ export class mdButton {
      */
     static setup( modal, defs ){
         let adefs = _.isArray( defs ) ? defs : [ defs ];
-        //console.debug( 'adefs', adefs );
+        //logger.debug( 'adefs', adefs );
         let changed = false;
         adefs.every(( def ) => {
             if( def ){
-                //console.debug( 'examining', def );
+                //logger.debug( 'examining', def );
                 let o = {};
                 if( _.isString( def )){
                     o.id = def;
                 } else if( !def.id || !_.isString( def.id )){
-                    console.error( 'identifier is mandatory, not found' );
+                    logger.error( 'mdButton.setup() identifier is mandatory, not found' );
                 } else {
                     o = { ...def };
                 }
-                //console.debug( 'built', o );
+                //logger.debug( 'built', o );
                 if( o.id && _.isString( o.id )){
                     if( o.id === Modal.C.ButtonExt.RESET ){
                         if( modal.buttonsReset()){
@@ -46,21 +49,21 @@ export class mdButton {
                         }
                     } else {
                         const ifExist = ( o.ifExist === true || o.ifExist === false ) ? o.ifExist : false;
-                        //console.debug( 'ifExist', ifExist );
+                        //logger.debug( 'ifExist', ifExist );
                         let found = modal.buttonGet( o.id );
                         if( found ){
-                            //console.debug( 'found', found );
+                            //logger.debug( 'found', found );
                             found._setDef( o );
                         } else if( !ifExist ){
                             if( modal.buttonAdd( new mdButton( o ))){
                                 changed = true;
                             }
                         } else {
-                            console.log( 'pwix:modal not applying definition as button doesn\'t exist' );
+                            logger.log( 'mdButton.setup() not applying definition as button doesn\'t exist' );
                         }
                     }
                 } else {
-                    console.error( 'o is invalid', o );
+                    logger.error( 'mdButton.setup() o is invalid', o );
                 }
             }
             return true;
@@ -139,7 +142,7 @@ export class mdButton {
 
         this._setDef( def );
 
-        //console.debug( this );
+        //logger.debug( this );
         return this;
     }
 
