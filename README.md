@@ -16,9 +16,13 @@ As simple as:
 ## Usage
 
 Just call
-```
+
+```sh
+    import { Modal } from 'meteor/pwix:modal';
+
     Modal.run( parms )
 ```
+
 and you're done!
 
 Without any parameters, the displayed modal will have a header with a dismiss button but no title, an empty body, and a footer with a single `OK` button.
@@ -34,6 +38,26 @@ Though the [Bootstrap documentation](https://getbootstrap.com/docs/5.2/component
 The package's behavior can be configured through a call to the `Modal.configure()` method, with just a single javascript object argument, which itself should only contains the options you want override.
 
 Known configuration options are:
+
+- `backdropOpacity`
+
+    The opacity of the backdrop when it is visible.
+
+    Default to `0.5`.
+
+    Since v2.5.
+
+- `backdropVisible`
+
+    Whether the backdrop is visible.
+
+    Default to `false` for compatibility reason:
+
+    - `bootstrap`'s backdrop defaults to be visible
+
+    - `pwix:modal` has chosen to not display this backdrop, thus the reason of the default value of this parameter.
+
+    Since v2.5.
 
 - `closeByBackdrop`
 
@@ -57,23 +81,25 @@ Known configuration options are:
 
     - `Modal.C.Verbose.CONFIGURE`
 
-        Trace configuration operations
+        Trace configuration operations.
+
+        This is the default.
 
     - `Modal.C.Verbose.FOCUS`
 
-        Trace the focus() function
+        Trace the focus() function.
 
     - `Modal.C.Verbose.NOMODAL`
 
-        Trace the modal research when there is none
+        Trace the modal research when there is none.
 
     - `Modal.C.Verbose.RESIZING`
 
-        Trace resizing informations
+        Trace resizing informations.
 
     - `Modal.C.Verbose.STACK`
 
-        Trace push into and pop from stack
+        Trace push into and pop from stack.
 
     Defaults to `Modal.C.Verbose.NONE`.
 
@@ -483,7 +509,8 @@ These are our known, standard, button identifiers. Their labels are localizable.
 ## Example
 
 Say you have a template you want render in a modal:
-```
+
+```html
     <template name="my_panel">
         <div class="my-panel">
 
@@ -500,7 +527,8 @@ Say you have a template you want render in a modal:
 ```
 
 From the parent who mades the open decision, just run:
-```
+
+```js
     Modal.run({
         mdBody: 'my_panel',
         mdTitle: 'A simple form',
@@ -509,7 +537,8 @@ From the parent who mades the open decision, just run:
 ```
 
 In the template JS:
-```
+
+```js
     Template.my_panel.onRendered( function(){
         Modal.setTarget( this.$( '.my-panel' ));
     });
@@ -545,6 +574,7 @@ Dependencies as of v 2.4.0:
 ```
 
 Each of these dependencies should be installed at application level:
+
 ```
     meteor npm install <package> --save
 ```

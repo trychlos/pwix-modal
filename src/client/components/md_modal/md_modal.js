@@ -177,21 +177,26 @@ Template.md_modal.onRendered( function(){
         $( 'body' ).addClass( self.MD.myClass.get());
     });
 
-    // set the backdrop style accordingly (we want it to not be visible)
+    // set the backdrop style accordingly (we want it to not be visible unless configured)
     //  we use the 'myClass' to have a more-specific CSS selector than the Bootstrap default one
     self.autorun(() => {
-        $( 'body.'+self.MD.myClass.get()+' div.modal-backdrop.show' ).css({
-            display: 'none',
-            'z-index': Modal.stack.firstZindex()
-        });
-    });
-
-    // set the z-index of the modal
-    self.autorun(() => {
-        //logger.debug( 'modal onRendered', Modal.stack.count());
-        $( 'body .modal#'+self.MD.modal.get().id()).css({
-            'z-index': Modal.stack.lastZindex()
-        });
+        const modal = self.MD.modal.get();
+        if( modal ){
+            // setup the backdrop
+            // it is actually created by bootstrap without we can do anything against that - just have to manage it
+            const $backdrops = $( 'body.'+self.MD.myClass.get()+' div.modal-backdrop' );
+            if( $backdrops.length ){
+                $( $backdrops[$backdrops.length-1] ).css({
+                    display: modal.backdropVisible() ? 'block' : 'none',
+                    opacity: modal.backdropOpacity(),
+                    'z-index': modal.backdropZIndex()
+                });
+            }
+            // setup the content on top of the backdrop
+            $( 'body .modal#'+modal.id()).css({
+                'z-index': modal.contentZIndex()
+            });
+        }
     });
 
     self.MD.margin = parseInt( self.$( '.md-hidden' ).css( 'margin' ));

@@ -187,6 +187,31 @@ export class mdModal {
     }
 
     /**
+     * @returns {Number} the backdrop opacity
+     */
+    backdropOpacity(){
+        const opacity = Modal.stack.backdropOpacity( this.id());
+        return opacity;
+    }
+
+    /**
+     * @returns {Boolean} whether this backdrop is visible or not
+     */
+    backdropVisible(){
+        const visible = Modal.stack.backdropVisible( this.id());
+        return visible;
+    }
+
+    /**
+     * @returns {Integer} the z-index of the backdrop for this modal
+     *  Rationale: each modal has its own backdrop created by bootstrap
+     */
+    backdropZIndex(){
+        const zindex = Modal.stack.backdropZIndex( this.id());
+        return zindex;
+    }
+
+    /**
      * @summary Getter/Setter
      * @param {Function} fn a function to allow the close of the modal
      * @returns {Function} the closing function
@@ -407,6 +432,14 @@ export class mdModal {
             this._closekeyboard.set( b );
         }
         return this._closekeyboard.get();
+    }
+
+    /**
+     * @returns {Integer} the z-index of the modal dialog
+     */
+    contentZIndex(){
+        const zindex = Modal.stack.contentZIndex( this.id());
+        return zindex;
     }
 
     /**

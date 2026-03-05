@@ -13,6 +13,8 @@ let _conf = {};
 Modal._conf = new ReactiveVar( _conf );
 
 Modal._defaults = {
+    backdropOpacity: 0.5,
+    backdropVisible: false,
     closeByBackdrop: true,
     contentClassesArray: null,
     verbosity: Modal.C.Verbose.CONFIGURE

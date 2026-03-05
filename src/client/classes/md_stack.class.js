@@ -23,7 +23,8 @@ export class mdStack {
     static zIndexStart = 1000;
 
     // the computing tick
-    static zIndexTick = 10;
+    // each modal uses two z-index levels: one of the backdrop whether it is visible or not, and the second for the modal itself.
+    static zIndexTick = 2;
 
     // private data
     //
@@ -31,7 +32,7 @@ export class mdStack {
     _stack = [];
 
     /**
-     * Constructor
+     * @constructor
      * @return {mdStack}
      */
     constructor(){
@@ -42,6 +43,42 @@ export class mdStack {
 
         mdStack._singleton = this;
         return this;
+    }
+
+    /**
+     * @returns {Number} the backdrop opacity
+     */
+    backdropOpacity( id ){
+        let opacity = Modal.configure().backdropOpacity;
+        return opacity;
+    }
+
+    /**
+     * @returns {Boolean} whether this backdrop is visible or not
+     */
+    backdropVisible( id ){
+        let visible = Modal.configure().backdropVisible;
+        return visible;
+    }
+
+    /**
+     * @returns {Integer} the z-index of the backdrop for the specified modal
+     *  Rationale:
+     *    Each modal has its own backdrop created by bootstrap
+     *    They are stacked as:
+     *              backdrop zindex                 modal zindex
+     *  modal #1:   zIndexStart+0                   zIndexStart+1
+     *  modal #2:   zIndexStart+zIndexTick+0        zIndexStart+zIndexTick+1
+     *  modal #3:   zIndexStart+(2*zIndexTick)+0    zIndexStart+(2*zIndexTick=+1
+     *  ...
+     */
+    backdropZIndex( id ){
+        const idx = this.index( id );
+        let zindex = mdStack.zIndexStart+0;
+        if( idx >=  0 ){
+            zindex += idx * ( mdStack.zIndexTick );
+        }
+        return zindex;
     }
 
     /**
@@ -63,6 +100,19 @@ export class mdStack {
     }
 
     /**
+     * @returns {Integer} the z-index of the modal content
+     *  Rationale: see backdropZIndex()
+     */
+    contentZIndex( id ){
+        const idx = this.index( id );
+        let zindex = mdStack.zIndexStart+1;
+        if( idx >=  0 ){
+            zindex += idx * ( mdStack.zIndexTick );
+        }
+        return zindex;
+    }
+
+    /**
      * @returns {Integer} the count of opened modals
      */
     count(){
@@ -70,17 +120,9 @@ export class mdStack {
     }
 
     /**
-     * @summary Make sure each modal in on top of the previous ones
-     * @returns {Integer} the first z-index level (display of the backdrops)
-     */
-    firstZindex(){
-        return mdStack.zIndexStart;
-    }
-
-    /**
      * @summary Find the searched for modal
      * @param {String} id the identifier of the searched modal, may be undefined
-     * @returns {Integer} the found modal, or -1
+     * @returns {Integer} the index of the found modal in the stack, or -1
      * @throws {Error} if the modal is not found
      */
     index( id ){
@@ -108,17 +150,6 @@ export class mdStack {
             }
         }
         return found;
-    }
-
-    /**
-     * @summary Make sure each modal in on top of the previous ones
-     * @returns {Integer} the z-index level of the last modal
-     */
-    lastZindex(){
-        if( !this._stack.length ){
-            throw new Error( 'trying to compute the z-index of a modal while none is opened' );
-        }
-        return mdStack.zIndexStart + ( mdStack.zIndexTick * this._stack.length );
     }
 
     /**
@@ -151,6 +182,13 @@ export class mdStack {
             if( topmost ){
                 topmost.focus();
             }
+            // and reactivate its backdrop
+            const $backdrops = $( 'body div.modal-backdrop' );
+            if( $backdrops.length ){
+                $( $backdrops[$backdrops.length-1] ).css({
+                    display: modal.backdropVisible() ? 'block' : 'none'
+                });
+            }
             return modal;
         }
         logger.error( 'mdModal.pop() trying to pop a modal while none is opened' );
@@ -163,11 +201,16 @@ export class mdStack {
      */
     push( modal ){
         if( !modal || !( modal instanceof mdModal )){
-            throw new Error( 'expecting mdModal instance, found', modal );
+            logger.error( 'push() expects an instance of mdModal, got', modal, 'throwing...' );
+            throw new Error( 'Bad data type' );
         }
-        logger.verbose({ verbosity: Modal.configure().verbosity, against: Modal.C.Verbose.STACK }, 'mdStack.push() into stack (length='+this.count()+')' );
+        logger.verbose({ verbosity: Modal.configure().verbosity, against: Modal.C.Verbose.STACK }, 'push() into stack (length='+this.count()+')' );
+        // before pushing this new modal, we make all other with an invisible backdrop
+        $( 'body div.modal-backdrop' ).css({
+            display: 'none'
+        });
+        // and push this new modal
         this._stack.push( modal );
-        //logger.debug( 'after push length', this.count());
     }
 
     /**

@@ -10,6 +10,7 @@
     - Replace bootstrap and @popperjs/core npm dependencies with pwix:ui-boostrap5
     - configure() now warns for unmanaged keys
     - Use pwix:logger universal logger, thus bumping minor candidate version number
+    - Define 'backdropOpacity' and 'backdropVisible' new configuration parameters
 
 ### 2.4.0
 
