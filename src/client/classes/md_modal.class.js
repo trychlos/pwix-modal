@@ -90,7 +90,7 @@ export class mdModal {
      */
     constructor( parms ){
 
-        this._id = Random.id();
+        this._id = 'md-'+Random.id();
         this._parms = parms;
 
         this._autofocus.set( this._argBool( parms, 'mdAutoFocus', true ));

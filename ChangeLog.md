@@ -11,6 +11,7 @@
     - configure() now warns for unmanaged keys
     - Use pwix:logger universal logger, thus bumping minor candidate version number
     - Define 'backdropOpacity' and 'backdropVisible' new configuration parameters
+    - Make sure the modal identifier begins with a letter
 
 ### 2.4.0
 
