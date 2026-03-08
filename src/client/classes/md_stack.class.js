@@ -26,6 +26,20 @@ export class mdStack {
     // each modal uses two z-index levels: one of the backdrop whether it is visible or not, and the second for the modal itself.
     static zIndexTick = 2;
 
+    // static methods
+
+    /**
+     * @param {number} index
+     * @returns {mdModal} the mdModal instance at the given index
+     */
+    static byIndex( index ){
+        if( index < 0 && index >= mdStack._stack.length ){
+            logger.error( 'byIndex() expects index inside of the stack range, got', index, 'thorwing...' );
+            throw new Error( 'bad data type' );
+        }
+        return mdStack._singleton._stack[index];
+    }
+
     // private data
     //
     // the stack itself
@@ -73,7 +87,7 @@ export class mdStack {
      *  ...
      */
     backdropZIndex( id ){
-        const idx = this.index( id );
+        const idx = this.indexById( id );
         let zindex = mdStack.zIndexStart+0;
         if( idx >=  0 ){
             zindex += idx * ( mdStack.zIndexTick );
@@ -90,7 +104,7 @@ export class mdStack {
         const classes = Modal.configure().contentClassesArray;
         let res = '';
         if( classes && Array.isArray( classes ) && classes.length ){
-            const found = this.index( modalId );
+            const found = this.indexById( modalId );
             if( found >= 0 ){
                 const nth = found % classes.length;
                 res = classes[nth];
@@ -104,7 +118,7 @@ export class mdStack {
      *  Rationale: see backdropZIndex()
      */
     contentZIndex( id ){
-        const idx = this.index( id );
+        const idx = this.indexById( id );
         let zindex = mdStack.zIndexStart+1;
         if( idx >=  0 ){
             zindex += idx * ( mdStack.zIndexTick );
@@ -125,7 +139,7 @@ export class mdStack {
      * @returns {Integer} the index of the found modal in the stack, or -1
      * @throws {Error} if the modal is not found
      */
-    index( id ){
+    indexById( id ){
         let found = -1;
         if( this._stack.length ){
             if( id ){
@@ -144,9 +158,9 @@ export class mdStack {
             }
         } else if( Modal.configure().verbosity & Modal.C.Verbose.NOMODAL ){
             if( id ){
-                logger.warn( 'mdStack.index() trying to find a modal while none is opened', id );
+                logger.warn( 'mdStack.indexById() trying to find a modal while none is opened', id );
             } else {
-                logger.warn( 'mdStack.index() trying to find an undefined modal' );
+                logger.warn( 'mdStack.indexById() trying to find an undefined modal' );
             }
         }
         return found;
@@ -161,7 +175,7 @@ export class mdStack {
      */
     modal( id ){
         let modal = null;
-        const found = this.index( id );
+        const found = this.indexById( id );
         if( found >= 0 ){
             modal = this._stack[found];
         }

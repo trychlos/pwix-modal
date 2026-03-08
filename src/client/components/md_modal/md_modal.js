@@ -7,12 +7,17 @@
  * - modal: the mdModal instance
  */
 
+import _ from 'lodash';
+
 import { Logger } from 'meteor/pwix:logger';
-import { UILayout } from 'meteor/pwix:ui-layout';
+import { UIUtils } from 'meteor/pwix:ui-utils';
+import { ReactiveDict } from 'meteor/reactive-dict';
 import { ReactiveVar } from 'meteor/reactive-var';
 
 //  provides 'draggable()' and 'resizable()' methods
 import 'jquery-ui/dist/jquery-ui.min.js';
+
+import { mdStack } from '../../classes/md_stack.class';
 
 import '../../../common/js/index.js';
 
@@ -32,40 +37,72 @@ Template.md_modal.onCreated( function(){
         // the mdModal instance
         modal: new ReactiveVar( null ),
 
-        // css values read from .md-hidden div
-        cssHidden: {
-            padding: new ReactiveVar( 0 )
+        // various measurements
+        measures: new ReactiveDict({}),
+        htmlBodyStyles: null,
+        modalContentStyles: null,
+        modalBodyStyles: null,
+        modalHeaderStyles: null,
+
+        // compute min and max width and height
+        computeLimits(){
+            // body width and height
+            this.htmlBodyStyles = getComputedStyle( $( 'body' )[0] );
+            const body_width = parseFloat( this.htmlBodyStyles.width );
+            this.measures.set( 'body-width', body_width );
+            const body_height = parseFloat( this.htmlBodyStyles.height );
+            this.measures.set( 'body-height', body_height );
+            // modal content margin
+            this.modalContentStyles = getComputedStyle( self.$( '.modal-content' )[0] );
+            const margin_top = parseFloat( this.modalContentStyles.margin_top );
+            this.measures.set( 'modal-margin-top', margin_top );
+            // modal body padding
+            this.modalBodyStyles = getComputedStyle( self.$( '.modal-body' )[0] );
+            const padding = parseFloat( this.modalBodyStyles.paddingLeft );
+            this.measures.set( 'modal-padding', padding );
+            // modal header height
+            this.modalHeaderStyles = getComputedStyle( self.$( '.modal-header' )[0] );
+            const header_height = parseFloat( this.modalHeaderStyles.height );
+            this.measures.set( 'header-height', header_height );
+            // Source - https://stackoverflow.com/a/8876069
+            // Posted by ryanve, modified by community. See post 'Timeline' for change history
+            // Retrieved 2026-03-08, License - CC BY-SA 4.0
+            const vw_width = Math.max( document.documentElement.clientWidth || 0, window.innerWidth || 0 );
+            this.measures.set( 'viewport-width', vw_width );
+            const vw_height = Math.max( document.documentElement.clientHeight || 0, window.innerHeight || 0 );
+            this.measures.set( 'viewport-height', vw_height );
+            // optimal width depends of the respective width of the body (and its children), of the footer (and its children)
+            // honors the dialog padding
+            let width = Math.max( this.computeWidth( '.modal-body' ), this.computeWidth( '.modal-footer' ));
+            width += 2*padding;
+            this.measures.set( 'width', width );
+            // at the moment min width is same than optimal width
+            const min_width = width;
+            this.measures.set( 'min-width', min_width );
+            // current height is just read from content styles
+            this.measures.set( 'height', this.modalContentStyles.height );
+            // max width and height are 95% of body size ,- taking into account the shift when modals are stacked
+            this.measures.set( 'max-width', 0.95 * ( body_width - header_height ));
+            this.measures.set( 'max-height', 0.95 * ( body_height - header_height ));
         },
 
-        // the size of the content
-        minWidth: 0,
-        contentWidth: new ReactiveVar( 0 ),
-
-        // the margin got from the .md-hidden class definition
-        margin: 0,
-
-        // compute the content min width
-        //  which depends of the respective width of the body (and its children), of the footer (and its children)
-        //  and of the available width in the screen
-        computeContentWidth( maxWidth ){
-            //logger.debug( 'modal-body' );
-            let bodyWidth = self.MD.maxWidth( '.modal-body' );
-            //logger.debug( 'modal-footer' );
-            let footerWidth = self.MD.maxWidth( '.modal-footer' );
-            let width = ( bodyWidth > footerWidth ? bodyWidth : footerWidth ) + self.MD.cssPadding();
-            //logger.debug( 'computeContentWidth: body', bodyWidth, 'footer', footerWidth, 'width', width );
-            self.MD.contentWidth.set( width > maxWidth ? maxWidth : width );
-        },
-
-        // get the css padding from .md-hidden div
-        cssPadding(){
-            let padding = self.MD.cssHidden.padding.get();
-            if( !padding ){
-                padding = parseInt( self.$( '.md-hidden ').css( 'padding' ));
-                self.MD.cssHidden.padding.set( padding );
+        // compute the max width between a div and its first child
+        computeWidth( selector, ){
+            let div = self.$( selector );
+            let parentWidth = 0;
+            let childWidth = 0;
+            if( div && div.length ){
+                const styles = getComputedStyle( div[0] );
+                parentWidth = parseFloat( styles.width ) + parseFloat( styles.marginLeft ) + parseFloat( styles.marginRight );
             }
-            //logger.debug( 'padding', padding );
-            return padding;
+            div = div.children().first();
+            if( div && div.length ){
+                const styles = getComputedStyle( div[0] );
+                childWidth = parseFloat( styles.width ) + parseFloat( styles.marginLeft ) + parseFloat( styles.marginRight );
+            }
+            const width = Math.max( parentWidth, childWidth );
+            //logger.debug( selector, 'parent', parentWidth, 'child', childWidth, 'width', width );
+            return width;
         },
 
         // if a localStorage key has been provided, get it
@@ -96,26 +133,6 @@ Template.md_modal.onCreated( function(){
                 }
             }
         },
-
-        // compute the max width between a div and its first child
-        //  if the final width comes from the children, then add the paddings
-        maxWidth( selector ){
-            let div = self.$( selector );
-            let parentWidth = 0;
-            let childWidth = 0;
-            if( div && div.length ){
-                parentWidth = div[0].clientWidth;
-                //logger.debug( 'parentWidth', parentWidth );
-            }
-            div = div.children().first();
-            if( div && div.length ){
-                childWidth = div[0].clientWidth;
-                //logger.debug( 'childWidth', childWidth );
-            }
-            const maxWidth = parentWidth < childWidth ? childWidth + ( 2 * self.MD.cssPadding()) : parentWidth;
-            //logger.debug( 'maxWidth', maxWidth );
-            return maxWidth;
-        }
     };
 
     // get the modal instance
@@ -133,58 +150,37 @@ Template.md_modal.onCreated( function(){
 
 Template.md_modal.onRendered( function(){
     const self = this;
-    //logger.log( 'onRendered', self );
+    //logger.debug( 'onRendered', self );
 
-    // make draggable if possible
-    if( self.$( '.modal-dialog' ).draggable ){
-        self.$( '.modal-dialog' ).draggable({
-            handle: '.modal-header',
-            cursor: 'grab'
-        });
-    }
-
-    // show the dialog before trying to compute the minimal sizes
-    self.$( '.modal' ).modal( 'show' );
-
-    // make resizable if possible
-    //  it happens that Bootstrap initialize the dialog at its minimal height, but may overflow the content width
-    if( self.$( '.modal-content' ).resizable ){
-        self.$( '.modal-content' ).resizable({
-            handles: 'all'
-        });
-        //logger.log( 'resizable', res );
-        self.$( '.modal-content' ).on( 'resize', ( event, ui ) => {
-            logger.verbose({ verbosity: Modal.configure().verbosity, against: Modal.C.Verbose.RESIZING }, 'resizing', event, ui );
-            if( !self.MD.minWidth ){
-                const div = self.$( '.modal-content' )[0];
-                //logger.log( 'width', 'client='+div.clientWidth, 'offset='+div.offsetWidth, 'scroll='+div.scrollWidth );
-                if( div.scrollWidth - div.clientWidth > 5 ){
-                    self.MD.minWidth = div.scrollWidth + 18;
-                    logger.warn( 'overflow detected, setting minWidth to', self.MD.minWidth );
-                    self.$( '.modal-content' ).resizable({
-                        minWidth: self.MD.minWidth
-                    });
-                    event.preventDefault();
-                }
-            }
-        });
-        // get/set the width and height ?
-        self.MD.lastSizeGet();
-    }
-
-    // add a tag class to body element to let the stylesheet identify the modal
-    self.autorun(() => {
-        $( 'body' ).addClass( self.MD.myClass.get());
-    });
-
-    // set the backdrop style accordingly (we want it to not be visible unless configured)
-    //  we use the 'myClass' to have a more-specific CSS selector than the Bootstrap default one
-    self.autorun(() => {
+    // when the modal is fully rendered, begin the work
+    UIUtils.DOM.waitFor( '#'+self.MD.modal.get().id()).then(() => {
         const modal = self.MD.modal.get();
-        if( modal ){
-            // setup the backdrop
+        if( modal ){        
+            // show the dialog before anything else
+            self.$( '.modal' ).modal( 'show' );
+            //logger.debug( 'show' );
+
+            // add a tag class to body element to let the stylesheet identify the modal
+            $( 'body' ).addClass( self.MD.myClass.get());
+
+            // make draggable if possible
+            if( self.$( '.modal-dialog' ).draggable ){
+                self.$( '.modal-dialog' ).draggable({
+                    handle: '.modal-header',
+                    cursor: 'grab'
+                });
+            }
+
+            // compute min and max width and height
+            self.MD.computeLimits();
+
+            // remove style set by bootstrap
+            self.$( '.modal-content' ).removeAttr( 'style' );
+            //logger.debug( 'styles removed' );
+
+            // set the backdrop style accordingly (we want it to not be visible unless configured)
             // it is actually created by bootstrap without we can do anything against that - just have to manage it
-            const $backdrops = $( 'body.'+self.MD.myClass.get()+' div.modal-backdrop' );
+            const $backdrops = $( 'div.modal-backdrop' );
             if( $backdrops.length ){
                 $( $backdrops[$backdrops.length-1] ).css({
                     display: modal.backdropVisible() ? 'block' : 'none',
@@ -193,104 +189,91 @@ Template.md_modal.onRendered( function(){
                 });
             }
             // setup the content on top of the backdrop
-            $( 'body .modal#'+modal.id()).css({
+            $( '#'+modal.id()).css({
                 'z-index': modal.contentZIndex()
             });
-        }
-    });
+            //logger.debug( 'backdrop z-index', modal.backdropZIndex(), 'modal z-index', modal.contentZIndex());
 
-    self.MD.margin = parseInt( self.$( '.md-hidden' ).css( 'margin' ));
-
-    // set the minimal width of the dialog
-    //  if we display a dynamic footer, then the dialog may have some issues to find the right width
-    //  if we find here that the footer width is greater than the content, then we adjust the dialog width
-    self.autorun(() => {
-        const maxWidth = parseInt( UILayout.width()) - 2*self.MD.margin;
-        let w;
-        if( self.MD.modal.get().fullScreen()){
-            w = maxWidth;
-        } else {
-            self.MD.computeContentWidth( maxWidth );
-            w = self.MD.contentWidth.get();
-        }
-        logger.verbose({ verbosity: Modal.configure().verbosity, against: Modal.C.Verbose.RESIZING }, 'set minimal width of the modal to', w );
-        self.$( '.modal-content' ).css({ width: w, minWidth: w, maxWidth: maxWidth });
-    });
-
-    // horizontally center the modal
-    //  this was automatic with standard bootstrap, but has disappeared somewhere
-    self.autorun(() => {
-        if( !self.MD.modal.get().fullScreen()){
-            const contentWidth = parseInt( self.$( '.modal-content' ).css( 'width' ));
-            const viewWidth = parseInt( UILayout.width());
-            const left = (( viewWidth-contentWidth ) / 2 )+'px';
-            logger.verbose({ verbosity: Modal.configure().verbosity, against: Modal.C.Verbose.RESIZING }, 'horizontally center the modal: viewWidth', viewWidth, 'contentWidth', contentWidth, 'left', left );
-            self.$( '.modal-content' ).css({ left: left });
-        }
-    });
-
-    // does the modal must be displayed full screen ?
-    self.autorun(() => {
-        if( self.MD.modal.get().fullScreen()){
-            const pos = '1px';
-            const em = parseInt( self.$( '.md-hidden' ).css( 'font-size' ));
-            const width = ( parseInt( UILayout.width()) - em )+'px';
-            const height = ( parseInt( UILayout.height()) - em )+'px';
-            logger.verbose({ verbosity: Modal.configure().verbosity, against: Modal.C.Verbose.RESIZING }, 'set fullscreen', pos, width, height );
-            self.$( '.modal-content' ).css({ top: pos, left: pos, height: height, minHeight: height, maxHeight: height, width: width, minWidth: width, maxWidth: width });
-        }
-    });
-
-    // make sure the modal is not higher than the viewport
-    self.autorun(() => {
-        if( !self.MD.modal.get().fullScreen()){
-            const em = parseInt( self.$( '.md-hidden' ).css( 'font-size' ));
-            const available = parseInt( UILayout.height());
-            let height = parseInt( self.$( '.modal-content' ).css( 'height' ));
-            let top = parseInt( self.$( '.modal-content' ).css( 'top' ));
-            if( top+height >= available-em ){
-                if( height >= available-em ){
-                    height = ( available-em )+'px';
-                    top = '1px'
-                } else {
-                    top = ( available-em-height-1 )+'px';
-                }
-                self.$( '.modal-content' ).css({ top: top, height: height, minHeight: height, maxHeight: height });
-            }
-        }
-    });
-
-    // vertical move
-    //  only apply if possible (not higher than the viewport)
-    self.autorun(() => {
-        if( !self.MD.modal.get().fullScreen()){
-            const move = self.MD.modal.get().moveTop();
-            const available = parseInt( UILayout.height());
-            const height = parseInt( self.$( '.modal-content' ).css( 'height' ));
-            const top = parseInt( self.$( '.modal-content' ).css( 'top' ));
-            if( top+move+height < available ){
-                self.$( '.modal-content' ).css({
-                    top: '+=' + move + 'px'
+            // make resizable if possible
+            //  it happens that Bootstrap initialize the dialog at a usable height, but may overflow the content width
+            if( self.$( '.modal-content' ).resizable ){
+                self.$( '.modal-content' ).resizable({
+                    handles: 'all',
+                    minWidth: self.MD.measures.get( 'min-width' )
                 });
             }
-        }
-    });
 
-    // vertically shift the stacked modals (because horizontal position defaults to be centered - see above)
-    // if possible given the available width and height
-    self.autorun(() => {
-        const count = Modal.count();
-        if( count > 1 ){
-            const shift = parseInt( self.$( '.md-hidden' ).css( 'left' ));
-            const em = parseInt( self.$( '.md-hidden' ).css( 'font-size' ));
-            const available = parseInt( UILayout.height());
-            const height = parseInt( self.$( '.modal-content' ).css( 'height' ));
-            const top = parseInt( self.$( '.modal-content' ).css( 'top' ));
-            let newtop = ( count - 1 ) * shift;
-            if( newtop+height > available-em ){
-                newtop = 1;
+            // prepare our modal styles
+            const css = ({
+                width: self.MD.measures.get( 'width' ),
+                minWidth: self.MD.measures.get( 'min-width' ),
+                minHeight: self.MD.measures.get( 'min-height' ),
+                maxWidth: self.MD.measures.get( 'max-width' ),
+                maxHeight: self.MD.measures.get( 'max-height' ),
+                top: 0,
+                left: 0
+            });
+
+            // unless we display the modal in full screen mode, we shift it regarding the previous one
+            if( !self.MD.modal.get().fullScreen()){
+                const this_rc = self.$( '.modal-content' )[0].getBoundingClientRect();
+                const max_height = self.MD.measures.get( 'max-height' );
+
+                // Boostrap defaults to position modal-content at top and centered, with a 'relative' position
+                // we must this 'relative' attribute as else we can not drag anymore
+                // so have to compute our shift relatively to this default position
+                const count = Modal.count();
+                if( count > 1 ){
+                    const shift = self.MD.measures.get( 'header-height' );
+                    const prev = mdStack.byIndex( count-2 );
+                    const prev_rc = $( '#'+prev.id()+' .modal-content' )[0].getBoundingClientRect();
+                    const target_x = prev_rc.left + shift;
+                    let x_shift = target_x - this_rc.left;
+                    // shift vertically depending of the count of opened dialogs
+                    let y_shift = shift * ( count - 1 );
+                    // if either of horizontal or vertical shifts make the dialog override the viewport, then back to the top-left corner of the screen
+                    const max_width = self.MD.measures.get( 'max-width' );
+                    if( this_rc.left + x_shift + this_rc.width >= max_width || this_rc.top + y_shift + this_rc.height >= max_height ){
+                        x_shift = ( -1 * this_rc.left ) + shift;
+                        y_shift = ( -1 * this_rc.top ) + shift;
+                    }
+                    // update the css
+                    x_shift = parseInt( x_shift + 0.5 );
+                    y_shift = parseInt( y_shift + 0.5 );
+                    css.top = y_shift+'px';
+                    css.left = x_shift+'px';
+                    //logger.debug( 'shift', shift, 'prev_rc', prev_rc, 'this_rc', this_rc, 'css', css );
+                }
+
+                // if a vertical move if asked for this modal, it applies to the above horizontal and vertical shift
+                //  only apply if possible (not higher than the viewport)
+                const move = self.MD.modal.get().moveTop();
+                if( move ){
+                    const css_top = parseFloat( css.top );
+                    if( css_top + move + this_rc.height < max_height ){
+                        css.top = ( css_top + move ) + 'px';
+                    }
+                }
             }
-            self.$( '.modal-content' ).css({ top: newtop+'px' });
+
+            // does the modal must be displayed full screen ?
+            if( self.MD.modal.get().fullScreen()){
+                const pos = '1px';
+                const width = self.MD.measures.get( 'max-width' );
+                const height = self.MD.measures.get( 'max-height' );
+                css = _.merge( css, {
+                    top: pos,
+                    left: pos,
+                    width: width,
+                    minWidth: width,
+                    height: height,
+                    minHeight: height
+                });
+                logger.verbose({ verbosity: Modal.configure().verbosity, against: Modal.C.Verbose.RESIZING }, 'set fullscreen', pos, width, height );
+            }
+
+            // set the modal content style once
+            self.$( '.modal-content' ).css( css );
         }
     });
 

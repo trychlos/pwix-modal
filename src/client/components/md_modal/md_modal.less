@@ -6,43 +6,12 @@
 
 .md-modal {
 
-    --md-modal-margin: 0.25em;
-    --md-modal-padding: 0.25em;
-    --md-modal-top: 2em;
-    --md-modal-shift: 0.25em;
-
-    @media screen and ( min-width: @ui-md-width ){
-        --md-modal-margin: 0.5em;
-        --md-modal-padding: 0.5em;
-        --md-modal-top: 4rem;
-        --md-modal-shift: 1em;
-    }
-
-    .modal-dialog {
-        margin: var( --md-modal-margin );
-    }
-
-    .modal-content {
-        top: var( --md-modal-top );
-        max-height: 99vh;
-    }
-
     .modal-content.ui-resizable {
         overflow: hidden;
     }
 
-    // added to have a vertical scrollbar in cookieManager
     .modal-body {
-        overflow-y: auto;
-    }
-
-    // this class to allow the javascript to get our values
-    .md-hidden {
-        display: none;
-        margin: var( --md-modal-margin );
-        top: var( --md-modal-top );
-        left: var( --md-modal-shift );
-        padding: var( --md-modal-padding );
+        min-height: 0;
     }
 
     // define a special xxl size for wide screens

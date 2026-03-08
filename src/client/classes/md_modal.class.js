@@ -394,7 +394,7 @@ export class mdModal {
      */
     close(){
         //logger.debug( 'closing', '.md-modal .modal#'+this.id());
-        $( '.md-modal .modal#'+this.id()).modal( 'hide' );
+        $( '.md-modal #'+this.id()).modal( 'hide' );
     }
 
     /**
@@ -484,14 +484,13 @@ export class mdModal {
                 _firstRec( $start );
                 return found;
             };
-            let selector = '.modal#'+this._id+' .modal-body';
-            let $found = _firstStart( '.modal#'+this._id+' .modal-body' );
+            let $found = _firstStart( '#'+this._id+' .modal-body' );
             if( !$found || !$found.length ){
                 // 'submit' type buttons should be avoided in a SPA-like app
-                $found = $( '.modal#'+this._id ).find( '.modal-footer button[type="submit"]' ).first();
+                $found = $( '#'+this._id ).find( '.modal-footer button[type="submit"]' ).first();
             }
             if( !$found || !$found.length ){
-                $found = $( '.modal#'+this._id ).find( '.modal-footer button.btn-primary' ).last();
+                $found = $( '#'+this._id ).find( '.modal-footer button.btn-primary' ).last();
             }
             if( $found && $found.length ){
                 logger.verbose({ verbosity: Modal.configure().verbosity, against: Modal.C.Verbose.FOCUS }, 'mdModal.focus() on', $found );

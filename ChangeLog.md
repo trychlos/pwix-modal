@@ -12,6 +12,7 @@
     - Use pwix:logger universal logger, thus bumping minor candidate version number
     - Define 'backdropOpacity' and 'backdropVisible' new configuration parameters
     - Make sure the modal identifier begins with a letter
+    - Fix dialog shift on stack
 
 ### 2.4.0
 

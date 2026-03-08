@@ -228,7 +228,7 @@ The globally exported object.
 
         Whether the modal should be moved vertically.
 
-        The value must be specified in pixel units, and can be negative (up-move to up) or positive (down-move).
+        The value must be specified in pixel units, and can be negative (up-move) or positive (down-move).
 
     - `mdSizeKey`
 
