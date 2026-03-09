@@ -13,6 +13,7 @@
     - Define 'backdropOpacity' and 'backdropVisible' new configuration parameters
     - Make sure the modal identifier begins with a letter
     - Fix dialog shift on stack
+    - Define new mdHeight modal instanciation parameter
 
 ### 2.4.0
 

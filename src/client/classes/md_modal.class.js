@@ -53,6 +53,7 @@ export class mdModal {
     _closekeyboard = new ReactiveVar( true );
     _footer = new ReactiveVar( null );
     _fullscreen = new ReactiveVar( null );
+    _height = new ReactiveVar( 0 );
     _movetop = new ReactiveVar( 0 );
     _sizekey = new ReactiveVar( null );
     _target = new ReactiveVar( null );
@@ -134,6 +135,8 @@ export class mdModal {
         }
 
         this._fullscreen.set( this._argBool( parms, 'mdFullScreen', false ));
+
+        this.contentHeight( parms.mdHeight );
 
         if( parms.mdMoveTop ){
             this._movetop.set( parms.mdMoveTop );
@@ -432,6 +435,17 @@ export class mdModal {
             this._closekeyboard.set( b );
         }
         return this._closekeyboard.get();
+    }
+
+    /**
+     * Getter/Setter
+     * @returns {Float} the asked height
+     */
+    contentHeight( height ){
+        if( height ){
+            this._height.set( parseFloat( height ));
+        }
+        return this._height.get();
     }
 
     /**

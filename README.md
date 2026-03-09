@@ -224,6 +224,12 @@ The globally exported object.
 
         Reserve this use to dedicated less-than-MD devices.
 
+    - `mdHeight`
+
+        The desired height of the modal content as a px-measure float.
+
+        Defaults to be left to Bootstrap automatism.
+
     - `mdMoveTop`
 
         Whether the modal should be moved vertically.

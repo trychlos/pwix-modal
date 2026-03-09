@@ -43,6 +43,7 @@ Template.md_modal.onCreated( function(){
         modalContentStyles: null,
         modalBodyStyles: null,
         modalHeaderStyles: null,
+        modalFooterStyles: null,
 
         // compute min and max width and height
         computeLimits(){
@@ -64,6 +65,10 @@ Template.md_modal.onCreated( function(){
             this.modalHeaderStyles = getComputedStyle( self.$( '.modal-header' )[0] );
             const header_height = parseFloat( this.modalHeaderStyles.height );
             this.measures.set( 'header-height', header_height );
+            // modal footer height
+            this.modalFooterStyles = getComputedStyle( self.$( '.modal-footer' )[0] );
+            const footer_height = parseFloat( this.modalFooterStyles.height );
+            this.measures.set( 'footer-height', footer_height );
             // Source - https://stackoverflow.com/a/8876069
             // Posted by ryanve, modified by community. See post 'Timeline' for change history
             // Retrieved 2026-03-08, License - CC BY-SA 4.0
@@ -79,8 +84,9 @@ Template.md_modal.onCreated( function(){
             // at the moment min width is same than optimal width
             const min_width = width;
             this.measures.set( 'min-width', min_width );
-            // current height is just read from content styles
-            this.measures.set( 'height', this.modalContentStyles.height );
+            // current height is just read from content styles, unless it has been specified as a parameter
+            const contentHeight = this.modal.get().contentHeight();
+            this.measures.set( 'height', contentHeight ? contentHeight + header_height + footer_height : this.modalContentStyles.height );
             // max width and height are 95% of body size ,- taking into account the shift when modals are stacked
             this.measures.set( 'max-width', 0.95 * ( body_width - header_height ));
             this.measures.set( 'max-height', 0.95 * ( body_height - header_height ));
@@ -207,8 +213,9 @@ Template.md_modal.onRendered( function(){
             const css = ({
                 width: self.MD.measures.get( 'width' ),
                 minWidth: self.MD.measures.get( 'min-width' ),
-                minHeight: self.MD.measures.get( 'min-height' ),
                 maxWidth: self.MD.measures.get( 'max-width' ),
+                height: self.MD.measures.get( 'height' ),
+                minHeight: self.MD.measures.get( 'min-height' ),
                 maxHeight: self.MD.measures.get( 'max-height' ),
                 top: 0,
                 left: 0
