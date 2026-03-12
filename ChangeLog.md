@@ -17,6 +17,7 @@
     - Define new Modal.topmost() function
     - Define new mdModal.set() improved method
     - Obsolete global level functions in favor of class level ones
+    - Remove functions obsoleted since v1.x
 
 ### 2.4.0
 

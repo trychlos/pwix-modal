@@ -28,34 +28,6 @@ Modal.askClose = function(){
 };
 
 /**
- * @summary Get/set the function which allow the modal closing
- *  OBSOLETED
- *  WILL BE REMOVED ON 2.0 VERSION
- */
-Modal.beforeClose = function( fn, id ){
-    logger.warn( 'Modal.beforeClose() method is obsolete, redirected to set()' );
-    let o = { beforeClose: fn };
-    if( id ){
-        o.id = id;
-    }
-    Modal.set( o );
-};
-
-/**
- * @summary Enable/disable a button
- *  OBSOLETED
- *  WILL BE REMOVED ON 2.0 VERSION
- */
-Modal.buttonEnable = function( button, enable, id ){
-    logger.warn( 'Modal.buttonEnable() method is obsolete, redirected to set()' );
-    let o = { buttons: { id: button, enabled: enable }};
-    if( id ){
-        o.id = id;
-    }
-    Modal.set( o );
-};
-
-/**
  * @summary Find a button element
  *  OBSOLETED AS OF v2.5
  *  WILL BE REMOVED ON a LATER VERSION
@@ -102,16 +74,6 @@ Modal.focus = function( arg ){
 };
 
 /**
- * @locus Client
- *  OBSOLETED
- *  WILL BE REMOVED ON 2.0 VERSION
- */
-Modal.knownButtons = function(){
-    logger.warn( 'Modal.knownButtons() method is obsolete, use Object.keys( Modal.C.Button )' );
-    return Object.keys( Modal.C.Button );
-};
-
-/**
  * @summary Opens a new modal dialog
  * @locus Client
  * @param {Object} parms the running parameters of the new dialog
@@ -135,90 +97,6 @@ Modal.set = function( arg ){
     const dup = _.cloneDeep( arg );
     delete dup.id;
     modal.set( dup );
-};
-
-/**
- * @summary Set the template to be rendered as the modal body
- *  OBSOLETED
- *  WILL BE REMOVED ON 2.0 VERSION
- */
-Modal.setBody = function( template, id ){
-    logger.warn( 'Modal.setBody() method is obsolete, redirected to set()' );
-    let o = { body: template };
-    if( id ){
-        o.id = id;
-    }
-    Modal.set( o );
-};
-
-/**
- * @summary Set the buttons of the currently opened dialog
- *  OBSOLETED
- *  WILL BE REMOVED ON 2.0 VERSION
- */
-Modal.setButtons = function( buttons, id ){
-    logger.warn( 'Modal.setBody() method is obsolete, redirected to set()' );
-    let o = { buttons: buttons };
-    if( id ){
-        o.id = id;
-    }
-    Modal.set( o );
-};
-
-/**
- * @summary Set the classes of the dialog
- *  OBSOLETED
- *  WILL BE REMOVED ON 2.0 VERSION
- */
-Modal.setClasses = function( classes, id ){
-    logger.warn( 'Modal.setClasses() method is obsolete, redirected to set()' );
-    let o = { classes: classes };
-    if( id ){
-        o.id = id;
-    }
-    Modal.set( o );
-};
-
-/**
- * @summary Set the template to be rendered as the modal footer
- *  OBSOLETED
- *  WILL BE REMOVED ON 2.0 VERSION
- */
-Modal.setFooter = function( template, id ){
-    logger.warn( 'Modal.setFooter() method is obsolete, redirected to set()' );
-    let o = { footer: template };
-    if( id ){
-        o.id = id;
-    }
-    Modal.set( o );
-};
-
-/**
- * @summary Set the events target
- *  OBSOLETED
- *  WILL BE REMOVED ON 2.0 VERSION
- */
-Modal.setTarget = function( target, id ){
-    logger.warn( 'Modal.setTarget() method is obsolete, redirected to set()' );
-    let o = { target: target };
-    if( id ){
-        o.id = id;
-    }
-    Modal.set( o );
-};
-
-/**
- * @summary Set the title of the dialog
- *  OBSOLETED
- *  WILL BE REMOVED ON 2.0 VERSION
- */
-Modal.setTitle = function( title, id ){
-    logger.warn( 'Modal.title() method is obsolete, redirected to set()' );
-    let o = { title: title };
-    if( id ){
-        o.id = id;
-    }
-    Modal.set( o );
 };
 
 /**
