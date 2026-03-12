@@ -274,3 +274,10 @@ Modal.target = function(){
     const modal = Modal.stack.modal();
     return modal.target();
 };
+
+/**
+ * @returns {Object} the current events target for the topmost modal
+ */
+Modal.topmost = function(){
+    return Modal.stack.modal();
+};

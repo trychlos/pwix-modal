@@ -14,6 +14,7 @@
     - Make sure the modal identifier begins with a letter
     - Fix dialog shift on stack
     - Define new mdHeight modal instanciation parameter
+    - Define new Modal.topmost() function
 
 ### 2.4.0
 

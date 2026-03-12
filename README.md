@@ -385,6 +385,10 @@ The globally exported object.
 
     Returns the current modal events target.
 
+- `Modal.topmost()`
+
+    Returns the current topmost modal dialog.
+
 #### Buttons management
 
 When using the standard footer, buttons can be specified either as an object or an array of objects.

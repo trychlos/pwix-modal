@@ -285,7 +285,10 @@ export class mdModal {
      * @returns {jQuery} the found button as a jQuery object, or null
      */
     buttonFind( button ){
-        return $( '.md-modal .modal-footer' ).find( '[data-md-btn-id='+button+']' );
+        const selector = '#'+this.id()+' .modal-footer [data-md-btn-id="'+button+'"]';
+        const $found = $( selector );
+        //logger.debug( 'selector="'+selector+'"', $found );
+        return $found;
     }
 
     /**
