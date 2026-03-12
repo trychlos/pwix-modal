@@ -16,9 +16,11 @@ const logger = Logger.get();
  * @summary Close the topmost opened dialog if the mdBeforeClose() (if exists) returns a Promise which eventually resolves to true.
  *  If the mdBeforeClose(), the function closes the modal.
  * @locus Client
+ *  OBSOLETED AS OF v2.5
+ *  WILL BE REMOVED ON a LATER VERSION
  */
 Modal.askClose = function(){
-    //logger.error( 'a console error to trace the call stack' );
+    logger.warn( 'Modal.askClose() method is obsoleted starting with v2.5 in favor of \'modal.askClose()\'. You should update your code' );
     const modal = Modal.stack.modal();
     if( modal ){
         modal.askClose();
@@ -55,13 +57,11 @@ Modal.buttonEnable = function( button, enable, id ){
 
 /**
  * @summary Find a button element
- *  Only if a specific footer has not been set via Modal.setFooter()
- * @locus Client
- * @param {String} button the button to search for
- * @param {String} id the identifier of the targeted dialog, defaulting to the topmost
- * @eturns {Object} the found button as a jQuery object, or null
+ *  OBSOLETED AS OF v2.5
+ *  WILL BE REMOVED ON a LATER VERSION
  */
 Modal.buttonFind = function( button, id ){
+    logger.warn( 'Modal.buttonFind() method is obsoleted starting with v2.5 in favor of \'modal.buttonFind()\'. You should update your code' );
     const modal = Modal.stack.modal( id );
     if( modal ){
         return modal.buttonFind( button );
@@ -70,10 +70,11 @@ Modal.buttonFind = function( button, id ){
 
 /**
  * @summary Uncondionally close the topmost opened dialog
- * @locus Client
+ *  OBSOLETED AS OF v2.5
+ *  WILL BE REMOVED ON a LATER VERSION
  */
 Modal.close = function(){
-    //logger.error( 'a console error to trace the call stack' );
+    logger.warn( 'Modal.close() method is obsoleted starting with v2.5 in favor of \'modal.close()\'. You should update your code' );
     const modal = Modal.stack.modal();
     if( modal ){
         modal.close();
@@ -91,8 +92,11 @@ Modal.count = function(){
 /**
  * @summary Set the focus on the first inputable field or the last button
  * @locus Client
+ *  OBSOLETED AS OF v2.5
+ *  WILL BE REMOVED ON a LATER VERSION
  */
 Modal.focus = function( arg ){
+    logger.warn( 'Modal.focus() method is obsoleted starting with v2.5 in favor of \'modal.focus()\'. You should update your code' );
     const modal = Modal.stack.modal( arg.id );
     modal.focus( arg );
 };
@@ -114,7 +118,6 @@ Modal.knownButtons = function(){
  * @returns {String} the identifier of this new modal
  */
 Modal.run = function( parms ){
-    //logger.debug( 'Modal.run()' );
     const modal = new mdModal( parms );
     return modal.id();
 };
@@ -123,9 +126,11 @@ Modal.run = function( parms ){
  * @summary Generic setter
  * @locus Client
  * @param {Object} arg the argument object
+ *  OBSOLETED AS OF v2.5
+ *  WILL BE REMOVED ON a LATER VERSION
  */
 Modal.set = function( arg ){
-    //logger.debug( arg );
+    logger.warn( 'Modal.set() method is obsoleted starting with v2.5 in favor of \'modal.set()\'. You should update your code' );
     const modal = Modal.stack.modal( arg.id );
     const dup = _.cloneDeep( arg );
     delete dup.id;
@@ -218,8 +223,11 @@ Modal.setTitle = function( title, id ){
 
 /**
  * @returns {Object} the current events target for the topmost modal
+ *  OBSOLETED AS OF v2.5
+ *  WILL BE REMOVED ON a LATER VERSION
  */
 Modal.target = function(){
+    logger.warn( 'Modal.target() method is obsoleted starting with v2.5 in favor of \'modal.target()\'. You should update your code' );
     const modal = Modal.stack.modal();
     return modal.target();
 };

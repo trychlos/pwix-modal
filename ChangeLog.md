@@ -16,6 +16,7 @@
     - Define new mdHeight modal instanciation parameter
     - Define new Modal.topmost() function
     - Define new mdModal.set() improved method
+    - Obsolete global level functions in favor of class level ones
 
 ### 2.4.0
 

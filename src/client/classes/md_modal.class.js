@@ -280,7 +280,6 @@ export class mdModal {
     }
 
     /**
-     * @summary
      * @param {String} button the searched button
      * @returns {jQuery} the found button as a jQuery object, or null
      */

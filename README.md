@@ -111,6 +111,120 @@ Remind too that Meteor packages are instanciated at application level. They are 
 
 The globally exported object.
 
+### Classes
+
+#### `mdModal`
+
+The class which manages each modal dialog. It has following public methods:
+
+- `askClose()`
+
+    Let the application a chance to prevent the close of the modal.
+
+    If a `beforeClose()` function has been configured, it is expected to return a `Promise` which must resolve to:
+    
+    - `true` to let the modal be closed
+    - `false` to prevent the close.
+
+- `buttonFind( button<String>): <jQuery|null>`
+
+    Find in the modal the identified button.
+
+    Because this method makes a search on the `data-md-btn-id` attribute, it may be irrelevant when a specific footer has been defined.
+
+- `close()`
+
+    Close the modal.
+
+- `focus( opts<Object|undefined>)`
+
+    Set the focus on the first inputable field or the last button.
+
+    `opts` is an optional options object with following keys:
+
+    - `field`: the target field selector, defaulting to the first inputable field of the body, or the last button.
+
+    The application may have its own opinion about which is the first inputable field, or, in other words, which field should be the default when the user presses a key. It will most probably to set the focus from its own `onRendered()` function. But this later is triggered before ours. So, because we are executed last, we cannot provide any suitable default.
+
+    As a consequence, each client application shoud call this function itself if it wants the user has a better default than the one provided.
+
+- `set( arg<Object|undefined>)`
+
+    Set the specified properties on the modal.
+
+    `arg` must be a Javascript object with following keys:
+
+    - `id`: the identifier of the to-be-configured modal, defaulting to the current topmost
+
+    - `autoFocus`: when specified, whether the focus is automatically managed by the modal itself.
+
+        See the `mdAutoFocus` parameter to get a full description.
+
+    - `beforeClose`: when specified, the function to be called by the modal to get an authorization to close.
+
+        See the `mdBeforeClose` parameter to get a description of the function.
+
+    - `body`: when specified, the name of the Blaze template to be set as the modal body
+
+    - `bodyHeight`: when specified, set a minimal new body height
+
+        Body height may be specified with a `'+'` or `'-'` prefix to respectively increase or decrease the current body height.
+
+    - `buttons`: when specified, a string, an array of strigs, an object or an array of object, each one providing the properties to be set on a button, as:
+
+        - `id`: mandatory, defaulting to the string itself if only a string is provided
+        - `label`
+        - `classes`
+        - `enabled`
+        - `name`
+        - `type`
+        - `html`
+        - `cb`
+        - `dismiss`
+        - `ifExist`: only apply if the button already exists, defaulting to false; this means that, if you do not specify this attribute, you may create a new button!
+
+        If a button has not been previously defined, then it is added at the end of the list.
+
+        This is also the case when the buttons are only specified as strings, not objects. In that case, we consider that this is a request to add a new button, which must not exist yet.
+
+    - `classes`: when specified, classes to be added to the '`.modal`' element
+
+    - `classesBody`: when specified, classes to be added to the '`.modal-body`' element
+
+    - `classesContent`: when specified, classes to be added to the '`.modal-content`' element
+
+    - `classesFooter`: when specified, classes to be added to the '`.modal-footer`' element
+
+    - `classesHeader`: when specified, classes to be added to the '`.modal-header`' element
+
+    - `closeByBackdrop`: when specified, whether the dialog should be closed when clicking on the backdrop
+
+    - `closeByHeader`: when specified, whether the header exhibits a dismiss button
+
+    - `closeByKeyboard`: when specified, whether the dialog should be closed when hitting Escape
+
+    - `footer`: when specified, the name of the Blaze template to be set as the modal footer
+
+        Just set to `null` to pass from a specific footer to the standard one.
+
+        Specifying a particular footer takes precedence over the standard one.
+        
+        When a particular footer is specified, then the button methods are no more operationnal, and you have to manage them yourself.
+
+    - `fullscreen`: when specified, whether the dialog should be displayed in full screen mode
+
+    - `moveTop`: when specified, whether the modal should be moved vertically.
+
+    - `target`: when specified, the JQuery object which must receive events for that modal
+
+        This method is usually called from the rendered body template `onRendered()` function. At that time, not only the DOM is rendered for this element, but it is very probable that this is in this template that the triggered events will be useful.
+
+    - `title`: when specified, the title of the modal
+
+- `target(): <jQuery>`
+
+    Returns the current target of modal events.
+
 ### Methods
 
 #### The life of the modal
@@ -262,128 +376,9 @@ The globally exported object.
 
     This method returns a string which is the unique identifier of the new modal.
 
-- `Modal.buttonFind( button_id [, id ] )`
-
-    Returns the specfied button as a jQuery object for the specified opened modal, defaulting to the topmost one.
-
-    Because this method makes a search on the `data-md-btn-id` attribute, it may be irrelevant when a specific footer has been defined.
-
-- `Modal.askClose()`
-
-    Close the current modal dialog from the caller, taking care of the eventual `mdBeforeClose` configured function.
-
-    If the function has been provided, it is ran and its result is executed.
-
-    Else, the odal is closed (which is the default if the function is not configured).
-
-- `Modal.close()`
-
-    Unconditionally close the current modal dialog from the caller.
-
-    Unconditionlly here means that this method doesn't take care of the optional `mdBeforeClose` configured function which ask for a user confirmation. Closing means.. closing!
-
-    Of course, and if this has not been prevented in the modal configuration, it is still possible to close the modal dialog via the usual ways:
-
-    - from the dismiss button in the header
-
-    - from the `Close` (resp. `Cancel`) button in the footer,
-
-    - or by clicking anywhere outside of the modal.
-
 - `Modal.count()`
 
     Returns the count of opened modals.
-
-- `Modal.focus( arg )`
-
-    Set the focus on a field.
-
-    `arg` is a parameter object which may contain:
-
-    - `id`: the modal identifier, defaulting to the topmost one
-
-    - `field`: the targeted field as a jQuery object, defaulting to the first inputable or the last button.
-
-    The application may have its own opinion about which is the first inputable field, or, in other words, which field should be the default when the user presses a key. It will most probably to set the focus from its own `onRendered()` function. But this later is triggered before ours. So, because we are executed last, we cannot provide any suitable default.
-
-    As a consequence, each client application shoud call this function itself if it wants the user has any suitable default.
-
-- `Modal.set( arg )`
-
-    A generic method to configure a running modal.
-
-    `arg` must be a Javascript object with following keys:
-
-    - `id`: the identifier of the to-be-configured modal, defaulting to the current topmost
-
-    - `autoFocus`: when specified, whether the focus is automatically managed by the modal itself.
-
-        See the `mdAutoFocus` parameter to get a full description.
-
-    - `beforeClose`: when specified, the function to be called by the modal to get an authorization to close.
-
-        See the `mdBeforeClose` parameter to get a description of the function.
-
-    - `body`: when specified, the name of the Blaze template to be set as the modal body
-
-    - `bodyHeight`: when specified, set a minimal new body height
-
-        Body height may be specified with a `'+'` or `'-'` prefix to respectively increase or decrease the current body height.
-
-    - `buttons`: when specified, a string, an array of strigs, an object or an array of object, each one providing the properties to be set on a button, as:
-
-        - `id`: mandatory, defaulting to the string itself if only a string is provided
-        - `label`
-        - `classes`
-        - `enabled`
-        - `name`
-        - `type`
-        - `html`
-        - `cb`
-        - `dismiss`
-        - `ifExist`: only apply if the button already exists, defaulting to false; this means that, if you do not specify this attribute, you may create a new button!
-
-        If a button has not been previously defined, then it is added at the end of the list.
-
-        This is also the case when the buttons are only specified as strings, not objects. In that case, we consider that this is a request to add a new button, which must not exist yet.
-
-    - `classes`: when specified, classes to be added to the '`.modal`' element
-
-    - `classesBody`: when specified, classes to be added to the '`.modal-body`' element
-
-    - `classesContent`: when specified, classes to be added to the '`.modal-content`' element
-
-    - `classesFooter`: when specified, classes to be added to the '`.modal-footer`' element
-
-    - `classesHeader`: when specified, classes to be added to the '`.modal-header`' element
-
-    - `closeByBackdrop`: when specified, whether the dialog should be closed when clicking on the backdrop
-
-    - `closeByHeader`: when specified, whether the header exhibits a dismiss button
-
-    - `closeByKeyboard`: when specified, whether the dialog should be closed when hitting Escape
-
-    - `footer`: when specified, the name of the Blaze template to be set as the modal footer
-
-        Just set to `null` to pass from a specific footer to the standard one.
-
-        Specifying a particular footer takes precedence over the standard one.
-        
-        When a particular footer is specified, then the button methods are no more operationnal, and you have to manage them yourself.
-
-    - `fullscreen`: when specified, whether the dialog should be displayed in full screen mode
-
-    - `moveTop`: when specified, whether the modal should be moved vertically.
-
-    - `target`: when specified, the JQuery object which must receive events for that modal
-
-        This method is usually called from the rendered body template `onRendered()` function. At that time, not only the DOM is rendered for this element, but it is very probable that this is in this template that the triggered events will be useful.
-
-    - `title`: when specified, the title of the modal
-
-- `Modal.target()`
-
-    Returns the current modal events target.
 
 - `Modal.topmost()`
 
