@@ -15,6 +15,7 @@
     - Fix dialog shift on stack
     - Define new mdHeight modal instanciation parameter
     - Define new Modal.topmost() function
+    - Define new mdModal.set() improved method
 
 ### 2.4.0
 

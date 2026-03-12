@@ -127,60 +127,9 @@ Modal.run = function( parms ){
 Modal.set = function( arg ){
     //logger.debug( arg );
     const modal = Modal.stack.modal( arg.id );
-    if( Object.keys( arg ).includes( 'autoFocus' )){
-        modal.autoFocus( arg.autoFocus );
-    }
-    if( Object.keys( arg ).includes( 'beforeClose' )){
-        modal.beforeClose( arg.beforeClose );
-    }
-    if( Object.keys( arg ).includes( 'body' )){
-        modal.body( arg.body );
-    }
-    if( Object.keys( arg ).includes( 'bodyHeight' )){
-        modal.bodyHeight( arg.bodyHeight );
-    }
-    if( Object.keys( arg ).includes( 'buttons' )){
-        modal.buttons( arg.buttons );
-    }
-    if( Object.keys( arg ).includes( 'classes' )){
-        modal.classes( arg.classes );
-    }
-    if( Object.keys( arg ).includes( 'classesBody' )){
-        modal.classesBody( arg.classesBody );
-    }
-    if( Object.keys( arg ).includes( 'classesContent' )){
-        modal.classesContent( arg.classesContent );
-    }
-    if( Object.keys( arg ).includes( 'classesFooter' )){
-        modal.classesFooter( arg.classesFooter );
-    }
-    if( Object.keys( arg ).includes( 'classesHeader' )){
-        modal.classesHeader( arg.classesHeader );
-    }
-    if( Object.keys( arg ).includes( 'closeByBackdrop' )){
-        modal.closeByBackdrop( arg.closeByBackdrop );
-    }
-    if( Object.keys( arg ).includes( 'closeByHeader' )){
-        modal.closeByHeader( arg.closeByHeader );
-    }
-    if( Object.keys( arg ).includes( 'closeByKeyboard' )){
-        modal.closeByKeyboard( arg.closeByKeyboard );
-    }
-    if( Object.keys( arg ).includes( 'footer' )){
-        modal.footer( arg.footer );
-    }
-    if( Object.keys( arg ).includes( 'fullscreen' )){
-        modal.fullScreen( arg.fullscreen );
-    }
-    if( Object.keys( arg ).includes( 'moveTop' )){
-        modal.moveTop( arg.moveTop );
-    }
-    if( Object.keys( arg ).includes( 'target' )){
-        modal.target( arg.target );
-    }
-    if( Object.keys( arg ).includes( 'title' )){
-        modal.title( arg.title );
-    }
+    const dup = _.cloneDeep( arg );
+    delete dup.id;
+    modal.set( dup );
 };
 
 /**

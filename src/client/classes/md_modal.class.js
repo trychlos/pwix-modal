@@ -560,6 +560,25 @@ export class mdModal {
     }
 
     /**
+     * @summary Generic setter
+     * @locus Client
+     * @param {Object} arg the argument object
+     */
+    set( arg ){
+        for( const key of Object.keys( arg )){
+            if( this[key] ){
+                if( _.isFunction( this[key] )){
+                    this[key]( arg[key] );
+                } else {
+                    logger.warn( 'set() not a function', key );
+                }
+            } else {
+                logger.warn( 'set() doesn\'t exist', key );
+            }
+        }
+    }
+
+    /**
      * @summary Getter
      * @returns {String} the name of the localStorage item which stores the width and height
      */
