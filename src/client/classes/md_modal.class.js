@@ -63,6 +63,11 @@ export class mdModal {
     // the rendered view
     _view = null;
 
+    // closing steps
+
+    // set to true when we want bypass the askClose() step
+    _unconditional_close = false;
+
     // private methods
     //
 
@@ -156,7 +161,7 @@ export class mdModal {
         }
 
         this._view = Blaze.renderWithData( Template.md_modal, { modal: this }, $( 'body' )[0] );
-        //logger.debug( this._view );
+        //logger.debug( 'instanciating', this.id());
 
         return this;
     }
@@ -167,7 +172,7 @@ export class mdModal {
      *  - true to let the modal be closed
      *  - false to prevent the close.
      */
-    askClose(){
+    async askClose(){
         //logger.debug( 'askToClose()', this );
         const fn = this.beforeClose();
         if( fn && _.isFunction( fn )){
@@ -399,11 +404,27 @@ export class mdModal {
     }
 
     /**
-     * @summary Close the modal
+     * @summary Unconditionally close the modal
      */
     close(){
-        //logger.debug( 'closing', '.md-modal .modal#'+this.id());
-        $( '.md-modal #'+this.id()).modal( 'hide' );
+        // find out modal
+        const $modal = $( '.md-modal #'+this.id());
+        // advertise the whole world
+        const $target = this.target() || $modal;
+        if( $target && $target.length ){
+            $target.trigger( 'md-close', {
+                id: this.id(),
+                parms: this.parms()
+            });
+        }
+        // keep position and size ?
+        const key = this.sizeKey();
+        if( key ){
+            //localStorage.setItem( key, self.$( '.modal-content' ).css( 'width' ) + ',' + self.$( '.modal-content' ).css( 'height' ));
+        }
+        // unconditionally close
+        this._unconditional_close = true;
+        $modal.modal( 'hide' );
     }
 
     /**
@@ -511,6 +532,9 @@ export class mdModal {
             }
             if( !$found || !$found.length ){
                 $found = $( '#'+this._id ).find( '.modal-footer button.btn-primary' ).last();
+            }
+            if( !$found || !$found.length ){
+                $found = $( '#'+this._id ).find( '.modal-footer button' ).last();
             }
             if( $found && $found.length ){
                 logger.verbose({ verbosity: Modal.configure().verbosity, against: Modal.C.Verbose.FOCUS }, 'mdModal.focus() on', $found );
@@ -627,5 +651,13 @@ export class mdModal {
             this._title.set( title );
         }
         return this._title.get() || '';
+    }
+
+    /**
+     * @return {Boolean} whether we are in the process of unconditionally closing the modal
+     *  Normally false, it is set to true by close() method just before calling hide()
+     */
+    unconditionallyClosing(){
+        return this._unconditional_close;
     }
 }

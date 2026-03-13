@@ -11,7 +11,6 @@
 |   Id | Date       | Description and comment(s) |
 | ---: | :---       | :---                       |
 |   10 | 2023- 5- 2 | would it be relevant to also allow to keep a position ? |
-|   38 | 2024- 1-17 | intercept Escape key to honor confirmOnClose |
 |   39 | 2026- 2-24 | Modal.run() should accept functions as well as constant properties |
 |   40 | 2026- 3-12 | as some global level functions are obsoleted as of v2.5, should remove them on a later version |
 |   41 |  |  |
@@ -97,6 +96,8 @@
 |      | 2023- 9-13 | buttons management is clarified |
 |   37 | 2023- 9-10 | closeByBackdrop, closeByHeader, closeByKeyboard mdModal methods should also be setters + set() should have corresponding code |
 |      | 2023- 9-10 | done |
+|   38 | 2024- 1-17 | intercept Escape key to honor confirmOnClose |
+|      | 2026- 3-13 | done |
 
 ---
 P. Wieser

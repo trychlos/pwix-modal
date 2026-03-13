@@ -190,22 +190,21 @@ export class mdStack {
         if( this.count()){
             logger.verbose({ verbosity: Modal.configure().verbosity, against: Modal.C.Verbose.STACK }, 'mdModal.pop() from stack (length='+this.count()+')' );
             //logger.debug( 'before pop length', this.count());
-            const modal = this._stack.pop();
-            // set the focus on the new topmost modal
+            const removed = this._stack.pop();
+            // identify the new topmost modal
             const topmost = this.topmost();
             if( topmost ){
-                topmost.focus();
+                // reactivate its backdrop
+                const $backdrops = $( 'body div.modal-backdrop' );
+                if( $backdrops.length ){
+                    $( $backdrops[$backdrops.length-1] ).css({
+                        display: topmost.backdropVisible() ? 'block' : 'none'
+                    });
+                }
             }
-            // and reactivate its backdrop
-            const $backdrops = $( 'body div.modal-backdrop' );
-            if( $backdrops.length ){
-                $( $backdrops[$backdrops.length-1] ).css({
-                    display: modal.backdropVisible() ? 'block' : 'none'
-                });
-            }
-            return modal;
+            return removed;
         }
-        logger.error( 'mdModal.pop() trying to pop a modal while none is opened' );
+        logger.error( 'mdStack.pop() trying to pop a modal while none is opened' );
         return null;
     }
 

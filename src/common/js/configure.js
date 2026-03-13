@@ -16,6 +16,7 @@ Modal._defaults = {
     backdropOpacity: 0.5,
     backdropVisible: false,
     closeByBackdrop: true,
+    closeByKeyboard: true,
     contentClassesArray: null,
     verbosity: Modal.C.Verbose.CONFIGURE
 };

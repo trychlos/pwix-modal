@@ -81,17 +81,6 @@ Template.md_modal.onCreated( function(){
             }
         },
 
-        // if a localStorage key has been provided, set it
-        lastSizeSet(){
-            const modal = self.MD.modal.get();
-            if( modal ){
-                const key = modal.sizeKey();
-                if( key ){
-                    localStorage.setItem( key, self.$( '.modal-content' ).css( 'width' ) + ',' + self.$( '.modal-content' ).css( 'height' ));
-                }
-            }
-        },
-
         // compute min and max width and height
         // take other measurements which will be needed later
         takeMeasures(){
@@ -307,7 +296,6 @@ Template.md_modal.onRendered( function(){
                         const y_pos = prev_rc.top + ( ( prev_rc.height - modalHeight ) / 2 );
                         const y_top = parseInt( y_pos + 0.5 );
                         css.top = y_top;
-                        logger.debug( 'pos', pos, 'modalHeight', modalHeight, 'prev_height', prev_rc.height, 'prev_top', prev_rc.top, 'y_top', y_top );
                     }
 
                 // auto shift
@@ -323,7 +311,7 @@ Template.md_modal.onRendered( function(){
                         }
                         // update the css
                         y_shift = parseInt( y_shift + 0.5 );
-                        css.top = y_shift+'px';
+                        css.top = y_shift;
                     }
                 }
 
@@ -333,7 +321,7 @@ Template.md_modal.onRendered( function(){
                 if( move ){
                     const css_top = parseFloat( css.top );
                     if( css_top + move + this_rc.height < max_height ){
-                        css.top = ( css_top + move ) + 'px';
+                        css.top = css_top + move;
                     }
                 }
             }
@@ -503,19 +491,19 @@ Template.md_modal.events({
             }
         }
         // this doesn't work
+        // see also:
+        //  https://stackoverflow.com/questions/75535862/data-keyboard-false-doesnt-work-in-bootstrap-for-the-following-code
+        //  https://stackoverflow.com/questions/16693079/how-to-disable-escape-key-for-twitter-bootstrap-modals
         /*
-        logger.debug( event.keyCode );
         if( event.keyCode === 27 ){
             const modal = this.modal;
             modal.askClose();
             return false;
-        }
-        */
+        } */
     },
 
     'submit .modal-content'( event, instance ){
         const $btn = instance.$( event.currentTarget ).find( '.modal-footer button.md-btn.md-last' );
-        //logger.debug( event, $btn );
         if( $btn ){
             $btn.trigger( 'click' );
             return false;
@@ -531,15 +519,12 @@ Template.md_modal.events({
     'click .md-btn'( event, instance ){
         const modal = this.modal;
         const $btn = instance.$( event.currentTarget );
-        //logger.debug( event, this, $btn, $btn.data());
         const btnId = $btn.attr( 'data-md-btn-id' );
         const button = modal.buttonGet( btnId );
         const target = modal.target() || $btn;
-        //logger.debug( target );
-        //alert( 'sending md-click to '+target.toString());
         target.trigger( 'md-click', {
             id: modal.id(),
-            button: modal.buttonGet( btnId ),
+            button,
             parms: modal.parms()
         });
 
@@ -548,8 +533,6 @@ Template.md_modal.events({
         if( dismiss === undefined ){
             dismiss = modal.buttons().length === 1 || false;
         }
-        //logger.debug( 'dismiss', dismiss );
-        //alert( 'dismiss='+dismiss );
         if( dismiss ){
             modal.askClose();
             return false;
@@ -560,18 +543,27 @@ Template.md_modal.events({
     // about to close the modal
     'hide.bs.modal .modal'( event, instance ){
         const modal = this.modal;
-        const target = modal.target() || instance.$( event.currentTarget );
-        instance.MD.lastSizeSet();
-        target.trigger( 'md-close', {
-            id: modal.id(),
-            parms: modal.parms()
-        });
+        if( modal ){
+            if( modal.unconditionallyClosing()){
+                //logger.info( 'unconditionally closing', modal );
+                return true;
+            }
+            modal.askClose();
+            return false;
+        }
+        // default action is to let the modal be hidden (aka be closed)
+        return true;
     },
 
     // remove the Blaze element from the DOM
     'hidden.bs.modal .modal'( event, instance ){
         $( 'body' ).removeClass( instance.MD.myClass.get());
         Blaze.remove( instance.view );
+        // and re-set the focus on the new topmost
+        const topmost = Modal.stack.topmost();
+        if( topmost ){
+            topmost.focus();
+        }
     },
 
     // set the focus on first input field

@@ -55,13 +55,19 @@ Known configuration options are:
 
     - `bootstrap`'s backdrop defaults to be visible
 
-    - `pwix:modal` has chosen to not display this backdrop, thus the reason of the default value of this parameter.
+    - `pwix:modal` has initially chosen to not display this backdrop, thus the reason of the default value of this parameter.
 
     Since v2.5.
 
 - `closeByBackdrop`
 
-    Whether the dialogs can be closed when clicking on the backdrop.
+    Whether the dialogs can be closed when clicking on the backdrop. This acts as the default value for `Modal.run()` arguments.
+
+    Default to `true`.
+
+- `closeBykeyboard`
+
+    Whether the dialogs can be closed when clicking on 'Escape' key. This acts as the default value for `Modal.run()` arguments.
 
     Default to `true`.
 
@@ -248,7 +254,7 @@ The class which manages each modal dialog. It has following public methods:
         A function to be called when the user asks for close the modal, by clicking on the backdrop, or the close button of the header, or a close button in the footer. This function let the application allows or forbid the close:
 
         - the function takes a unique argument, which is the modal identifier
-        - it is expected that the function returns a Promise which must resolve to:
+        - it is expected that the function returns a `Promise` which must resolve to:
             - `true` to let the modal be closed
             - `false` to prevent the modal to be closed.
 
@@ -308,17 +314,23 @@ The class which manages each modal dialog. It has following public methods:
 
         Defaults to configured value.
 
+        Note that you should keep this default if you plan to ask a confirmation to your user when he/she clicks on the backdrop.
+
     - `mdCloseByHeader`
 
         Whether the header holds a `Close` button.
 
         Defaults to `true`.
 
+        Note that you should keep this default if you plan to ask a confirmation to your user when he/she clicks on the cross check of the header.
+
     - `mdCloseByKeyboard`
 
         Whether `Escape` key closes the modal.
 
         Defaults to `true`.
+
+        Note that you should keep this default if you plan to ask a confirmation to your user when he/she hits the 'Escape' key.
 
     - `mdFooter`
 
@@ -452,6 +464,22 @@ All others parameters passed when creating the button are kept, and made availab
 Each button, apart those generated directly via the `html` key, has a `date-md-btn-id` attribute set to the button identifier.
 
 Please note that all that buttons management is NOT relevant when using a specific footer.
+
+#### Modal closing
+
+Bootstrap let the modal be closed:
+
+- by clicking on the backdrop, outside of the modal, 
+- by clicking on the header cross check,
+- by hitting the 'Escape' key.
+
+You can also add, e.g., a 'Cancel' button.
+
+The three Bootstrap closing modes all depend of the configuration of the modal, i.e. whether `closeByBackdrop`, `closeByHeader` or `closeByKeyboard` are true.
+
+When `false`, this closing mode is just disabled.
+
+When one is `true`, or the user has clicked on your 'Cancel' button, then only `pwix:modal` tries to honor the `beforeClose` parameter which is expected to be an async function which will eventually return `true` or `false`.
 
 #### Modal positionning
 
