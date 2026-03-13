@@ -11,7 +11,6 @@ import _ from 'lodash';
 
 import { Logger } from 'meteor/pwix:logger';
 import { UIUtils } from 'meteor/pwix:ui-utils';
-import { ReactiveDict } from 'meteor/reactive-dict';
 import { ReactiveVar } from 'meteor/reactive-var';
 
 //  provides 'draggable()' and 'resizable()' methods
@@ -38,59 +37,12 @@ Template.md_modal.onCreated( function(){
         modal: new ReactiveVar( null ),
 
         // various measurements
-        measures: new ReactiveDict({}),
+        measures: {},
         htmlBodyStyles: null,
         modalContentStyles: null,
         modalBodyStyles: null,
         modalHeaderStyles: null,
         modalFooterStyles: null,
-
-        // compute min and max width and height
-        computeLimits(){
-            // body width and height
-            this.htmlBodyStyles = getComputedStyle( $( 'body' )[0] );
-            const body_width = parseFloat( this.htmlBodyStyles.width );
-            this.measures.set( 'body-width', body_width );
-            const body_height = parseFloat( this.htmlBodyStyles.height );
-            this.measures.set( 'body-height', body_height );
-            // modal content margin
-            this.modalContentStyles = getComputedStyle( self.$( '.modal-content' )[0] );
-            const margin_top = parseFloat( this.modalContentStyles.margin_top );
-            this.measures.set( 'modal-margin-top', margin_top );
-            // modal body padding
-            this.modalBodyStyles = getComputedStyle( self.$( '.modal-body' )[0] );
-            const padding = parseFloat( this.modalBodyStyles.paddingLeft );
-            this.measures.set( 'modal-padding', padding );
-            // modal header height
-            this.modalHeaderStyles = getComputedStyle( self.$( '.modal-header' )[0] );
-            const header_height = parseFloat( this.modalHeaderStyles.height );
-            this.measures.set( 'header-height', header_height );
-            // modal footer height
-            this.modalFooterStyles = getComputedStyle( self.$( '.modal-footer' )[0] );
-            const footer_height = parseFloat( this.modalFooterStyles.height );
-            this.measures.set( 'footer-height', footer_height );
-            // Source - https://stackoverflow.com/a/8876069
-            // Posted by ryanve, modified by community. See post 'Timeline' for change history
-            // Retrieved 2026-03-08, License - CC BY-SA 4.0
-            const vw_width = Math.max( document.documentElement.clientWidth || 0, window.innerWidth || 0 );
-            this.measures.set( 'viewport-width', vw_width );
-            const vw_height = Math.max( document.documentElement.clientHeight || 0, window.innerHeight || 0 );
-            this.measures.set( 'viewport-height', vw_height );
-            // optimal width depends of the respective width of the body (and its children), of the footer (and its children)
-            // honors the dialog padding
-            let width = Math.max( this.computeWidth( '.modal-body' ), this.computeWidth( '.modal-footer' ));
-            width += 2*padding;
-            this.measures.set( 'width', width );
-            // at the moment min width is same than optimal width
-            const min_width = width;
-            this.measures.set( 'min-width', min_width );
-            // current height is just read from content styles, unless it has been specified as a parameter
-            const contentHeight = this.modal.get().contentHeight();
-            this.measures.set( 'height', contentHeight ? contentHeight + header_height + footer_height : this.modalContentStyles.height );
-            // max width and height are 95% of body size ,- taking into account the shift when modals are stacked
-            this.measures.set( 'max-width', 0.95 * ( body_width - header_height ));
-            this.measures.set( 'max-height', 0.95 * ( body_height - header_height ));
-        },
 
         // compute the max width between a div and its first child
         computeWidth( selector, ){
@@ -139,6 +91,61 @@ Template.md_modal.onCreated( function(){
                 }
             }
         },
+
+        // compute min and max width and height
+        // take other measurements which will be needed later
+        takeMeasures(){
+            // body width and height
+            this.htmlBodyStyles = getComputedStyle( $( 'body' )[0] );
+            const body_width = parseFloat( this.htmlBodyStyles.width );
+            this.measures['body-width'] = body_width;
+            const body_height = parseFloat( this.htmlBodyStyles.height );
+            this.measures['body-height'] = body_height;
+            // modal content margin
+            this.modalContentStyles = getComputedStyle( self.$( '.modal-content' )[0] );
+            const margin_top = parseFloat( this.modalContentStyles.margin_top );
+            this.measures['modal-margin-top'] = margin_top;
+            // modal body padding
+            this.modalBodyStyles = getComputedStyle( self.$( '.modal-body' )[0] );
+            const padding = parseFloat( this.modalBodyStyles.paddingLeft );
+            this.measures['modal-padding'] = padding;
+            // modal header height
+            this.modalHeaderStyles = getComputedStyle( self.$( '.modal-header' )[0] );
+            const header_height = parseFloat( this.modalHeaderStyles.height );
+            this.measures['header-height'] = header_height;
+            // modal footer height
+            this.modalFooterStyles = getComputedStyle( self.$( '.modal-footer' )[0] );
+            const footer_height = parseFloat( this.modalFooterStyles.height );
+            this.measures['footer-height'] = footer_height;
+            // Source - https://stackoverflow.com/a/8876069
+            // Posted by ryanve, modified by community. See post 'Timeline' for change history
+            // Retrieved 2026-03-08, License - CC BY-SA 4.0
+            const vw_width = Math.max( document.documentElement.clientWidth || 0, window.innerWidth || 0 );
+            this.measures['viewport-width'] = vw_width;
+            const vw_height = Math.max( document.documentElement.clientHeight || 0, window.innerHeight || 0 );
+            this.measures['viewport-height'] = vw_height;
+            // optimal width depends of the respective width of the body (and its children), of the footer (and its children)
+            // honors the dialog padding
+            let width = Math.max( this.computeWidth( '.modal-body' ), this.computeWidth( '.modal-footer' ));
+            width += 2*padding;
+            this.measures['width'] = width;
+            // at the moment min width is same than optimal width
+            const min_width = width;
+            this.measures['min-width'] = min_width;
+            // current height is just read from content styles, unless it has been specified as a parameter
+            const contentHeight = this.modal.get().contentHeight();
+            this.measures['height'] = contentHeight ? contentHeight + header_height + footer_height : parseFloat( this.modalContentStyles.height );
+            // max width and height are 95% of body size ,- taking into account the shift when modals are stacked
+            this.measures['max-width'] = 0.95 * ( body_width - header_height );
+            this.measures['max-height'] = 0.95 * ( body_height - header_height );
+            // get bounding client rect for current and previous modal
+            const count = Modal.count();
+            const prev_modal = count > 1 ? mdStack.byIndex( count-2 ) : null;
+            const prev_rc = prev_modal ? $( '#'+prev_modal.id()+' .modal-content' )[0].getBoundingClientRect() : null;
+            this.measures['prev-rc'] = prev_rc;
+            const this_rc = self.$( '.modal-content' )[0].getBoundingClientRect();
+            this.measures['this-rc'] = this_rc;
+        }
     };
 
     // get the modal instance
@@ -178,7 +185,7 @@ Template.md_modal.onRendered( function(){
             }
 
             // compute min and max width and height
-            self.MD.computeLimits();
+            self.MD.takeMeasures();
 
             // remove style set by bootstrap
             self.$( '.modal-content' ).removeAttr( 'style' );
@@ -194,7 +201,7 @@ Template.md_modal.onRendered( function(){
                     'z-index': modal.backdropZIndex()
                 });
             }
-            // setup the content on top of the backdrop
+            // setup this modal content on top of the backdrop
             $( '#'+modal.id()).css({
                 'z-index': modal.contentZIndex()
             });
@@ -205,51 +212,119 @@ Template.md_modal.onRendered( function(){
             if( self.$( '.modal-content' ).resizable ){
                 self.$( '.modal-content' ).resizable({
                     handles: 'all',
-                    minWidth: self.MD.measures.get( 'min-width' )
+                    minWidth: self.MD.measures['min-width']
                 });
             }
 
             // prepare our modal styles
+            // let Bootstrap compute itself the needed height (nb: 'px' is the default unit)
             const css = ({
-                width: self.MD.measures.get( 'width' ),
-                minWidth: self.MD.measures.get( 'min-width' ),
-                maxWidth: self.MD.measures.get( 'max-width' ),
-                height: self.MD.measures.get( 'height' ),
-                minHeight: self.MD.measures.get( 'min-height' ),
-                maxHeight: self.MD.measures.get( 'max-height' ),
+                width: self.MD.measures['width'],
+                minWidth: self.MD.measures['min-width'],
+                maxWidth: self.MD.measures['max-width'],
+                //height: self.MD.measures['height'],
+                minHeight: self.MD.measures['min-height'],
+                maxHeight: self.MD.measures['max-height'],
                 top: 0,
                 left: 0
             });
 
-            // unless we display the modal in full screen mode, we shift it regarding the previous one
-            if( !self.MD.modal.get().fullScreen()){
-                const this_rc = self.$( '.modal-content' )[0].getBoundingClientRect();
-                const max_height = self.MD.measures.get( 'max-height' );
+            // does the modal must be displayed full screen ?
+            if( modal.fullScreen()){
+                const pos = '1px';
+                const width = self.MD.measures['max-width'];
+                const height = self.MD.measures['max-height'];
+                css = _.merge( css, {
+                    top: pos,
+                    left: pos,
+                    width: width,
+                    minWidth: width,
+                    height: height,
+                    minHeight: height
+                });
+                logger.verbose({ verbosity: Modal.configure().verbosity, against: Modal.C.Verbose.RESIZING }, 'set fullscreen', pos, width, height );
 
+            // not in full screen mode, so we shift the modal relatively to the previous one
+            // horizontal and vertical positions are computed separately
+            } else {
+                const pos = modal.position();
+                const count = Modal.count();
+                const prev_rc = self.MD.measures['prev-rc'];
+                const this_rc = self.MD.measures['this-rc'];
+
+                // positionning in the center of the screen
+                if( pos & Modal.C.Position.SCREEN_H_CENTERED ){
+                    const modalWidth = self.MD.measures['width'];
+                    const screenWidth = self.MD.measures['viewport-width'];
+                    const x_pos = ( screenWidth - modalWidth ) / 2;
+                    const x_left = parseInt( x_pos + 0.5 );
+                    css.left = x_left;
+
+                // positionning this modal relatively to the previous one if only honored if there is one previous one
+                } else if( pos & Modal.C.Position.MODAL_H_CENTERED ){
+                    if( count > 1 ){
+                        const modalWidth = self.MD.measures['width'];
+                        const target_x = prev_rc.left + (( prev_rc.width - modalWidth ) / 2 );
+                        let x_shift = target_x - this_rc.left;
+                        x_shift = parseInt( x_shift + 0.5 );
+                        css.left = x_shift;
+                    }
+                
+                // else shift if possible
                 // Boostrap defaults to position modal-content at top and centered, with a 'relative' position
                 // we must this 'relative' attribute as else we can not drag anymore
                 // so have to compute our shift relatively to this default position
-                const count = Modal.count();
-                if( count > 1 ){
-                    const shift = self.MD.measures.get( 'header-height' );
-                    const prev = mdStack.byIndex( count-2 );
-                    const prev_rc = $( '#'+prev.id()+' .modal-content' )[0].getBoundingClientRect();
-                    const target_x = prev_rc.left + shift;
-                    let x_shift = target_x - this_rc.left;
-                    // shift vertically depending of the count of opened dialogs
-                    let y_shift = shift * ( count - 1 );
-                    // if either of horizontal or vertical shifts make the dialog override the viewport, then back to the top-left corner of the screen
-                    const max_width = self.MD.measures.get( 'max-width' );
-                    if( this_rc.left + x_shift + this_rc.width >= max_width || this_rc.top + y_shift + this_rc.height >= max_height ){
-                        x_shift = ( -1 * this_rc.left ) + shift;
-                        y_shift = ( -1 * this_rc.top ) + shift;
+                } else {
+                    if( count > 1 ){
+                        const shift = self.MD.measures['header-height'];
+                        const target_x = prev_rc.left + shift;
+                        let x_shift = target_x - this_rc.left;
+                        //logger.debug( 'horizontal shift', prev_rc, this_rc, target_x, x_shift );
+                        // if either of horizontal or vertical shifts make the dialog override the viewport, then back to the top-left corner of the screen
+                        const max_width = self.MD.measures['max-width'];
+                        if( this_rc.left + x_shift + this_rc.width >= max_width ){
+                            x_shift = ( -1 * this_rc.left ) + shift;
+                            //logger.debug( 'x_shift realigned to', x_shift );
+                        }
+                        // update the css
+                        x_shift = parseInt( x_shift + 0.5 );
+                        css.left = x_shift;
                     }
-                    // update the css
-                    x_shift = parseInt( x_shift + 0.5 );
-                    y_shift = parseInt( y_shift + 0.5 );
-                    css.top = y_shift+'px';
-                    css.left = x_shift+'px';
-                    //logger.debug( 'shift', shift, 'prev_rc', prev_rc, 'this_rc', this_rc, 'css', css );
+                }
+
+                if( pos & Modal.C.Position.SCREEN_V_CENTERED ){
+                    const modalHeight = self.MD.measures['height'];
+                    const screenHeight = self.MD.measures['viewport-height'];
+                    const y_pos = ( screenHeight - modalHeight ) / 2;
+                    const y_top = parseInt( y_pos + 0.5 );
+                    css.top = y_top;
+
+                // positionning this modal relatively to the previous one if only honored if there is one previous one
+                } else if( pos & Modal.C.Position.MODAL_V_CENTERED ){
+                    const count = Modal.count();
+                    if( count > 1 ){
+                        const modalHeight = self.MD.measures['height'];
+                        const y_pos = prev_rc.top + ( ( prev_rc.height - modalHeight ) / 2 );
+                        const y_top = parseInt( y_pos + 0.5 );
+                        css.top = y_top;
+                        logger.debug( 'pos', pos, 'modalHeight', modalHeight, 'prev_height', prev_rc.height, 'prev_top', prev_rc.top, 'y_top', y_top );
+                    }
+
+                // auto shift
+                } else {
+                    if( count > 1 ){
+                        const max_height = self.MD.measures['max-height'];
+                        const shift = self.MD.measures['header-height'];
+                        // shift vertically depending of the count of opened dialogs
+                        let y_shift = shift * ( count - 1 );
+                        // if either of horizontal or vertical shifts make the dialog override the viewport, then back to the top-left corner of the screen
+                        if( this_rc.top + y_shift + this_rc.height >= max_height ){
+                            y_shift = ( -1 * this_rc.top ) + shift;
+                        }
+                        // update the css
+                        y_shift = parseInt( y_shift + 0.5 );
+                        css.top = y_shift+'px';
+                    }
                 }
 
                 // if a vertical move if asked for this modal, it applies to the above horizontal and vertical shift
@@ -263,23 +338,8 @@ Template.md_modal.onRendered( function(){
                 }
             }
 
-            // does the modal must be displayed full screen ?
-            if( self.MD.modal.get().fullScreen()){
-                const pos = '1px';
-                const width = self.MD.measures.get( 'max-width' );
-                const height = self.MD.measures.get( 'max-height' );
-                css = _.merge( css, {
-                    top: pos,
-                    left: pos,
-                    width: width,
-                    minWidth: width,
-                    height: height,
-                    minHeight: height
-                });
-                logger.verbose({ verbosity: Modal.configure().verbosity, against: Modal.C.Verbose.RESIZING }, 'set fullscreen', pos, width, height );
-            }
-
             // set the modal content style once
+            //logger.debug( 'css', css );
             self.$( '.modal-content' ).css( css );
         }
     });

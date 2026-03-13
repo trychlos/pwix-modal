@@ -10,13 +10,13 @@ Modal.C = {
     //  - have a internationalizable label in /src/common/js/i18n.js
     //  - documented in /README.md
     Button: {
-        OK: 'OK',
+        OK:     'OK',
         CANCEL: 'CANCEL',
-        CLOSE: 'CLOSE',
-        SAVE: 'SAVE',
-        YES: 'YES',
-        NO: 'NO',
-        NEW: 'NEW'
+        CLOSE:  'CLOSE',
+        SAVE:   'SAVE',
+        YES:    'YES',
+        NO:     'NO',
+        NEW:    'NEW'
     },
 
     // a special 'reset all' button identifier
@@ -24,9 +24,18 @@ Modal.C = {
         RESET: 'MD_BUTTON_RESET'
     },
 
+    Position: {
+        AUTO:              0,
+        SCREEN_H_CENTERED: 0x01 << 0,
+        SCREEN_V_CENTERED: 0x01 << 1,
+        MODAL_H_CENTERED:  0x01 << 2,
+        MODAL_V_CENTERED:  0x01 << 3,
+        RESTORE:           0x01 << 4
+    },
+
     // verbosity levels
     Verbose: {
-        NONE: 0,
+        NONE:      0,
         CONFIGURE: 0x01 <<  0,
         NOMODAL:   0x01 <<  1,
         STACK:     0x01 <<  2,

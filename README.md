@@ -350,6 +350,10 @@ The class which manages each modal dialog. It has following public methods:
 
         The value must be specified in pixel units, and can be negative (up-move) or positive (down-move).
 
+    - `mdPosition`
+
+        Overrides the default positioning with an OR-ed value of `Modal.C.Position` constants.
+
     - `mdSizeKey`
 
         The string name of the `localStorage` item which will record the last used width and height.
@@ -448,6 +452,18 @@ All others parameters passed when creating the button are kept, and made availab
 Each button, apart those generated directly via the `html` key, has a `date-md-btn-id` attribute set to the button identifier.
 
 Please note that all that buttons management is NOT relevant when using a specific footer.
+
+#### Modal positionning
+
+`pwix:modal` does its best to automatically position the new modal. Default is to stack on the last opened modal, slightly shifted to bottom and right. This is said 'AUTO' positionning.
+
+The caller can ask to position the new modal in particular places:
+
+- horizontally and/or vertically centered in the screen (ak in the viewport),
+
+- horizontally and/or vertically centered relatively to the previous modal.
+
+This request for a particular positioning can be specified when calling `Modal.run()` with the `mdPosition` parameter.
 
 #### Translations
 

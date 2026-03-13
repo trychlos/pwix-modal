@@ -55,6 +55,7 @@ export class mdModal {
     _fullscreen = new ReactiveVar( null );
     _height = new ReactiveVar( 0 );
     _movetop = new ReactiveVar( 0 );
+    _position = new ReactiveVar( Modal.C.Position.AUTO );
     _sizekey = new ReactiveVar( null );
     _target = new ReactiveVar( null );
     _title = new ReactiveVar( null );
@@ -141,6 +142,9 @@ export class mdModal {
         if( parms.mdMoveTop ){
             this._movetop.set( parms.mdMoveTop );
         }
+
+        this.position( parms.mdPosition );
+
         if( parms.mdSizeKey ){
             this._sizekey.set( parms.mdSizeKey );
         }
@@ -556,6 +560,21 @@ export class mdModal {
      */
     parms(){
         return this._parms;
+    }
+
+    /**
+     * @summary Getter/Setter
+     * @returns {Integer} the position code of the modal
+     */
+    position( pos ){
+        if( pos !== undefined ){
+            if( _.isNumber( pos )){
+                this._position.set( parseInt( pos ));
+            } else {
+                logger.warning( 'position() expects a number, got', pos );
+            }
+        }
+        return this._position.get();
     }
 
     /**
