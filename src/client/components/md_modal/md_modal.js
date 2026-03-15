@@ -317,7 +317,7 @@ Template.md_modal.onRendered( function(){
 
                 // if a vertical move if asked for this modal, it applies to the above horizontal and vertical shift
                 //  only apply if possible (not higher than the viewport)
-                const move = self.MD.modal.get().moveTop();
+                const move = modal.moveTop();
                 if( move ){
                     const css_top = parseFloat( css.top );
                     if( css_top + move + this_rc.height < max_height ){
@@ -339,14 +339,6 @@ Template.md_modal.onRendered( function(){
             id: self.MD.modal.get().id(),
             parms: self.MD.modal.get().parms()
         });
-    });
-
-    // set the focus if asked for
-    self.autorun(() => {
-        const modal = self.MD.modal.get();
-        if( modal.autoFocus()){
-            modal.focus();
-        }
     });
 });
 
@@ -544,8 +536,11 @@ Template.md_modal.events({
     'hide.bs.modal .modal'( event, instance ){
         const modal = this.modal;
         if( modal ){
+            if( !modal.isTopmost()){
+                return false;
+            }
             if( modal.unconditionallyClosing()){
-                //logger.info( 'unconditionally closing', modal );
+                logger.debug( 'unconditionally closing', modal.id());
                 return true;
             }
             modal.askClose();
@@ -566,9 +561,12 @@ Template.md_modal.events({
         }
     },
 
-    // set the focus on first input field
+    // set the focus on first input field if asked for
     'shown.bs.modal .modal'( event, instance ){
-        instance.$( '.modal#'+this.modal.id()+' .modal-body input' ).first().focus();
+        const modal = this.modal;
+        if( modal && modal.isTopmost() && modal.autoFocus()){
+            modal.focus();
+        }
     }
 });
 

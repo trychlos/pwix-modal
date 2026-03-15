@@ -65,6 +65,8 @@ export class mdModal {
 
     // closing steps
 
+    // set to false from first 'hide()' request until end of askClose() interaction to prevent focus
+    _accepting_focus = false;
     // set to true when we want bypass the askClose() step
     _unconditional_close = false;
 
@@ -161,9 +163,17 @@ export class mdModal {
         }
 
         this._view = Blaze.renderWithData( Template.md_modal, { modal: this }, $( 'body' )[0] );
+        this._accepting_focus = true;
         //logger.debug( 'instanciating', this.id());
 
         return this;
+    }
+
+    /**
+     * @return {Boolean} if we are willing to accept the focus
+     */
+    acceptingFocus(){
+        return this._accepting_focus;
     }
 
     /**
@@ -174,11 +184,14 @@ export class mdModal {
      */
     async askClose(){
         //logger.debug( 'askToClose()', this );
+        this._accepting_focus = false;
         const fn = this.beforeClose();
         if( fn && _.isFunction( fn )){
             fn( this.id()).then(( res ) => {
                 if( res ){
                     this.close();
+                } else {
+                    this._accepting_focus = true;
                 }
             });
         } else {
@@ -499,50 +512,73 @@ export class mdModal {
      * @summary Set the focus on the first inputable field or the last button
      * @param {Object} arg the parameters:
      *  - field: the target field, defaulting to the first inputable field of the body, or the last button
+     * 
+     * See also:
+     *  https://stackoverflow.com/questions/1599660/which-html-elements-can-receive-focus
+     *  https://chatgpt.com/g/g-p-699e28a5c6388191a646026add6d12f4-meteor-js/c/69b67f1e-09e8-8395-9f24-fb38319c0d88
      */
     focus( arg={} ){
+        //logger.debug( 'focus()', this.id());
+        const _findFocusable = function( root ){
+            const scope = _scope( root );
+            const $candidates = $( scope )
+                .find( _selector())
+                .filter( ':visible' )
+                .filter( function(){
+                    const el = this;
+                    const $el = $( el );
+
+                    // reject disabled form controls
+                    if( el.disabled ){
+                        return false;
+                    }
+
+                    // reject explicit tabindex=-1
+                    const tabindex = el.getAttribute( 'tabindex' );
+                    if( tabindex !== null && Number( tabindex ) === -1 ){
+                        return false;
+                    }
+
+                    // reject elements inside disabled fieldsets
+                    if( $el.closest( 'fieldset:disabled' ).length ){
+                        return false;
+                    }
+
+                    return true;
+                });
+            return $candidates.length ? $candidates[0] : null;
+        };
+        const _selector = function(){
+            return [
+                'a[href]',
+                'area[href]',
+                'button',
+                //'embed', // explicitely disabling embed's
+                //'iframe', // explicitely disabling iframe's
+                'input:not([type="hidden"])',
+                //'object', // explicitely disabling object's
+                'select',
+                'textarea',
+                '[contentEditable=true]'
+            ].join( ', ' );
+        };
+        const _scope = function( root ){
+            return root.querySelector( '.modal-body' )
+                || root.querySelector( '.tab-pane.active.show' ) || root.querySelector( '.tab-pane.active' )    // bootstrap variant
+                || root.querySelector( '.tabbed-pane.active.show' ) || root.querySelector( '.tabbed-pane.active' ) // Tabbed variant
+                || root;
+        };
         if( arg.field ){
             arg.field.trigger( 'focus' );
         } else {
-            const inputable = [ 'INPUT', 'TEXTAREA', 'SELECT' ];
-            const _firstStart = function( selector ){
-                //logger.debug( 'selector', selector );
-                let found = null;
-                const _firstRec = function( $o ){
-                    //logger.debug( '$o', $o );
-                    $o.each( function( index, element ){
-                        const $elt = $( this );
-                        //logger.debug( '$elt', $elt );
-                        if( inputable.includes( $elt[0].nodeName )){
-                            found = $elt;
-                        } else {
-                            _firstRec( $elt.children());
-                        }
-                        return found === null;
-                    });
-                };
-                const $start = $( selector );
-                _firstRec( $start );
-                return found;
-            };
-            let $found = _firstStart( '#'+this._id+' .modal-body' );
-            if( !$found || !$found.length ){
-                // 'submit' type buttons should be avoided in a SPA-like app
-                $found = $( '#'+this._id ).find( '.modal-footer button[type="submit"]' ).first();
+            const root = document.getElementById( this.id());
+            if( !root ){
+                logger.warning( 'focus() unable to get modal root element by its id' );
+                return;
             }
-            if( !$found || !$found.length ){
-                $found = $( '#'+this._id ).find( '.modal-footer button.btn-primary' ).last();
-            }
-            if( !$found || !$found.length ){
-                $found = $( '#'+this._id ).find( '.modal-footer button' ).last();
-            }
-            if( $found && $found.length ){
-                logger.verbose({ verbosity: Modal.configure().verbosity, against: Modal.C.Verbose.FOCUS }, 'mdModal.focus() on', $found );
-                UIUtils.DOM.waitFor( UIUtils.DOM.selector( $found )).then(() => {
-                    $found.focus();
-                    $found.select();
-                });
-            }
+            const target = _findFocusable( root ) || root;
+            //logger.debug( 'focus() target', this.id(), target );
+            target.focus();
         }
     }
 
@@ -564,6 +600,18 @@ export class mdModal {
      */
     id(){
         return this._id;
+    }
+
+    /**
+     * @returns {Boolean} the current events target for the topmost modal
+     */
+    isTopmost(){
+        const topmost = Modal.stack.topmost();
+        if( !topmost ){
+            logger.warn( 'isTopmost() trying to test a modal while none is opened' );
+            return false;
+        }
+        return topmost.id() === this.id();
     }
 
     /**

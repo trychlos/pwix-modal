@@ -20,6 +20,7 @@
     - Remove functions obsoleted since v1.x
     - Define and honor new Modal.C.Position constants
     - Intercept Escape key and honor confirmOnClose (todo #38)
+    - Fix focus management
 
 ### 2.4.0
 
