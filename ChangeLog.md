@@ -21,6 +21,7 @@
     - Define and honor new Modal.C.Position constants
     - Intercept Escape key and honor confirmOnClose (todo #38)
     - Fix focus management
+    - modal-body becomes flex-column
 
 ### 2.4.0
 

@@ -4,44 +4,46 @@
 
 @import "{pwix:ui-layout}/exports/stylesheets.less";
 
-.md-modal {
-
-    .modal-content.ui-resizable {
+.md-modal > .modal > .modal-dialog > .modal-content.ui-resizable {
         overflow: hidden;
-    }
+}
 
-    .modal-body {
-        min-height: 0;
-    }
+.md-modal > .modal > .modal-dialog > .modal-content > .modal-body {
+    min-height: 0;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
 
+.md-modal > .modal {
     // define a special xxl size for wide screens
     @media screen and ( min-width: @ui-xs-width ){
-        .modal .modal-dialog.modal-xxl {
+        .modal-dialog.modal-xxl {
             --bs-modal-width: 280px;
         }
     }
     @media screen and ( min-width: @ui-sm-width ){
-        .modal .modal-dialog.modal-xxl {
+        .modal-dialog.modal-xxl {
             --bs-modal-width: 330px;
         }
     }
     @media screen and ( min-width: @ui-md-width ){
-        .modal .modal-dialog.modal-xxl {
+        .modal-dialog.modal-xxl {
             --bs-modal-width: 700px;
         }
     }
     @media screen and ( min-width: @ui-lg-width ){
-        .modal .modal-dialog.modal-xxl {
+        .modal-dialog.modal-xxl {
             --bs-modal-width: 920px;
         }
     }
     @media screen and ( min-width: 1500px ){
-        .modal .modal-dialog.modal-xxl {
+        .modal-dialog.modal-xxl {
             --bs-modal-width: 1350px;
         }
     }
     @media screen and ( min-width: @ui-xl-width ){
-        .modal .modal-dialog.modal-xxl {
+        .modal-dialog.modal-xxl {
             --bs-modal-width: 1750px;
         }
     }

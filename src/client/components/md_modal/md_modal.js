@@ -175,6 +175,7 @@ Template.md_modal.onRendered( function(){
 
             // compute min and max width and height
             self.MD.takeMeasures();
+            //logger.debug( 'modalBodyStyles.height', self.MD.modalBodyStyles.height );
 
             // remove style set by bootstrap
             self.$( '.modal-content' ).removeAttr( 'style' );
