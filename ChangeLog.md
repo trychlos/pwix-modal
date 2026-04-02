@@ -2,9 +2,9 @@
 
 ## ChangeLog
 
-### 2.5.0-rc.0
+### 2.5.0
 
-    Release date: 
+    Release date: 2026- 4- 2
 
     - Adapt to new pwix-ui-layout
     - Replace bootstrap and @popperjs/core npm dependencies with pwix:ui-boostrap5
@@ -267,4 +267,4 @@
 
 ---
 P. Wieser
-- Last updated on 2026, Feb. 2nd
+- Last updated on 2026, Apr. 2nd
